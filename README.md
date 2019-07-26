@@ -1,2 +1,2 @@
 # XamarinPhoneContact
-used to get mobile contact
+used to get mobile contacts
