@@ -1010,11 +1010,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.iOS/XamarinPhoneContact.iOS.csproj",
+      "projectUniqueName": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.iOS/XamarinPhoneContact.iOS.csproj",
       "projectName": "XamarinPhoneContact.iOS",
-      "projectPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.iOS/XamarinPhoneContact.iOS.csproj",
+      "projectPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.iOS/XamarinPhoneContact.iOS.csproj",
       "packagesPath": "/Users/kamal/.nuget/packages/",
-      "outputPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.iOS/obj/",
+      "outputPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.iOS/obj/",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
@@ -1029,8 +1029,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj": {
-              "projectPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj"
+            "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj": {
+              "projectPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj"
             }
           }
         }

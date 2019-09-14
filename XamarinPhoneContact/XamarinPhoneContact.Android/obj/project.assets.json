@@ -2004,11 +2004,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.Android/XamarinPhoneContact.Android.csproj",
+      "projectUniqueName": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.Android/XamarinPhoneContact.Android.csproj",
       "projectName": "XamarinPhoneContact.Android",
-      "projectPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.Android/XamarinPhoneContact.Android.csproj",
+      "projectPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.Android/XamarinPhoneContact.Android.csproj",
       "packagesPath": "/Users/kamal/.nuget/packages/",
-      "outputPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.Android/obj/",
+      "outputPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.Android/obj/",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
@@ -2023,8 +2023,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-            "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj": {
-              "projectPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj"
+            "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj": {
+              "projectPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj"
             }
           }
         }

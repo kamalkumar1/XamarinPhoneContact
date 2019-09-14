@@ -2,6 +2,6 @@
 <Devices>
   <Device id="emulator-5554">
     <ResultingAbi>x86</ResultingAbi>
-    <SdkVersion>26</SdkVersion>
+    <SdkVersion>28</SdkVersion>
   </Device>
 </Devices>

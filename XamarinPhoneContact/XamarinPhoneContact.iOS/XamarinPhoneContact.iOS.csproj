@@ -71,7 +71,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContactList.cs" />
     <Compile Include="PhoneContactData.cs" />
-    <Compile Include="ContactItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -117,6 +116,14 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\deletebutton.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\deletebutton.imageset\deletebutton.png" />
+    <ImageAsset Include="Assets.xcassets\deletebutton.imageset\deletebutton-1.png" />
+    <ImageAsset Include="Assets.xcassets\deletebutton.imageset\deletebutton-2.png" />
+    <ImageAsset Include="Assets.xcassets\checkmark.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\checkmark.imageset\checkmark.png" />
+    <ImageAsset Include="Assets.xcassets\checkmark.imageset\checkmark%402x.png" />
+    <ImageAsset Include="Assets.xcassets\checkmark.imageset\checkmark%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -136,5 +143,10 @@
       <Project>{0492B8FF-84B9-40CE-B8F4-D0A7692ECF7D}</Project>
       <Name>XamarinPhoneContact</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\deletebutton.imageset\" />
+    <Folder Include="Assets.xcassets\deletebutton.imageset\" />
+    <Folder Include="Assets.xcassets\checkmark.imageset\" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="XamarinPhoneContact.MainPage">
-    <StackLayout>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XamarinPhoneContact.MainPage">
+    <StackLayout Padding="20">
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-        
+        <Button VerticalOptions="CenterAndExpand"
+                Text="ShowTheCustomContactControl"
+                BackgroundColor="Green"
+                TextColor="White"
+                FontSize="Large"
+                Padding="10"
+                Clicked="Show_Clicked"></Button>
+
+        <StackLayout BackgroundColor="Blue"
+                     Spacing="0"
+                     Orientation="Horizontal"
+                     Margin="0"
+                     Padding="0">
+            <Grid BackgroundColor="Orange"
+                  RowSpacing="8"
+                  HorizontalOptions="FillAndExpand">
+
+                <Label BackgroundColor="Red"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Text="1234"
+                       TextColor="Black"
+                       FontSize="25" />
+                <Label BackgroundColor="Green"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Text="1234"
+                       TextColor="Black"
+                       FontSize="25" />
+
+            </Grid>
+            <Image  Margin="20"
+                    HorizontalOptions="Fill"
+                    Source="deletebutton" Aspect="AspectFit" ></Image>
+
+        </StackLayout>
+
     </StackLayout>
 </ContentPage>

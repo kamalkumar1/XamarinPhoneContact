@@ -6,18 +6,17 @@ using Contacts;
 using Foundation;
 using System.Diagnostics;
 using AddressBook;
+using System.Collections.Generic;
+
 [assembly: Dependency(typeof(ContactList))]
 namespace XamarinPhoneContact.iOS
 {
     public class ContactList : IContact
     {
-        public void GetAllContact()
-        {
+        public event EventHandler CustomPermissionStatus;
 
-            PhoneContactData contactdata = new PhoneContactData();
-           var totalContactListItem = contactdata.GetAllContactFromPhone();
-        }
-       public void MoveToSetting()
+        
+       private void MoveToSetting()
         {
             UIApplication.SharedApplication.InvokeOnMainThread(() =>
             {
@@ -36,7 +35,7 @@ namespace XamarinPhoneContact.iOS
             });
         }
 
-        public ContactEnum CheckPermission()
+        public ContactEnum CheckPermissions()
         {
             CNAuthorizationStatus authStatus = CNContactStore.GetAuthorizationStatus(CNEntityType.Contacts);
             if (authStatus == CNAuthorizationStatus.Denied || authStatus == CNAuthorizationStatus.Restricted)
@@ -77,6 +76,62 @@ namespace XamarinPhoneContact.iOS
         public static void Init()
         {
 
+        }
+
+        public Dictionary<string,object> GetAllContact()
+        {
+            PhoneContactData contactdata = new PhoneContactData();
+            var totalContactListItem = contactdata.GetAllContactFromPhone();
+            return totalContactListItem;
+        }
+
+        public void CheckPermission(object permission)
+        {
+            CNAuthorizationStatus authStatus = CNContactStore.GetAuthorizationStatus(CNEntityType.Contacts);
+            if (authStatus == CNAuthorizationStatus.Denied || authStatus == CNAuthorizationStatus.Restricted)
+            {
+                Debug.WriteLine("Contacts Denied or Restricted");
+                var okCancelAlertController = UIAlertController.Create("Alert", "Need permission to access contac", UIAlertControllerStyle.Alert);
+
+                //Add Actions
+                okCancelAlertController.AddAction(UIAlertAction.Create("Setting", UIAlertActionStyle.Default, (UIAlertAction obj) =>
+                {
+                    MoveToSetting();
+                }));
+                okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel,null));
+
+                //Present Alert
+               UIApplication.SharedApplication.KeyWindow.RootViewController. PresentViewController(okCancelAlertController, true, null);
+
+            }
+            else if(authStatus == CNAuthorizationStatus.NotDetermined)
+            {
+                     var store = new CNContactStore();
+                    store.RequestAccess(CNEntityType.Contacts, (granted, error) =>
+                    {
+                        if (!granted)
+                        {
+                            var okCancelAlertController = UIAlertController.Create("Alert ", "Need permission to access contact", UIAlertControllerStyle.Alert);
+                            //Add Actions
+                            okCancelAlertController.AddAction(UIAlertAction.Create("Setting", UIAlertActionStyle.Default, (UIAlertAction obj) =>
+                            {
+                                MoveToSetting();
+                            }));
+                            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
+                        }
+                        else
+                        {
+                            //check = ContactEnum.Granted;
+                            CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
+                        }
+                    });
+                }
+                
+            else
+            {
+                CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
+
+            }
         }
     }
 }

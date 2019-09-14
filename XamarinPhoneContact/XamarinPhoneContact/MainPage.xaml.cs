@@ -11,56 +11,29 @@ namespace XamarinPhoneContact
 
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
+    [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
-        IContact contact;
+        readonly IContact contact;
         public MainPage()
         {
             InitializeComponent();
-            contact = DependencyService.Get<IContact>();
+           
         }
-        protected override void OnAppearing()
+        async void Show_Clicked(object sender, System.EventArgs e)
         {
-            base.OnAppearing();
-            CheckContactAccessPermission();
+           // ContactConfig.Instance.EnableMultiSelectionTickMark = true;
+           // ContactConfig.Instance.CloseButtonTitle = "Dismiss";
+             MobileContact mobile = new MobileContact();
+            mobile.getSelectedContact += Mobile_GetSelectedContactItem;
+            //await prese
+            //await Navigation.PushModalAsync(new MobileContact());
+            await Navigation.PushModalAsync(mobile);
         }
 
-        private void CheckContactAccessPermission()
+        private void Mobile_GetSelectedContactItem(ContactItem contactItem)
         {
-            if (contact.CheckPermission() != ContactEnum.Restricted && contact.CheckPermission() != ContactEnum.Denied)
-            {
-                if (contact.CheckPermission() != ContactEnum.PermissionRequired)
-                {
-                    LoadContact();
-                }
-                else
-                {
-                    Device.InvokeOnMainThreadAsync(() =>
-                    {
-                        DisplayAlert("Alert", "You have no Access to cconact", "OK");
-                    });
-                }
-            }
-            else
-            {
-                Device.InvokeOnMainThreadAsync(() =>
-                {
-                    ShowAlert();
-                });
-            }
-        }
-        public async void ShowAlert()
-        {
-            bool status = await DisplayAlert("Message", "PermissionRequired To Access Contaact", "Setting", "Cancel");
-            if (!status.Equals("Cancel"))
-            {
-                contact.MoveToSetting();
-            }
-        }
-        void LoadContact()
-        {
-            contact.GetAllContact();
+            
         }
     }
 }

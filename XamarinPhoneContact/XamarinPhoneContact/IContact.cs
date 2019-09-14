@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace XamarinPhoneContact
 {
     public interface IContact
     {
-        void GetAllContact();
-        ContactEnum CheckPermission();
-        void MoveToSetting();
+        Dictionary<string, object> GetAllContact();
+        void CheckPermission();
+        event EventHandler CustomPermissionStatus;
     }
 }

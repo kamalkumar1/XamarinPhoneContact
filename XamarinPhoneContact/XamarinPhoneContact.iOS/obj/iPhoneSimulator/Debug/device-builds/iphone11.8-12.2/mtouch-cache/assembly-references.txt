@@ -1,4 +1,4 @@
-/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.iOS/bin/iPhoneSimulator/Debug/XamarinPhoneContact.iOS.exe
+/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.iOS/bin/iPhoneSimulator/Debug/XamarinPhoneContact.iOS.exe
 /Library/Frameworks/Xamarin.iOS.framework/Versions/12.10.0.157/lib/mono/Xamarin.iOS/mscorlib.dll
 /Users/kamal/.nuget/packages/xamarin.forms/4.1.0.618606/lib/Xamarin.iOS10/Xamarin.Forms.Core.dll
 /Library/Frameworks/Xamarin.iOS.framework/Versions/12.10.0.157/lib/mono/Xamarin.iOS/Facades/netstandard.dll
@@ -21,5 +21,6 @@
 /Library/Frameworks/Xamarin.iOS.framework/Versions/12.10.0.157/lib/mono/Xamarin.iOS/System.Xml.Linq.dll
 /Users/kamal/.nuget/packages/xamarin.forms/4.1.0.618606/lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll
 /Users/kamal/.nuget/packages/xamarin.forms/4.1.0.618606/lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll
-/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/bin/Debug/netstandard2.0/XamarinPhoneContact.dll
+/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/bin/Debug/netstandard2.0/XamarinPhoneContact.dll
 /Users/kamal/.nuget/packages/xamarin.forms/4.1.0.618606/lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll
+/Users/kamal/.nuget/packages/xamarin.essentials/1.2.0/lib/xamarinios10/Xamarin.Essentials.dll

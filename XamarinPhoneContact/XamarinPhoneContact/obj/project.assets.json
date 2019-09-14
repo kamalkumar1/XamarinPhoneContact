@@ -561,11 +561,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj",
+      "projectUniqueName": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj",
       "projectName": "XamarinPhoneContact",
-      "projectPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj",
+      "projectPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact.csproj",
       "packagesPath": "/Users/kamal/.nuget/packages/",
-      "outputPath": "/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact/obj/",
+      "outputPath": "/Users/kamal/Documents/Git/XamarinPhoneContact/XamarinPhoneContact/XamarinPhoneContact/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

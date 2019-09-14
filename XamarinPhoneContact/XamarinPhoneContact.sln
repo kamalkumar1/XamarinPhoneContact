@@ -54,4 +54,6 @@ Global
 		{0492B8FF-84B9-40CE-B8F4-D0A7692ECF7D}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{0492B8FF-84B9-40CE-B8F4-D0A7692ECF7D}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
 EndGlobal
