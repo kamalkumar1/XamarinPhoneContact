@@ -16,11 +16,14 @@ using Android.Support.V7.App;
 using Xamarin.Forms;
 using XamarinPhoneContact.Droid;
 using System.Linq;
+//using Context = Android.Content.Context;
+
 [assembly: Dependency(typeof(ContactList))]
 namespace XamarinPhoneContact.Droid
 {
     public class ContactList : Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IContact, ICallBackInterface
     {
+       private static Activity m_activity;
         // private static int RequestPermissionCode = 1;
         public event EventHandler CustomPermissionStatus;
         readonly string[] permissionscontact = { Manifest.Permission.ReadContacts };
@@ -45,13 +48,24 @@ namespace XamarinPhoneContact.Droid
             new ContactGroup(alphate[26], alphate[26]){}
 
         };
+        public static void Init(Activity activity)
+        {
+            m_activity = activity;
+        }
         public void CheckPermission()
         {
+            //MessagingCenter.Subscribe<MainPage, Dictionary>(this, "data", (s, a) => {
+            //   // Events.Add($"Received message at {a.ToString()}");
+
+
+
+            //});
             var check = GetcontactPermission();
             if (!check)
             {
                 CustomPermissionStatus?.Invoke(ContactEnum.Denied, EventArgs.Empty);
                 SetContactPermission();
+                
             }
             else
             {
@@ -63,9 +77,11 @@ namespace XamarinPhoneContact.Droid
         }
         public void SetContactPermission()
         {
-            var activity = MainActivity.Instance;
-            activity.callBackInterface = this;
-            ActivityCompat.RequestPermissions(activity, new string[] { Manifest.Permission.ReadContacts }, 101);
+            //  var activity = MainActivity.Instance;
+            /// activity.callBackInterface = this;
+            PhoneContactPermissionsResults.Instance.callBackInterface = this;
+
+            ActivityCompat.RequestPermissions(m_activity, new string[] { Manifest.Permission.ReadContacts }, 1107);
 
         }
         private bool GetcontactPermission()
@@ -74,7 +90,7 @@ namespace XamarinPhoneContact.Droid
             {
                 return true;
             }
-            var permissionCheck = ContextCompat.CheckSelfPermission(Android.App.Application.Context, Manifest.Permission.ReadContacts);
+            var permissionCheck = ContextCompat.CheckSelfPermission(GlobalApplication.CurrentContext, Manifest.Permission.ReadContacts);
             return permissionCheck == Permission.Granted;
         }
         public Dictionary<string,object> GetAllContact()
@@ -86,7 +102,8 @@ namespace XamarinPhoneContact.Droid
             ContactsContract.CommonDataKinds.StructuredName.GivenName };
           
             totalContactListWithoutGrouping = new List<ContactItem>();
-            var contentResolver = MainActivity.Instance.ContentResolver;
+            var globalVariable = GlobalApplication.CurrentContext;
+            var contentResolver = globalVariable.ContentResolver;
             ICursor myCursor = contentResolver.Query(ContactsContract.Contacts.ContentUri, null, null, null, "upper(" + ContactsContract.CommonDataKinds.Phone.InterfaceConsts.DisplayName + ") ASC");
             //ICursor myCursor = contentResolver.Query(ContactsContract.Contacts.ContentUri, null, null, null,  null);
             if (myCursor.Count > 0)
@@ -319,7 +336,7 @@ namespace XamarinPhoneContact.Droid
             switch (requestCode)
             {
 
-                case 101:
+                case 1107:
                     {
                         if (grantResults[0] == Permission.Granted)
                         {

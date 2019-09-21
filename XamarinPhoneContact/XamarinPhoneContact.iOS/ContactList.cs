@@ -85,7 +85,7 @@ namespace XamarinPhoneContact.iOS
             return totalContactListItem;
         }
 
-        public void CheckPermission(object permission)
+        public void CheckPermission()
         {
             CNAuthorizationStatus authStatus = CNContactStore.GetAuthorizationStatus(CNEntityType.Contacts);
             if (authStatus == CNAuthorizationStatus.Denied || authStatus == CNAuthorizationStatus.Restricted)
@@ -99,7 +99,7 @@ namespace XamarinPhoneContact.iOS
                     MoveToSetting();
                 }));
                 okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel,null));
-
+              
                 //Present Alert
                UIApplication.SharedApplication.KeyWindow.RootViewController. PresentViewController(okCancelAlertController, true, null);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -19,15 +20,15 @@ namespace XamarinPhoneContact
         readonly IContact contact;
         IEnumerable<ContactGroup> totalContactItems;
         IEnumerable<ContactItem> totalContactItemsWithoutGrouping;
-        public GetSelectedContactItem  getSelectedContact;
+        public GetSelectedContactItem getSelectedContact;
         public MobileContact()
         {
             InitializeComponent();
-            if(Device.Android == Device.RuntimePlatform)
+            if (Device.Android == Device.RuntimePlatform)
             {
                 searchText.BackgroundColor = Color.White;
             }
-          
+
             searchText.IsSpellCheckEnabled = false;
             dismisbutton.BackgroundColor = Color.Transparent;
             dismisbutton.IsVisible = ContactConfig.Instance.Dismisbutton;
@@ -47,7 +48,7 @@ namespace XamarinPhoneContact
             contact = DependencyService.Get<IContact>();
             contact.CustomPermissionStatus += Contact_CustomPermissionStatus;
             SetCloseButton();
-           
+
         }
         public void SetCloseButton()
         {
@@ -62,9 +63,9 @@ namespace XamarinPhoneContact
                 dismisbutton.IsVisible = false;
                 dismisbuttonText.IsVisible = true;
                 dismisbuttonText.Text = ContactConfig.Instance.CloseButtonTitle;
-               
+
             }
-            if (string.IsNullOrEmpty(ContactConfig.Instance.CloseButtonTitle)&& string.IsNullOrEmpty(ContactConfig.Instance.CloseButtonImageName))
+            if (string.IsNullOrEmpty(ContactConfig.Instance.CloseButtonTitle) && string.IsNullOrEmpty(ContactConfig.Instance.CloseButtonImageName))
             {
                 dismisbuttonText.Text = "Close";
                 dismisbuttonText.IsVisible = true;
@@ -119,31 +120,37 @@ namespace XamarinPhoneContact
             }
 
         }
-        void LoadContact()
+        async void LoadContact()
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            bottomLayout.IsVisible = true;
+            await Task.Run(async () =>
             {
-                // Code to run on the main thread
                 var keyValuePairs = contact.GetAllContact();
-                totalContactItems = (IEnumerable<ContactGroup>)keyValuePairs["Group"];
-                totalContactItemsWithoutGrouping = (IEnumerable<ContactItem>)keyValuePairs["List"];
-                contactList.ItemsSource = totalContactItems;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    bottomLayout.IsVisible = false;
+                    // Code to run on the main thread
+
+                    totalContactItems = (IEnumerable<ContactGroup>)keyValuePairs["Group"];
+                    totalContactItemsWithoutGrouping = (IEnumerable<ContactItem>)keyValuePairs["List"];
+                    contactList.ItemsSource = totalContactItems;
+                });
             });
-
-
+         
         }
-        public void Handle_clear(object sender,EventArgs e)
+        public void Handle_clear(object sender, EventArgs e)
         {
             var selectedlist = (from s in totalContactItemsWithoutGrouping
-                               where s.Itemselcted == true select s).ToList();
-            foreach(var item in selectedlist)
+                                where s.Itemselcted == true
+                                select s).ToList();
+            foreach (var item in selectedlist)
             {
                 var index = totalContactItemsWithoutGrouping.ToList().IndexOf(item);
                 item.Itemselcted = false;
                 totalContactItemsWithoutGrouping.ToList()[index] = item;
-               
+
             }
-            if(string.IsNullOrEmpty(searchText.Text))
+            if (string.IsNullOrEmpty(searchText.Text))
             {
                 contactList.ItemsSource = totalContactItems;
             }
@@ -151,7 +158,7 @@ namespace XamarinPhoneContact
             {
                 contactList.ItemsSource = totalContactItemsWithoutGrouping;
             }
-           
+
         }
         public void HandleListSelected(object sender, SelectedItemChangedEventArgs eventArgs)
         {
@@ -162,11 +169,11 @@ namespace XamarinPhoneContact
         }
         public void HandleItemTapped(object sender, ItemTappedEventArgs e)
         {
-           
+
             if (!ContactConfig.Instance.EnableMultiSelectionTickMark)
             {
                 var item = e.Item as ContactItem;
-                getSelectedContact?.Invoke(item); 
+                getSelectedContact?.Invoke(item);
             }
             else
             {
@@ -186,4 +193,3 @@ namespace XamarinPhoneContact
         }
     }
 }
-        

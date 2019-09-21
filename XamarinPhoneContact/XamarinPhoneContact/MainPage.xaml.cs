@@ -22,12 +22,9 @@ namespace XamarinPhoneContact
         }
         async void Show_Clicked(object sender, System.EventArgs e)
         {
-           // ContactConfig.Instance.EnableMultiSelectionTickMark = true;
-           // ContactConfig.Instance.CloseButtonTitle = "Dismiss";
-             MobileContact mobile = new MobileContact();
+
+            MobileContact mobile = new MobileContact();
             mobile.getSelectedContact += Mobile_GetSelectedContactItem;
-            //await prese
-            //await Navigation.PushModalAsync(new MobileContact());
             await Navigation.PushModalAsync(mobile);
         }
 

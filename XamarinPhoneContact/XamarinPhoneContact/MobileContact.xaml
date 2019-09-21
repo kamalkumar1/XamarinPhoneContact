@@ -85,6 +85,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackLayout x:Name="bottomLayout" IsVisible="false" BackgroundColor="White" Padding="5,5,5,5">
+                <Label HorizontalOptions="CenterAndExpand" Text="Fetching your contact..."  FontAttributes="Bold" FontSize="Medium" ></Label>
+            </StackLayout>
         </StackLayout>
 
 

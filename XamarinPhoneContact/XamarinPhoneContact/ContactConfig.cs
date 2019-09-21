@@ -23,6 +23,7 @@ namespace XamarinPhoneContact
         // private void GetButonImageName
         public string CloseButtonImageName;
         public string CloseButtonTitle;
+        public int ContactPermission = 1107;
 
     }
 

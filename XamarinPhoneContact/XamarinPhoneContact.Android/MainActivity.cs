@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Xamarin.Forms;
+using System.Collections;
 
 namespace XamarinPhoneContact.Droid
 {
@@ -22,6 +24,8 @@ namespace XamarinPhoneContact.Droid
 
             base.OnCreate(savedInstanceState);
             Instance = this;
+            ContactList.Init(this);
+           // GlobalApplication.getAppContext();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
@@ -29,11 +33,12 @@ namespace XamarinPhoneContact.Droid
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
-            //PermissionStatus.Invoke(grantResults, EventArgs.Empty);
-            //PermissionStatus(grantResults, EventArgs.Empty);
-            if (callBackInterface != null)
-                callBackInterface.RequestPermissionsResults(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (ContactConfig.Instance.ContactPermission == requestCode)
+            {
+                PhoneContactPermissionsResults.Instance.RequestPermissionsResults(requestCode, permissions, grantResults);
+            }
+           // MessagingCenter.Send(this, _tickContract, DateTime.Now);
+           base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
     }
