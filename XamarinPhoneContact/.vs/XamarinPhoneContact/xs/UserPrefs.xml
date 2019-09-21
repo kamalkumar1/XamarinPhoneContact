@@ -1,0 +1,44 @@
+﻿<Properties StartupConfiguration="{4AA8F051-EE32-4602-993E-454E326A3054}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="XamarinPhoneContact.Android/MainActivity.cs">
+    <Files>
+      <File FileName="XamarinPhoneContact/MainPage.xaml" Line="6" Column="9" />
+      <File FileName="XamarinPhoneContact/MainPage.xaml.cs" />
+      <File FileName="XamarinPhoneContact.iOS/ContactList.cs" />
+      <File FileName="XamarinPhoneContact.iOS/PhoneContactData.cs" />
+      <File FileName="XamarinPhoneContact.iOS/ContactItem.cs" />
+      <File FileName="XamarinPhoneContact.Android/MainActivity.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="XamarinPhoneContact" expanded="True">
+            <Node name="XamarinPhoneContact" expanded="True">
+              <Node name="App.xaml" expanded="True" />
+              <Node name="MainPage.xaml" expanded="True" />
+            </Node>
+            <Node name="XamarinPhoneContact.Android" expanded="True">
+              <Node name="Assets" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="MainActivity.cs" selected="True" />
+            </Node>
+            <Node name="XamarinPhoneContact.iOS" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../../../Documents/Git/pulseapp/.vs/Pulse/xs/Pulse/Pulse.Shared/Customer/Customer.cs" line="212" offsetX="429" offsetY="3165" expression="data" liveUpdate="False" />
+    <Watch file="../../../../../Documents/Git/pulseapp/.vs/Pulse/xs/Pulse/Pulse.Shared/Revision/Revision.cs" line="129" offsetX="1079" offsetY="1920" expression="Customer.LoggedInCustomer.SelectedProject.SaleID" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.iOS/PhoneContactData.cs" relfile="XamarinPhoneContact.iOS/PhoneContactData.cs" line="49" column="1" />
+      <Breakpoint file="/Users/kamal/Projects/XamarinPhoneContact/XamarinPhoneContact.iOS/PhoneContactData.cs" relfile="XamarinPhoneContact.iOS/PhoneContactData.cs" line="46" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.XamarinPhoneContact.Android PreferredExecutionTarget="Android.test" />
+  <MonoDevelop.Ide.ItemProperties.XamarinPhoneContact.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.0ED0CF93-CE00-4D0A-9951-3BF64DC15628" />
+</Properties>
