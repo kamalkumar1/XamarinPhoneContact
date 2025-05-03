@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("XamarinPhoneContact")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0ad003dce87c0e5611a662ce5d2c3353fecc54df")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+af21c7cb2b95276b2492d5ae99418fca6f4be9ba")]
 [assembly: System.Reflection.AssemblyProductAttribute("XamarinPhoneContact")]
 [assembly: System.Reflection.AssemblyTitleAttribute("XamarinPhoneContact")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

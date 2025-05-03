@@ -37,14 +37,17 @@
                         Clicked="Handle_clear"
                         Text="Clear All">
                 </Button>
-                <ImageButton x:Name="dismisbutton"
+                <Image x:Name="dismisbutton"
                         Aspect="AspectFit"
                         Grid.Row="1"
                         Grid.Column="1"
                         Margin="0,10,10,0"
                         HeightRequest="25"
-                        WidthRequest="25"
-                        Clicked="Dismiss_Selected"></ImageButton>
+                        WidthRequest="25">
+                       <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Dismiss_Selected" />
+                    </Image.GestureRecognizers>
+                       </Image>
                 <Button x:Name="dismisbuttonText"
                         Margin="0,5,10,5"
                         Grid.Row="2"
@@ -112,10 +115,9 @@
                     x:Name="bottomLayout"
                     IsVisible="{Binding Itemselcted}"
                     Padding="0">
-                <Label VerticalTextAlignment="Center"
+                <Label x:Name="LblLoadingText" VerticalTextAlignment="Center"
                         HorizontalTextAlignment="Center"
                         Padding="0,12,0,12"
-                        Text="Fetching your contact..."
                         FontAttributes="Bold"
                         FontSize="Medium"></Label>
             </StackLayout>

@@ -7,14 +7,14 @@
     <StackLayout Padding="20">
         <!-- Place new controls here -->
         <Button VerticalOptions="CenterAndExpand"
-                Text="ShowTheCustomContactControl"
+                Text="Custom Contact Control"
                 BackgroundColor="Green"
                 TextColor="White"
                 FontSize="Large"
                 Padding="10"
                 Clicked="Show_Clicked"></Button>
 
-        <StackLayout BackgroundColor="Blue"
+        <StackLayout IsVisible="False" BackgroundColor="Blue"
                      Spacing="0"
                      Orientation="Horizontal"
                      Margin="0"

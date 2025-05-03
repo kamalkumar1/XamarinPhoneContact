@@ -63,6 +63,11 @@ namespace XamarinPhoneContact.Helper
         /// </summary>
          public static bool GetDate = false;
 
+        /// <summary>
+        /// While loading the contact below text will be shown
+        /// </summary>
+         public static string Loadingtext = "Fetching your contact...";
+
     }
     public sealed class ContactConfig
     {

@@ -33,6 +33,7 @@ public partial class MobileContact : ContentPage
         dismisbutton.IsVisible = kkContactControl.Dismisbutton;
         searchText.IsVisible = kkContactControl.EnableSearchBar;
         contactList.SeparatorColor = kkContactControl.ListSepratorColor;
+        LblLoadingText.Text= kkContactControl.Loadingtext;
 
         _contact.CustomPermissionStatus += Contact_CustomPermissionStatus;
         SetCloseButton();
@@ -93,8 +94,8 @@ public partial class MobileContact : ContentPage
             }
             else
             {
-                var filteredContacts = totalContactItemsWithoutGrouping
-                .Where(c => c.DisplayName.Contains(searchBarText));
+                 contactList.IsGroupingEnabled = false;
+                var filteredContacts = totalContactItemsWithoutGrouping.Where(c => c.DisplayName != null && c.DisplayName.IndexOf(searchBarText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 if(filteredContacts!=null)
                 {
                     contactList.ItemsSource = filteredContacts;
