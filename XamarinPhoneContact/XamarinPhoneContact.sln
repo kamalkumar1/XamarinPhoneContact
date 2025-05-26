@@ -4,6 +4,8 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinPhoneContact", "XamarinPhoneContact.csproj", "{175CEF4D-933C-8728-53FD-FDB143882037}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiPhoneContactLibrary", "..\MauiPhoneContactLibrary\MauiPhoneContactLibrary.csproj", "{4D465C11-BC58-4A5E-B192-2961F497BD93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,8 +14,13 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

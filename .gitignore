@@ -19,3 +19,12 @@ XamarinPhoneContact/obj/Debug/net8.0-windows10.0.19041.0/win10-x64/.NETCoreApp,V
 XamarinPhoneContact/XamarinPhoneContact.csproj.user
 *.user
 XamarinPhoneContact/XamarinPhoneContact.csproj.user
+/MauiPhoneContactLibrary/bin/Debug/net8.0-android
+/MauiPhoneContactLibrary/bin/Debug/net8.0-ios
+/MauiPhoneContactLibrary/bin/Debug/net8.0-maccatalyst
+/MauiPhoneContactLibrary/bin/Debug/net8.0-windows10.0.19041.0
+/MauiPhoneContactLibrary/obj/Debug/net8.0-android
+/MauiPhoneContactLibrary/obj/Debug/net8.0-ios
+/MauiPhoneContactLibrary/obj/Debug/net8.0-maccatalyst
+/MauiPhoneContactLibrary/obj/Debug/net8.0-windows10.0.19041.0
+/MauiPhoneContactLibrary/obj
