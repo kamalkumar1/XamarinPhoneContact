@@ -13,11 +13,12 @@ using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using AndroidX.AppCompat.App;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 using System.Linq;
-using XamarinPhoneContact.Platforms.Android;
+using MauiPhoneContactLibrary.Platforms;
+using MauiPhoneContactLibrary.Platforms.Android;
 
-namespace XamarinPhoneContact.Platforms
+namespace MauiPhoneContactLibrary.Platforms
 {
     public class ContactList : AppCompatActivity, IContact, ICallBackInterface
     {

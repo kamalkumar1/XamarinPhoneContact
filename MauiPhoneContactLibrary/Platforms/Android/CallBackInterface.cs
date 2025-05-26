@@ -2,7 +2,7 @@
 using Android.Content.PM;
 using Android.Runtime;
 
-namespace XamarinPhoneContact.Platforms
+namespace MauiPhoneContactLibrary.Platforms
 {
     public interface ICallBackInterface
     {

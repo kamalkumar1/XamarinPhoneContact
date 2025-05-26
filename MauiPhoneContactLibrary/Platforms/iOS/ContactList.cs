@@ -1,11 +1,11 @@
 ﻿using UIKit;
-using XamarinPhoneContact.iOS;
+using MauiPhoneContactLibrary.iOS;
 using Contacts;
 using Foundation;
 using System.Diagnostics;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 
-namespace XamarinPhoneContact.Platforms
+namespace MauiPhoneContactLibrary.Platforms
 {
     public class ContactList : IContact
     {
