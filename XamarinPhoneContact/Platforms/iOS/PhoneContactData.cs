@@ -4,10 +4,10 @@ using Contacts;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using MauiPhoneContactLibrary.Helper;
+using XamarinPhoneContact.Helper;
 using System.Linq;
 
-namespace MauiPhoneContactLibrary.iOS
+namespace XamarinPhoneContact.iOS
 {
     public class PhoneContactData
     {

@@ -62,4 +62,14 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\XamarinPhoneContact\XamarinPhoneContact.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="MauiPhoneContactLibrary">
+	    <HintPath>..\MauiPhoneContactLibrary\bin\Release\net8.0-ios\MauiPhoneContactLibrary.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
 </Project>
