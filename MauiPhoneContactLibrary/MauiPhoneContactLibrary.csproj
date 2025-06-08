@@ -15,7 +15,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Version>1.1.0</Version>
 		<PackageId>PhoneContact.MAUI.KK</PackageId>
-		<Title>KK.MAUIPHONECONTACTLIBARY</Title>
+		<Title>PhoneContact</Title>
 		<Company>Valelas</Company>
 		<Copyright>@2025</Copyright>
 		<PackageIcon>Copilot_20250531_131700.png</PackageIcon>
