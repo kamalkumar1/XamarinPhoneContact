@@ -52,11 +52,14 @@ namespace MauiPhoneContactLibrary.Platforms
         }
         public void CheckPermission()
         {
+            Console.WriteLine("55");
             var check = GetcontactPermission();
             if (!check)
             {
-                CustomPermissionStatus?.Invoke(ContactEnum.Denied, EventArgs.Empty);
+                Console.WriteLine("59");
                 SetContactPermission();
+                CustomPermissionStatus?.Invoke(ContactEnum.Denied, EventArgs.Empty);
+               
 
             }
             else
@@ -66,16 +69,32 @@ namespace MauiPhoneContactLibrary.Platforms
         }
         public void SetContactPermission()
         {
-            MainActivity.Instance.callBackInterface = this;
+            try
+            {
+                Console.WriteLine("71");
+                MainActivity.Instance.callBackInterface = this;
+ 
+                if (m_activity == null)
+                {
+                    throw new InvalidOperationException("Activity reference (m_activity) is null.");
+                }
+                ActivityCompat.RequestPermissions(m_activity, new string[] { Manifest.Permission.ReadContacts }, 1107);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Actvityexception:"+ex);
 
-            ActivityCompat.RequestPermissions(m_activity, new string[] { Manifest.Permission.ReadContacts }, 1107);
+            }
+          
         }
         private bool GetcontactPermission()
         {
+            Console.WriteLine("77");
             if ((int)Build.VERSION.SdkInt < 23)
             {
                 return true;
             }
+            Console.WriteLine("83");
             var globalVariable = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
             var permissionCheck = ContextCompat.CheckSelfPermission(globalVariable, Manifest.Permission.ReadContacts);
             return permissionCheck == Permission.Granted;
@@ -376,6 +395,7 @@ namespace MauiPhoneContactLibrary.Platforms
 
         public void RequestPermissionsResults(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
+            Console.WriteLine("384");
             switch (requestCode)
             {
 
@@ -384,11 +404,13 @@ namespace MauiPhoneContactLibrary.Platforms
                         if (grantResults[0] == Permission.Granted)
                         {
                             CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
+                            Console.WriteLine("Granted");
 
                         }
                         else
                         {
                             CustomPermissionStatus?.Invoke(ContactEnum.Denied, EventArgs.Empty);
+                            Console.WriteLine("denied");
 
                         }
                     }

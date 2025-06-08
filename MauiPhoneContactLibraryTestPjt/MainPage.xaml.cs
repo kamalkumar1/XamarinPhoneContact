@@ -4,6 +4,9 @@
 
 using MauiPhoneContactLibrary;
 using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Platforms;
+using MauiPhoneContactLibrary.View;
+using System.Diagnostics;
 
 namespace MauiPhoneContactLibraryTestPjt
 {
@@ -16,12 +19,12 @@ namespace MauiPhoneContactLibraryTestPjt
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void OnCounterClicked(object sender, EventArgs e)
         {
             try
             {
                 kkContactControl.EnableMultiSelectionTickMark = true;
-                kkContactControl.CloseButtonImageName = "deletebutton.png";
+              //  kkContactControl.CloseButtonImageName = "deletebutton.png";
                 IContact contact = new ContactList(); // Assuming Contact implements IContact
                 MobileContact mobile = new MobileContact(contact);
                 mobile.getSelectedContact += Mobile_GetSelectedContactItem;
@@ -34,6 +37,11 @@ namespace MauiPhoneContactLibraryTestPjt
                 Debug.WriteLine(ex);
 
             }
+        }
+        private void Mobile_GetSelectedContactItem(ContactItem contactItem)
+        {
+
+
         }
     }
 

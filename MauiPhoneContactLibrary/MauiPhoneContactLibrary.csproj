@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>
@@ -11,9 +11,43 @@
 		<Nullable>enable</Nullable>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Version>1.0.0</Version>
+		<PackageId>PhoneContact.MAUI.KK</PackageId>
+		<Title>KK.MAUIPHONECONTACTLIBARY</Title>
+		<Company>Valelas</Company>
+		<Copyright>@2025</Copyright>
+		<PackageIcon>Copilot_20250531_131700.png</PackageIcon>
+		<RepositoryUrl>https://github.com/kamalkumar1/XamarinPhoneContact</RepositoryUrl>
+		<PackageTags>MAUI;CONTACT;MOBILE CONTACT;iOS;ANDROID;CONTACT;PHONE</PackageTags>
+		<PackageReleaseNotes>Given Support .Net 8 and above
+Given MAUI Compatablity 
+Support latest android and iOS</PackageReleaseNotes>
+		<Description>- Retrieve and display phone contacts
+- Search and filter contacts
+- Request runtime permissions for accessing contacts
+- Cross-platform support (**Android &amp; iOS**)
+- Smooth UI experience with **MAUI**</Description>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<FileVersion>1.0.0.0</FileVersion>
+		<PackageLicenseFile>MIT License.txt</PackageLicenseFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\..\Downloads\Copilot_20250531_131700.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\MIT License.txt">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
