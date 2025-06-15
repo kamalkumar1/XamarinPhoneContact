@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiPhoneContactLibrary", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiPhoneContactLibraryTestPjt", "..\MauiPhoneContactLibraryTestPjt\MauiPhoneContactLibraryTestPjt.csproj", "{BE4254FE-EC55-4EB6-A95E-FEB965E3DA80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinPhoneContact.Forms.kk", "..\XamarinPhoneContact.Forms.kk\XamarinPhoneContact.Forms.kk.csproj", "{A73CB602-ABFA-46E0-83E4-37807311BF01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{BE4254FE-EC55-4EB6-A95E-FEB965E3DA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE4254FE-EC55-4EB6-A95E-FEB965E3DA80}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE4254FE-EC55-4EB6-A95E-FEB965E3DA80}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A73CB602-ABFA-46E0-83E4-37807311BF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73CB602-ABFA-46E0-83E4-37807311BF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73CB602-ABFA-46E0-83E4-37807311BF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73CB602-ABFA-46E0-83E4-37807311BF01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

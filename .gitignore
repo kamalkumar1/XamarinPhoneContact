@@ -45,3 +45,9 @@ MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/re
 MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/Platforms/Windows/App.xbf
 MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/MauiPhoneContactLibraryTestPjt.build.appxrecipe
 MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/AppxManifest.xml
+/XamarinPhoneContact.Forms.kk/obj/Release/net8.0-android
+/XamarinPhoneContact.Forms.kk/obj/Release/net8.0-ios
+/XamarinPhoneContact.Forms.kk/obj/Release/net8.0-iost
+/XamarinPhoneContact.Forms.kk/obj/Release/net8.0-maccatalyst
+/XamarinPhoneContact.Forms.kk/obj/Release/net8.0-windows10.0.19041.0
+/XamarinPhoneContact.Forms.kk/obj

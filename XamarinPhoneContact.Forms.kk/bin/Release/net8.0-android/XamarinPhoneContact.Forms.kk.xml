@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XamarinPhoneContact.Forms.kk</name>
+    </assembly>
+    <members>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.ListSepratorColor">
+            <summary>
+            The color of the list separator.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.CloseButtonBackgroundColor">
+            <summary>
+            The Close button background color.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.CloseButtonTextColor">
+            <summary>
+            Close button text color.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.CloseButtonImageName">
+            <summary>
+            Close Button Image icon name
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.CloseButtonTitle">
+            <summary>
+            Close Button Title
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.EnableSearchBar">
+            <summary>
+            Enable the search bar.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.Dismisbutton">
+            <summary>
+            Enable the CloseButton.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.EnableMultiSelectionTickMark">
+            <summary>
+            Enable MutliSelectionTickMark.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.ShowBithday">
+            <summary>
+            Get Birthday detail while select the contact.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.ShowEmail">
+            <summary>
+            Get Email detail while select the contact.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.ShowAddress">
+            <summary>
+            Get Address detail while select the contact.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.ShowCompany">
+            <summary>
+            Get Company detail while select the contact.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.ShowUrl">
+            <summary>
+            Get Url detail while select the contact.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.GetDate">
+            <summary>
+            Get Date like birhtday detail while select the contact.
+            </summary>
+        </member>
+        <member name="F:MauiPhoneContactLibrary.Helper.kkContactControl.Loadingtext">
+            <summary>
+            While loading the contact below text will be shown
+            </summary>
+        </member>
+        <member name="P:MauiPhoneContactLibrary.Helper.ContactItem.ContactID">
+            <summary>
+            Unique id of contact
+            </summary>
+        </member>
+        <member name="P:MauiPhoneContactLibrary.Helper.ContactItem.Birthday">
+            <summary>
+            user Birthday date
+            </summary>
+        </member>
+        <member name="P:MauiPhoneContactLibrary.Helper.ContactItem.DisplayName">
+            <summary>
+            By
+            </summary>
+        </member>
+    </members>
+</doc>
