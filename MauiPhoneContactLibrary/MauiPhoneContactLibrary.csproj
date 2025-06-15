@@ -13,7 +13,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.1.0</Version>
+		<Version>1.1.2</Version>
 		<PackageId>PhoneContact.MAUI.KK</PackageId>
 		<Title>PhoneContact</Title>
 		<Company>Valelas</Company>
@@ -21,9 +21,7 @@
 		<PackageIcon>Copilot_20250531_131700.png</PackageIcon>
 		<RepositoryUrl>https://github.com/kamalkumar1/XamarinPhoneContact</RepositoryUrl>
 		<PackageTags>MAUI;CONTACT;MOBILE CONTACT;iOS;ANDROID;CONTACT;PHONE</PackageTags>
-		<PackageReleaseNotes>Given Support .Net 8 and above
-Given MAUI Compatablity 
-Support latest android and iOS</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated Readme file</PackageReleaseNotes>
 		<Description>- Retrieve and display phone contacts
 - Search and filter contacts
 - Request runtime permissions for accessing contacts
@@ -32,6 +30,7 @@ Support latest android and iOS</PackageReleaseNotes>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<FileVersion>1.0.0.0</FileVersion>
 		<PackageLicenseFile>MIT License.txt</PackageLicenseFile>
+		<PackageProjectUrl>https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
