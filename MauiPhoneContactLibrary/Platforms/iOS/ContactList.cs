@@ -77,10 +77,10 @@ namespace MauiPhoneContactLibrary.Platforms
 
         }
 
-        public Dictionary<string,object> GetAllContact()
+        public async Task<Dictionary<string,object>> GetAllContact()
         {
             PhoneContactData contactdata = new PhoneContactData();
-            var totalContactListItem = contactdata.GetAllContactFromPhone();
+            var totalContactListItem = await contactdata.GetAllContactFromPhoneAsync();
             return totalContactListItem;
         }
 

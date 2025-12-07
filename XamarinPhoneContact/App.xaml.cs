@@ -1,4 +1,7 @@
-﻿namespace XamarinPhoneContact;
+﻿using XamarinPhoneContact.Interface;
+using XamarinPhoneContact.Model;
+
+namespace XamarinPhoneContact;
 
 public partial class App : Application
 {

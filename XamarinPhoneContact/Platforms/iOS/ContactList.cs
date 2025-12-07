@@ -9,13 +9,13 @@ namespace XamarinPhoneContact.Platforms
 {
     public class ContactList : IContact
     {
-    public event EventHandler? CustomPermissionStatus;
+        public event EventHandler? CustomPermissionStatus;
 
-       public ContactList ()
-       {
+        public ContactList()
+        {
 
-       }
-       private void MoveToSetting()
+        }
+        private void MoveToSetting()
         {
             UIApplication.SharedApplication.InvokeOnMainThread(() =>
             {
@@ -42,10 +42,10 @@ namespace XamarinPhoneContact.Platforms
                 Debug.WriteLine("Contacts Denied or Restricted");
                 return ContactEnum.Denied;
             }
-           
+
             //if user adds contact for 1st time
             ContactEnum check = ContactEnum.PermissionRequired;
-           
+
             if (authStatus == CNAuthorizationStatus.NotDetermined)
             {
                 var store = new CNContactStore();
@@ -77,7 +77,7 @@ namespace XamarinPhoneContact.Platforms
 
         }
 
-        public Dictionary<string,object> GetAllContact()
+        public Dictionary<string, object> GetAllContact()
         {
             PhoneContactData contactdata = new PhoneContactData();
             var totalContactListItem = contactdata.GetAllContactFromPhone();
@@ -97,47 +97,47 @@ namespace XamarinPhoneContact.Platforms
                 {
                     MoveToSetting();
                 }));
-                okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel,null));
-              
+                okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
+
                 //Present Alert
-               UIApplication.SharedApplication.KeyWindow.RootViewController. PresentViewController(okCancelAlertController, true, null);
+                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okCancelAlertController, true, null);
 
             }
-            else if(authStatus == CNAuthorizationStatus.NotDetermined)
+            else if (authStatus == CNAuthorizationStatus.NotDetermined)
             {
-                     var store = new CNContactStore();
-                    store.RequestAccess(CNEntityType.Contacts, (granted, error) =>
+                var store = new CNContactStore();
+                store.RequestAccess(CNEntityType.Contacts, (granted, error) =>
+                {
+                    if (!granted)
                     {
-                        if (!granted)
+                        var okCancelAlertController = UIAlertController.Create("Alert ", "Need permission to access contact", UIAlertControllerStyle.Alert);
+                        //Add Actions
+                        okCancelAlertController.AddAction(UIAlertAction.Create("Setting", UIAlertActionStyle.Default, (UIAlertAction obj) =>
                         {
-                            var okCancelAlertController = UIAlertController.Create("Alert ", "Need permission to access contact", UIAlertControllerStyle.Alert);
-                            //Add Actions
-                            okCancelAlertController.AddAction(UIAlertAction.Create("Setting", UIAlertActionStyle.Default, (UIAlertAction obj) =>
-                            {
-                                MoveToSetting();
-                            }));
-                            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
-                        }
-                        else
-                        {
-                            //check = ContactEnum.Granted;
-                               UIApplication.SharedApplication.InvokeOnMainThread(() =>
-            {
-                 CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
-                
-            });
-                        }
-                    });
-                }
-                
+                            MoveToSetting();
+                        }));
+                        okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
+                    }
+                    else
+                    {
+                        //check = ContactEnum.Granted;
+                        UIApplication.SharedApplication.InvokeOnMainThread(() =>
+         {
+             CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
+
+         });
+                    }
+                });
+            }
+
             else
             {
                 UIApplication.SharedApplication.InvokeOnMainThread(() =>
             {
-                 CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
-                
+                CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
+
             });
-               
+
 
             }
         }
