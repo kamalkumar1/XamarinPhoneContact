@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using XamarinPhoneContact.Helper;
 
 namespace XamarinPhoneContact
 {
     public interface IContact
     {
-        Dictionary<string, object> GetAllContact();
+        Task<List<ContactGroup>> GetAllContactFromPhoneAsync();
         void CheckPermission();
         event EventHandler CustomPermissionStatus;
     }

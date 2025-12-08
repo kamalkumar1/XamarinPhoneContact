@@ -14,7 +14,7 @@ public delegate void GetSelectedContactItem(ContactItem contactItem);
 public partial class MobileContact : ContentPage
 {
     IContact _contact;
-    IEnumerable<ContactGroup> totalContactItems;
+    IEnumerable<ContactGroup> totalContactItems = new List<ContactGroup>(1000);
     IEnumerable<ContactItem> totalContactItemsWithoutGrouping;
     public GetSelectedContactItem getSelectedContact;
     public Thickness ContactViewCellMargin = new Thickness(20, 20, 20, 20);
@@ -32,8 +32,7 @@ public partial class MobileContact : ContentPage
         dismisbutton.BackgroundColor = Colors.Transparent;
         dismisbutton.IsVisible = kkContactControl.Dismisbutton;
         searchText.IsVisible = kkContactControl.EnableSearchBar;
-        contactList.SeparatorColor = kkContactControl.ListSepratorColor;
-        LblLoadingText.Text= kkContactControl.Loadingtext;
+        LblLoadingText.Text = kkContactControl.Loadingtext;
 
         _contact.CustomPermissionStatus += Contact_CustomPermissionStatus;
         SetCloseButton();
@@ -89,14 +88,14 @@ public partial class MobileContact : ContentPage
             if (string.IsNullOrEmpty(searchBarText))
             {
                 contactList.ItemsSource = new List<ContactItem>();
-                contactList.IsGroupingEnabled = true;
+                contactList.IsGrouped = true;
                 contactList.ItemsSource = totalContactItems;
             }
             else
             {
-                 contactList.IsGroupingEnabled = false;
+                contactList.IsGrouped = false;
                 var filteredContacts = totalContactItemsWithoutGrouping.Where(c => c.DisplayName != null && c.DisplayName.IndexOf(searchBarText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                if(filteredContacts!=null)
+                if (filteredContacts != null)
                 {
                     contactList.ItemsSource = filteredContacts;
                 }
@@ -112,22 +111,24 @@ public partial class MobileContact : ContentPage
     async void LoadContact()
     {
         bottomLayout.IsVisible = true;
-        await Task.Run(async () =>
+
+
+
+        totalContactItems = await _contact.GetAllContactFromPhoneAsync();
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            var keyValuePairs = _contact.GetAllContact();
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                bottomLayout.IsVisible = false;
-                // Code to run on the main thread
+            bottomLayout.IsVisible = false;
+            // Code to run on the main thrteead
 
-                totalContactItems = (IEnumerable<ContactGroup>)keyValuePairs["Group"];
-                totalContactItemsWithoutGrouping = (IEnumerable<ContactItem>)keyValuePairs["List"];
-                contactList.ItemsSource = totalContactItems;
 
-                // Set margin for ViewCell
+            //totalContactItems = (IEnumerable<ContactGroup>)keyValuePairs["Group"];
+            //totalContactItemsWithoutGrouping = (IEnumerable<ContactItem>)keyValuePairs["List"];
+            contactList.ItemsSource = totalContactItems;
 
-            });
+            // Set margin for ViewCell
+
         });
+
 
     }
     public void Handle_clear(object sender, EventArgs e)

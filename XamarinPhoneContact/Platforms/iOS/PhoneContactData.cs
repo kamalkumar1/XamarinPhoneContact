@@ -8,36 +8,18 @@ using XamarinPhoneContact.Helper;
 using System.Linq;
 using System.Diagnostics;
 using XamarinPhoneContact.Platforms.iOS;
+using System.Threading.Tasks;
+using XamarinPhoneContact.Model;
+using XamarinPhoneContact.Interface;
 
-namespace XamarinPhoneContact.iOS
+namespace XamarinPhoneContact.Platforms.iOS
 {
-    public class PhoneContactData
+    public class PhoneContactData : KKPhoneContactBase, IKKPhoneContactData
     {
-        List<ContactItem>? totalContactListWithoutGrouping;
         CNContactStore? store;
         CNContactFetchRequest? request;
         CNContactHelper cNContactHelper;
-        readonly static string[] alphate = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#" };
-        List<ContactGroup> totalContactList = new List<ContactGroup>
-        {
-            new ContactGroup(alphate[0], alphate[0]){},new ContactGroup(alphate[1], alphate[1]){},
-            new ContactGroup(alphate[2], alphate[2]){},new ContactGroup(alphate[3], alphate[3]){},
-            new ContactGroup(alphate[4], alphate[4]){},new ContactGroup(alphate[5], alphate[5]){},
-            new ContactGroup(alphate[6], alphate[6]){},new ContactGroup(alphate[7], alphate[7]){},
-            new ContactGroup(alphate[8], alphate[8]){},new ContactGroup(alphate[9], alphate[9]){},
-            new ContactGroup(alphate[10], alphate[10]){},new ContactGroup(alphate[11], alphate[11]){},
-            new ContactGroup(alphate[12], alphate[12]){},new ContactGroup(alphate[13], alphate[13]){},
-            new ContactGroup(alphate[14], alphate[14]){},new ContactGroup(alphate[15], alphate[15]){},
-            new ContactGroup(alphate[16], alphate[16]){},new ContactGroup(alphate[17], alphate[17]){},
-            new ContactGroup(alphate[18], alphate[18]){},new ContactGroup(alphate[19], alphate[19]){},
-            new ContactGroup(alphate[20], alphate[20]){},new ContactGroup(alphate[21], alphate[21]){},
-            new ContactGroup(alphate[22], alphate[22]){},new ContactGroup(alphate[23], alphate[23]){},
-            new ContactGroup(alphate[24], alphate[24]){},new ContactGroup(alphate[25], alphate[25]){},
-            new ContactGroup(alphate[26], alphate[26]){}
-
-        };
-        List<CNContact> totalcncontact = new List<CNContact>(1000);
-
+        List<CNContact> mastertotalcncontact = new List<CNContact>(1000);
 
         /// <summary>
         /// Gets all contact from phone.
@@ -45,104 +27,86 @@ namespace XamarinPhoneContact.iOS
         /// <returns>The all contact from phone.</returns>
         public Dictionary<string, object> GetAllContactFromPhone()
         {
-            NSError error;
-            store = new CNContactStore();
-            request = new CNContactFetchRequest(cNContactHelper.GetCNcontactKey());
-            request.SortOrder = CNContactSortOrder.GivenName;
-            totalContactListWithoutGrouping = new List<ContactItem>();
-            store.EnumerateContacts(request, out error, HandleCNContactStoreListContactsHandler);
-            ProcessData();
-            var dict = new Dictionary<string, object>
-            {
-                { "Group", totalContactList },
-                { "List", totalContactListWithoutGrouping }
-            };
-            return dict;
+            return null;
 
         }
-        void ProcessData()
+        /// <summary>
+        /// Gets all contact from phone.
+        /// </summary>
+        /// <returns>The all contact from phone.</returns>
+        public async Task<List<ContactGroup>> GetAllContactFromPhoneAsync()
         {
-
+            List<ContactGroup>? contactItems = null;
+            await Task.Run(async () =>
+            {
+                NSError error;
+                store = new CNContactStore();
+                request = new CNContactFetchRequest(cNContactHelper.GetCNcontactKey());
+                request.SortOrder = CNContactSortOrder.GivenName;
+                store.EnumerateContacts(request, out error, HandleCNContactStoreListContactsHandler);
+                contactItems = await ProcessContactsParallel(mastertotalcncontact);
+            });
+            return contactItems;
         }
         void HandleCNContactStoreListContactsHandler(CNContact contact, ref bool stop)
         {
             if (stop == false)
             {
-                totalcncontact.Add(contact);
-                // try
-                // {
-                //     ContactItem item = new ContactItem();
-                //     item.ContactID = contact.Identifier ?? "";
-
-                //     //DisplayName
-                //     GetDisplayName(contact, item);
-                //     //Name
-                //     GetName(contact, item);
-                //     //Phone
-                //     GetPhoneNumber(contact, item);
-
-                //     if (kkContactControl.ShowBithday)
-                //     {
-                //         //Birthday
-                //         GetBirthDay(contact, item);
-                //     }
-                //     if (kkContactControl.ShowEmail)
-                //     {
-                //         //Email
-                //         GetEmails(contact, item);
-                //     }
-                //     if (kkContactControl.ShowAddress)
-                //     {
-                //         //Address
-                //         GetAddress(contact, item);
-                //     }
-                //     if (kkContactControl.ShowCompany)
-                //     {
-                //         //GetCompany
-                //         GetCompany(contact, item);
-                //     }
-                //     if (kkContactControl.ShowUrl)
-                //     {
-                //         //GetUrls
-                //         GetUrls(contact, item);
-                //     }
-                //     if (kkContactControl.GetDate)
-                //     {
-                //         //GetDate
-                //         GetDate(contact, item);
-                //     }
-                //     totalContactListWithoutGrouping.Add(item);
-
-
-                //     try
-                //     {
-                //         if (item.DisplayName != null && !string.IsNullOrEmpty(item.DisplayName))
-                //         {
-                //             var firstLetter = item.DisplayName.Substring(0, 1).ToUpper();
-                //             var indexs = Array.IndexOf(alphate, firstLetter);
-                //             totalContactList[indexs].Add(item);
-                //         }
-                //         else
-                //         {
-                //             totalContactList[26].Add(item);
-                //         }
-                //         //var vcvc = from s in totalContactList where s.Count > 0 select s.ToList();
-                //     }
-                //     catch (Exception ex)
-                //     {
-                //         Debug.WriteLine(ex);
-                //     }
-                // }
-                // catch (Exception ex)
-                // {
-                //     Debug.WriteLine(ex);
-                // }
+                mastertotalcncontact.Add(contact);
             }
             else
             {
                 Debug.WriteLine(stop);
             }
         }
+        async Task<List<ContactGroup>> ProcessContactsParallel(List<CNContact> rawContacts)
+        {
+            var processTasks = rawContacts.Select(contact => Task.Run(() => ProcessSingleContact(contact))).ToArray();
+            var allItems = await Task.WhenAll(processTasks);
+            // Parallel grouping (maintains original order)
+            var groupTasks = allItems.Select(item => Task.Run(() => GroupContact(item))).ToList();
+            await Task.WhenAll(groupTasks);
+            return totalContactList;
+
+        }
+        private async Task<ContactItem> ProcessSingleContact(CNContact contact)
+        {
+            var item = new ContactItem { ContactID = contact.Identifier ?? "" };
+            // Your existing methods - now run in parallel across contacts
+            var taskdisplayt = Task.Run(() => cNContactHelper.GetDisplayName(contact, item));
+            var tasknamet = Task.Run(() => cNContactHelper.GetName(contact, item));
+            var taskphone = Task.Run(() => cNContactHelper.GetPhoneNumber(contact, item));
+            var taskbithday = Task.Run(() =>
+            {
+                if (kkContactControl.ShowBithday) cNContactHelper.GetBirthDay(contact, item);
+            });
+            var taskemail = Task.Run(() =>
+            {
+                if (kkContactControl.ShowEmail) cNContactHelper.GetEmails(contact, item);
+            });
+            var taskaddress = Task.Run(() =>
+            {
+                if (kkContactControl.ShowAddress) cNContactHelper.GetAddress(contact, item);
+            });
+            var taskcompany = Task.Run(() =>
+            {
+                if (kkContactControl.ShowCompany) cNContactHelper.GetCompany(contact, item);
+            });
+            var taskshowurl = Task.Run(() =>
+            {
+                if (kkContactControl.ShowUrl) cNContactHelper.GetUrls(contact, item);
+            });
+            var taskshowdate = Task.Run(() =>
+            {
+                if (kkContactControl.GetDate) cNContactHelper.GetDate(contact, item);
+            });
+
+            // add optional ones similarly
+            await Task.WhenAll(taskdisplayt, tasknamet, taskphone, taskbithday, taskemail, taskaddress, taskcompany, taskshowurl, taskshowdate);
+            return item;
+        }
+
+
     }
 
 }

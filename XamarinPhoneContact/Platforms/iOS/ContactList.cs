@@ -1,20 +1,22 @@
 ﻿using UIKit;
-using XamarinPhoneContact.iOS;
 using Contacts;
 using Foundation;
 using System.Diagnostics;
 using XamarinPhoneContact.Helper;
+using XamarinPhoneContact.Interface;
 
-namespace XamarinPhoneContact.Platforms
+namespace XamarinPhoneContact.Platforms.iOS
 {
     public class ContactList : IContact
     {
+        public IKKPhoneContactData _iphoneContactData;
         public event EventHandler? CustomPermissionStatus;
 
-        public ContactList()
+        public ContactList(IKKPhoneContactData kKPhoneContactData)
         {
-
+            _iphoneContactData = kKPhoneContactData;
         }
+
         private void MoveToSetting()
         {
             UIApplication.SharedApplication.InvokeOnMainThread(() =>
@@ -70,11 +72,6 @@ namespace XamarinPhoneContact.Platforms
                 check = ContactEnum.Granted;
             }
             return check;
-        }
-
-        public static void Init()
-        {
-
         }
 
         public Dictionary<string, object> GetAllContact()
@@ -140,6 +137,16 @@ namespace XamarinPhoneContact.Platforms
 
 
             }
+        }
+
+        public async Task<List<ContactGroup>> GetAllContactFromPhoneAsync()
+        {
+            var totalContactListItem = await _iphoneContactData.GetAllContactFromPhoneAsync();
+            Console.WriteLine("Total Contact List Item Count: " + totalContactListItem[0]);
+            return totalContactListItem;
+
+
+
         }
     }
 }

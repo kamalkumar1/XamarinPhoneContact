@@ -1,6 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using XamarinPhoneContact.Interface;
+#if IOS
+using XamarinPhoneContact.Platforms.iOS;
+#elif ANDROID
+using XamarinPhoneContact.Platforms.Android;
+#endif
+
 using XamarinPhoneContact.Model;
 using XamarinPhoneContact.Model.LocalSql;
 using XamarinPhoneContact.Platforms;
@@ -19,13 +25,14 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-			builder.Services.AddSingleton<IContact, ContactList>();
-		  builder.Services.AddSingleton<IKKControlSetup, KKContactBaseControl>();
-			builder.Services.AddSingleton<ISqlLiteSetup, SQlLiteSetup>();
-			builder.Services.AddSingleton<IKKCreateSqlTable, CreateSqlTable>();
-			builder.Services.AddSingleton<IKKContactControlDbOperation, KKContactControlDbOperation>();
-			 
-			
+		builder.Services.AddTransient<IContact, ContactList>();
+		builder.Services.AddTransient<IKKControlSetup, KKContactBaseControl>();
+		builder.Services.AddTransient<ISqlLiteSetup, SQlLiteSetup>();
+		builder.Services.AddTransient<IKKCreateSqlTable, CreateSqlTable>();
+		builder.Services.AddTransient<IKKContactControlDbOperation, KKContactControlDbOperation>();
+		builder.Services.AddTransient<IKKPhoneContactData, PhoneContactData>();
+
+
 
 #if DEBUG
 		builder.Logging.AddDebug();
@@ -34,16 +41,16 @@ public static class MauiProgram
 		return builder.Build();
 	}
 	public static MauiAppBuilder SetKKContactControl(this MauiAppBuilder mauiAppBuilder)
-  {
-		  mauiAppBuilder.ConfigureLifecycleEvents(events =>
-        {
-						#if IOS
-									events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) =>
-									{
-										   MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
-											return true;
-									}));
-						#elif ANDROID
+	{
+		mauiAppBuilder.ConfigureLifecycleEvents(events =>
+			{
+#if IOS
+				events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) =>
+					{
+						MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
+						return true;
+					}));
+#elif ANDROID
 												events.AddAndroid(android => android
 										.OnCreate((activity, bundle) =>
 										{
@@ -51,9 +58,9 @@ public static class MauiProgram
 												  MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
 										})
 								);
-						#endif
-				});
-      
-		 return mauiAppBuilder;
-  }
+#endif
+			});
+
+		return mauiAppBuilder;
+	}
 }

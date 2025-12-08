@@ -2,13 +2,13 @@
 
 namespace XamarinPhoneContact.Helper
 {
-    public static  class kkContactControl
+    public static class kkContactControl
     {
-       
-         /// <summary>
+
+        /// <summary>
         /// The color of the list separator.
         /// </summary>
-        public  static  Color ListSepratorColor = Color.FromArgb("#D3D3D3");
+        public static Color ListSepratorColor = Color.FromArgb("#D3D3D3");
         /// <summary>
         /// The Close button background color.
         /// </summary>
@@ -61,12 +61,12 @@ namespace XamarinPhoneContact.Helper
         /// <summary>
         /// Get Date like birhtday detail while select the contact.
         /// </summary>
-         public static bool GetDate = false;
+        public static bool GetDate = false;
 
         /// <summary>
         /// While loading the contact below text will be shown
         /// </summary>
-         public static string Loadingtext = "Fetching your contact...";
+        public static string Loadingtext = "Fetching your contact...";
 
     }
     public sealed class ContactConfig
@@ -82,8 +82,9 @@ namespace XamarinPhoneContact.Helper
         public static ContactConfig Instance { get; } = new ContactConfig();
         public bool EnableTextChangedDelegate = true;
         public bool EnableSearchButtonPressedDelegate = true;
-       
+
         public int ContactPermission = 1107;
+
 
     }
 
