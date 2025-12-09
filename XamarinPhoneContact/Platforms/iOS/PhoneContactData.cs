@@ -9,17 +9,22 @@ using System.Linq;
 using System.Diagnostics;
 using XamarinPhoneContact.Platforms.iOS;
 using System.Threading.Tasks;
+using XamarinPhoneContact.Interface.LocalDB;
 using XamarinPhoneContact.Model;
 using XamarinPhoneContact.Interface;
 
 namespace XamarinPhoneContact.Platforms.iOS
 {
-    public class PhoneContactData : KKPhoneContactBase, IKKPhoneContactData
+    public class PhoneContactData : KKContactBaseControl, IKKPhoneContactData
     {
         CNContactStore? store;
         CNContactFetchRequest? request;
         CNContactHelper cNContactHelper;
         List<CNContact> mastertotalcncontact = new List<CNContact>(1000);
+
+        public PhoneContactData(IKKContactControlDbOperation kKContactControlDbOperation) : base(kKContactControlDbOperation)
+        {
+        }
 
         /// <summary>
         /// Gets all contact from phone.

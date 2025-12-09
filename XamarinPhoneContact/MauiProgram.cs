@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
+using XamarinPhoneContact.Interface.LocalDB;
 using XamarinPhoneContact.Interface;
 #if IOS
 using XamarinPhoneContact.Platforms.iOS;

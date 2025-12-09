@@ -64,11 +64,14 @@
                        SearchButtonPressed="Handle_SearchButtonPressed">
             </SearchBar>
             <CollectionView
-                ItemSizingStrategy="MeasureFirstItem"
                 IsGrouped="True"
                 Grid.Row="2"
                 Grid.Column="0"
                 x:Name="contactList">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5"
+                                       Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
 
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate>
@@ -81,41 +84,52 @@
                 </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid  RowSpacing="0"
-                               ColumnSpacing="0"
-                               Margin="0,0,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <StackLayout  Grid.Row="0"
-                                          Grid.Column="0">
-                                <Label
-                                    Padding="10,10,0,0"
-                                    Text="{Binding DisplayName}"
-                                    FontAttributes="Bold"
-                                    FontSize="16"/>
-                                <Label Padding="10,10,0,10"
-                                       Text="{Binding GetPhones[0].PhoneNumber}"
-                                       FontSize="14"/>
-                            </StackLayout>
-                            <Image HeightRequest="20"
-                                   WidthRequest="20"
-                                   Margin="5,5,20,0"
-                                   Grid.Row="0"
-                                   Grid.Column="1"
-                                   IsVisible="{Binding Itemselcted}"
-                                   Source="checkmark"
-                                   Aspect="AspectFit"></Image>
-                            <BoxView Grid.Row="1"
-                                     HeightRequest="1.5"
-                                     BackgroundColor="LightGray"
-                                     VerticalOptions="Center"/>
+                        <Border
+                            Margin="10,0,10,0"
+                            Padding="0"
+                            BackgroundColor="White"
+                            StrokeThickness="1"
+                            Stroke="#CCCCCC">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid
+                                RowSpacing="0"
+                                ColumnSpacing="0"
+                                Margin="0,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout HeightRequest="80"
+                                             Spacing="0"
+                                             Grid.Row="0"
+                                             Grid.Column="0">
+                                    <Label HeightRequest="40"
+                                           Padding="10,10,0,10"
+                                           Text="{Binding DisplayName}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"/>
+                                    <Label HeightRequest="40"
+                                           Padding="10,10,0,10"
+                                           Text="1234567890"
+                                           FontSize="14"/>
+                                </StackLayout>
+                                <Image HeightRequest="20"
+                                       WidthRequest="20"
+                                       Margin="5,5,20,0"
+                                       Grid.Row="0"
+                                       Grid.Column="1"
+                                       IsVisible="{Binding Itemselcted}"
+                                       Source="checkmark"
+                                       Aspect="AspectFit"></Image>
 
-                        </Grid>
+
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

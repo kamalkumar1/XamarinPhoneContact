@@ -74,13 +74,6 @@ namespace XamarinPhoneContact.Platforms.iOS
             return check;
         }
 
-        public Dictionary<string, object> GetAllContact()
-        {
-            PhoneContactData contactdata = new PhoneContactData();
-            var totalContactListItem = contactdata.GetAllContactFromPhone();
-            return totalContactListItem;
-        }
-
         public void CheckPermission()
         {
             CNAuthorizationStatus authStatus = CNContactStore.GetAuthorizationStatus(CNEntityType.Contacts);

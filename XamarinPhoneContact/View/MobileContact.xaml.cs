@@ -15,7 +15,6 @@ public partial class MobileContact : ContentPage
 {
     IContact _contact;
     IEnumerable<ContactGroup> totalContactItems = new List<ContactGroup>(1000);
-    IEnumerable<ContactItem> totalContactItemsWithoutGrouping;
     public GetSelectedContactItem getSelectedContact;
     public Thickness ContactViewCellMargin = new Thickness(20, 20, 20, 20);
 
@@ -94,88 +93,73 @@ public partial class MobileContact : ContentPage
             else
             {
                 contactList.IsGrouped = false;
-                var filteredContacts = totalContactItemsWithoutGrouping.Where(c => c.DisplayName != null && c.DisplayName.IndexOf(searchBarText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                if (filteredContacts != null)
-                {
-                    contactList.ItemsSource = filteredContacts;
-                }
+                // var filteredContacts = totalContactItemsWithoutGrouping.Where(c => c.DisplayName != null && c.DisplayName.IndexOf(searchBarText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                // if (filteredContacts != null)
+                // {
+                //     contactList.ItemsSource = filteredContacts;
+                // }
             }
-
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex);
         }
-
     }
     async void LoadContact()
     {
         bottomLayout.IsVisible = true;
-
-
-
-        totalContactItems = await _contact.GetAllContactFromPhoneAsync();
-        MainThread.BeginInvokeOnMainThread(() =>
+        await Task.Run(async () =>
         {
-            bottomLayout.IsVisible = false;
-            // Code to run on the main thrteead
-
-
-            //totalContactItems = (IEnumerable<ContactGroup>)keyValuePairs["Group"];
-            //totalContactItemsWithoutGrouping = (IEnumerable<ContactItem>)keyValuePairs["List"];
-            contactList.ItemsSource = totalContactItems;
-
-            // Set margin for ViewCell
-
+            totalContactItems = await _contact.GetAllContactFromPhoneAsync();
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                bottomLayout.IsVisible = false;
+                // Code to run on the main thrteead
+                contactList.ItemsSource = totalContactItems;
+            });
         });
-
 
     }
     public void Handle_clear(object sender, EventArgs e)
     {
-        var selectedlist = (from s in totalContactItemsWithoutGrouping
-                            where s.Itemselcted == true
-                            select s).ToList();
-        foreach (var item in selectedlist)
-        {
-            var index = totalContactItemsWithoutGrouping.ToList().IndexOf(item);
-            item.Itemselcted = false;
-            totalContactItemsWithoutGrouping.ToList()[index] = item;
-
-        }
-        if (string.IsNullOrEmpty(searchText.Text))
-        {
-            contactList.ItemsSource = totalContactItems;
-        }
-        else
-        {
-            contactList.ItemsSource = totalContactItemsWithoutGrouping;
-        }
+        // var selectedlist = (from s in totalContactItemsWithoutGrouping
+        //                     where s.Itemselcted == true
+        //                     select s).ToList();
+        // foreach (var item in selectedlist)
+        // {
+        //     var index = totalContactItemsWithoutGrouping.ToList().IndexOf(item);
+        //     item.Itemselcted = false;
+        //     totalContactItemsWithoutGrouping.ToList()[index] = item;
+        // }
+        // if (string.IsNullOrEmpty(searchText.Text))
+        // {
+        //     contactList.ItemsSource = totalContactItems;
+        // }
+        // else
+        // {
+        //     contactList.ItemsSource = totalContactItemsWithoutGrouping;
+        // }
 
     }
     public void HandleListSelected(object sender, SelectedItemChangedEventArgs eventArgs)
     {
-        //var objes = (ContactItem)eventArgs.SelectedItem;
-        //objes.Itemselcted = objes.Itemselcted == true ? false:true;
-        //GetSelectedContactItem?.Invoke(sender, EventArgs.Empty);
         contactList.SelectedItem = null;
     }
     public void HandleItemTapped(object sender, ItemTappedEventArgs e)
     {
-
-        if (!kkContactControl.EnableMultiSelectionTickMark)
-        {
-            var item = e.Item as ContactItem;
-            getSelectedContact?.Invoke(item);
-        }
-        else
-        {
-            var objes = e.Item as ContactItem;
-            objes.Itemselcted = objes.Itemselcted == true ? false : true;
-            getSelectedContact?.Invoke(objes);
-            var inex = totalContactItemsWithoutGrouping.ToList().IndexOf(objes);
-            totalContactItemsWithoutGrouping.ToList()[inex] = objes;
-        }
+        // if (!kkContactControl.EnableMultiSelectionTickMark)
+        // {
+        //     var item = e.Item as ContactItem;
+        //     getSelectedContact?.Invoke(item);
+        // }
+        // else
+        // {
+        //     var objes = e.Item as ContactItem;
+        //     objes.Itemselcted = objes.Itemselcted == true ? false : true;
+        //     getSelectedContact?.Invoke(objes);
+        //     var inex = totalContactItemsWithoutGrouping.ToList().IndexOf(objes);
+        //     totalContactItemsWithoutGrouping.ToList()[inex] = objes;
+        // }
     }
     public void Dismiss_Selected(object sender, EventArgs e)
     {
