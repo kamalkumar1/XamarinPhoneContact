@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using XamarinPhoneContact.Helper;
+using XamarinPhoneContact.Model;
 namespace XamarinPhoneContact.View;
 
 public class Namesd
@@ -8,7 +9,7 @@ public class Namesd
     public string name;
     public string display;
 }
-public delegate void GetSelectedContactItem(ContactItem contactItem);
+public delegate void GetSelectedContactItem(KKSqlTableForContact contactItem);
 [XamlCompilation(XamlCompilationOptions.Compile)]
 
 public partial class MobileContact : ContentPage
@@ -86,7 +87,7 @@ public partial class MobileContact : ContentPage
         {
             if (string.IsNullOrEmpty(searchBarText))
             {
-                contactList.ItemsSource = new List<ContactItem>();
+                contactList.ItemsSource = new List<KKSqlTableForContact>();
                 contactList.IsGrouped = true;
                 contactList.ItemsSource = totalContactItems;
             }
@@ -111,6 +112,8 @@ public partial class MobileContact : ContentPage
         await Task.Run(async () =>
         {
             totalContactItems = await _contact.GetAllContactFromPhoneAsync();
+            //totalContactItems = await _contact.GetAllContactFromPhoneAndStoreToLocalDbAsync();
+
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 bottomLayout.IsVisible = false;
@@ -149,12 +152,12 @@ public partial class MobileContact : ContentPage
     {
         // if (!kkContactControl.EnableMultiSelectionTickMark)
         // {
-        //     var item = e.Item as ContactItem;
+        //     var item = e.Item as KKSqlTableForContact;
         //     getSelectedContact?.Invoke(item);
         // }
         // else
         // {
-        //     var objes = e.Item as ContactItem;
+        //     var objes = e.Item as KKSqlTableForContact;
         //     objes.Itemselcted = objes.Itemselcted == true ? false : true;
         //     getSelectedContact?.Invoke(objes);
         //     var inex = totalContactItemsWithoutGrouping.ToList().IndexOf(objes);

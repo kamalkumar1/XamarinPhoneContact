@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using SQLite;
 
 namespace XamarinPhoneContact.Helper
 {
@@ -44,46 +45,27 @@ namespace XamarinPhoneContact.Helper
         public string Date { get; set; }
         public string type { get; set; }
     }
-    public class ContactItem : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        /// <summary>
-        /// Unique id of contact
-        /// </summary>
-        public string? ContactID { get; set; }
-        /// <summary>
-        /// user Birthday date
-        /// </summary>
-        public string? Birthday { get; set; }
-        /// <summary>
-        /// By
-        /// </summary>
-        public string? DisplayName { get; set; }
-        public Name? GetNames { get; set; }
-        public List<Emailids>? GetEmails { get; set; }
-        public List<Url>? GetUrls { get; set; }
-        public List<Phone>? GetPhones { get; set; }
-        public Company? GetCompany { get; set; }
-        public List<Address>? GetAddress { get; set; }
-        public List<DateList>? GetDateList { get; set; }
+    // public class ContactItem
+    // {
+    //     // Unique ID for each contact
+    //     [PrimaryKey, AutoIncrement]
+    //     public int Id { get; set; }
+    //     /// <summary>
+    //     /// Unique id of contact
+    //     /// </summary>
+    //     public string? ContactID { get; set; }
+    //     /// <summary>
+    //     /// user Birthday date
+    //     /// </summary>
+    //     public string? Birthday { get; set; }
+    //     public string? DisplayName { get; set; }
+    //     public Name? GetNames { get; set; }
+    //     public List<Emailids>? GetEmails { get; set; }
+    //     public List<Url>? GetUrls { get; set; }
+    //     public List<Phone>? GetPhones { get; set; }
+    //     public Company? GetCompany { get; set; }
+    //     public List<Address>? GetAddress { get; set; }
+    //     public List<DateList>? GetDateList { get; set; }
 
-        private bool _itemselcted;
-        public bool Itemselcted
-        {
-            get { return _itemselcted; }
-            set
-            {
-                if (_itemselcted == value)
-                    return;
-                _itemselcted = value;
-                OnPropertyChanged();
-            }
-        }
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-    }
+    // }
 }

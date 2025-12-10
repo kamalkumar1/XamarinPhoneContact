@@ -39,7 +39,7 @@ namespace XamarinPhoneContact
 
             }
         }
-        private void Mobile_GetSelectedContactItem(ContactItem contactItem)
+        private void Mobile_GetSelectedContactItem(KKSqlTableForContact contactItem)
         {
 
 

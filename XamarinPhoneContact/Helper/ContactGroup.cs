@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using XamarinPhoneContact.Model;
 
 namespace XamarinPhoneContact.Helper
 {
-    public class ContactGroup:List<ContactItem>
+    public class ContactGroup : List<KKSqlTableForContact>
     {
         public string Title { get; set; }
         public string ShortTitle { get; set; }
