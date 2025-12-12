@@ -7,9 +7,8 @@
     Shell.FlyoutBehavior="Disabled"
     Title="XamarinPhoneContact">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent Title="Home"
+            Shell.NavBarIsVisible="false"
+                  x:Name="Mainpage"/>
 
 </Shell>

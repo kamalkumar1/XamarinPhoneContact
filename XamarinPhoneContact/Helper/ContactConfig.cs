@@ -85,6 +85,8 @@ namespace XamarinPhoneContact.Helper
 
         public int ContactPermission = 1107;
 
+        public int PageSize = 15;
+
 
     }
 

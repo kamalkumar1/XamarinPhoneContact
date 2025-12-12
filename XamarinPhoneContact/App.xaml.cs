@@ -3,12 +3,15 @@ using XamarinPhoneContact.Model;
 
 namespace XamarinPhoneContact;
 
+
 public partial class App : Application
 {
+	//readonly AppShell appShell;
 	public App()
 	{
 		InitializeComponent();
 
-		MainPage =  new NavigationPage(new MainPage());
+		//appShell = mainPage;
+		MainPage = new AppShell();
 	}
 }

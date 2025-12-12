@@ -9,6 +9,10 @@ using XamarinPhoneContact.Platforms.Android;
 #endif
 using XamarinPhoneContact.Model;
 using XamarinPhoneContact.Model.LocalSql;
+using XamarinPhoneContact.Service.Interface;
+using XamarinPhoneContact.Service;
+using XamarinPhoneContact.View;
+using XamarinPhoneContact.ViewModel;
 
 namespace XamarinPhoneContact;
 
@@ -19,17 +23,23 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.SetKKContactControl()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-		builder.Services.AddTransient<IContact, ContactList>();
+		//builder.Services.AddTransient<IContact, ContactList>();
+		builder.Services.AddSingleton<AppShell>();
 		builder.Services.AddTransient<IKKControlSetup, KKContactBaseControl>();
 		builder.Services.AddTransient<ISqlLiteSetup, SQlLiteSetup>();
 		builder.Services.AddTransient<IKKCurdOperation, KKCurdOperation>();
 		builder.Services.AddTransient<IKKContactControlDbOperation, KKContactControlDbOperation>();
 		builder.Services.AddTransient<IKKPhoneContactData, ReadPhoneContactData>();
+		builder.Services.AddTransient<MobileContact>();
+		builder.Services.AddTransient<KKContactViewModel>();
+		builder.Services.AddTransient<IKKContactPermissionRequest, ContactPermissionRequest>();
+		builder.Services.AddTransient<IKKGetContact, KKGetContact>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
@@ -44,7 +54,13 @@ public static class MauiProgram
 #if IOS
 				events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) =>
 					{
-						MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
+						Task.Run(() =>
+						{
+							MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
+							MauiServiceProvider.GetService<IKKPhoneContactData>().GetAllContactFromPhoneAndStoreToLocalDbAsync();
+
+						});
+
 						return true;
 					}));
 #elif ANDROID

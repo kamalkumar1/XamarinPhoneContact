@@ -2,9 +2,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SQLite;
+using XamarinPhoneContact.Model;
 
 namespace XamarinPhoneContact.Helper
 {
+
     public struct Name
     {
         public string? Prefix { get; set; }
@@ -45,27 +47,25 @@ namespace XamarinPhoneContact.Helper
         public string Date { get; set; }
         public string type { get; set; }
     }
-    // public class ContactItem
-    // {
-    //     // Unique ID for each contact
-    //     [PrimaryKey, AutoIncrement]
-    //     public int Id { get; set; }
-    //     /// <summary>
-    //     /// Unique id of contact
-    //     /// </summary>
-    //     public string? ContactID { get; set; }
-    //     /// <summary>
-    //     /// user Birthday date
-    //     /// </summary>
-    //     public string? Birthday { get; set; }
-    //     public string? DisplayName { get; set; }
-    //     public Name? GetNames { get; set; }
-    //     public List<Emailids>? GetEmails { get; set; }
-    //     public List<Url>? GetUrls { get; set; }
-    //     public List<Phone>? GetPhones { get; set; }
-    //     public Company? GetCompany { get; set; }
-    //     public List<Address>? GetAddress { get; set; }
-    //     public List<DateList>? GetDateList { get; set; }
+    public struct ContactItem
+    {
+        public int Id { get; set; }
+        /// <summary>
+        /// Unique id of contact
+        /// </summary>
+        public string? ContactID { get; set; }
+        /// <summary>
+        /// user Birthday date
+        /// </summary>
+        public string? Birthday { get; set; }
+        public string? DisplayName { get; set; }
+        public Name? GetNames { get; set; }
+        public List<Emailids>? GetEmails { get; set; }
+        public List<Url>? GetUrls { get; set; }
+        public List<Phone>? GetPhones { get; set; }
+        public Company? GetCompany { get; set; }
+        public List<Address>? GetAddress { get; set; }
+        public List<DateList>? GetDateList { get; set; }
 
-    // }
+    }
 }

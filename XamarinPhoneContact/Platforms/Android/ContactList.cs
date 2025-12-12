@@ -14,13 +14,14 @@ using AndroidX.Core.Content;
 using AndroidX.AppCompat.App;
 using XamarinPhoneContact.Helper;
 using XamarinPhoneContact.Interface;
+using XamarinPhoneContact.Interface.LocalDB;
 
 namespace XamarinPhoneContact.Platforms.Android
 {
     public class ContactList : AppCompatActivity, IContact, ICallBackInterface
     {
 
-        public IKKPhoneContactData _iphoneContactData;
+        public IKKCurdOperation _kKCurdOperation;
         private static Activity? m_activity;
         public event EventHandler? CustomPermissionStatus;
         readonly string[] permissionscontact = { Manifest.Permission.ReadContacts };
@@ -31,15 +32,11 @@ namespace XamarinPhoneContact.Platforms.Android
         {
             m_activity = activity;
         }
-        public ContactList(IKKPhoneContactData kKPhoneContactData)
+        public ContactList(IKKCurdOperation kKCurdOperation)
         {
-            _iphoneContactData = kKPhoneContactData;
+            _kKCurdOperation = kKCurdOperation;
         }
-        public async Task<List<ContactGroup>> GetAllContactFromPhoneAsync()
-        {
-            var getContact = await _iphoneContactData.GetAllContactFromPhoneAsync();
-            return getContact;
-        }
+
         public void CheckPermission()
         {
             var check = GetcontactPermission();
@@ -104,6 +101,9 @@ namespace XamarinPhoneContact.Platforms.Android
             //throw new NotImplementedException();
         }
 
-
+        public Task<List<ContactGroup>> GetAllContactFromPhoneAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

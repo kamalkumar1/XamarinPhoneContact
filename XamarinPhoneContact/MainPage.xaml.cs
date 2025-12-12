@@ -23,13 +23,14 @@ namespace XamarinPhoneContact
         {
             try
             {
-                kkContactControl.EnableMultiSelectionTickMark = true;
-                kkContactControl.CloseButtonImageName = "deletebutton.png";
-                IKKPhoneContactData phoneContactData = MauiServiceProvider.GetService<IKKPhoneContactData>();
-                IContact contact = new ContactList(phoneContactData); // Assuming Contact implements IContact
-                MobileContact mobile = new MobileContact(contact);
-                mobile.getSelectedContact += Mobile_GetSelectedContactItem;
-                await Navigation.PushModalAsync(mobile);
+                // kkContactControl.EnableMultiSelectionTickMark = true;
+                // kkContactControl.CloseButtonImageName = "deletebutton.png";
+                // IKKPhoneContactData phoneContactData = MauiServiceProvider.GetService<IKKPhoneContactData>();
+                // IContact contact = new ContactList(phoneContactData); // Assuming Contact implements IContact
+                // MobileContact mobile = new MobileContact(KK);
+                // mobile.getSelectedContact += Mobile_GetSelectedContactItem;
+                // await Navigation.PushModalAsync(mobile);
+                await Shell.Current.GoToAsync(nameof(MobileContact));
 
 
             }

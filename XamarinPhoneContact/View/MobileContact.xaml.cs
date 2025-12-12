@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using XamarinPhoneContact.Helper;
 using XamarinPhoneContact.Model;
+using XamarinPhoneContact.ViewModel;
+
 namespace XamarinPhoneContact.View;
 
 public class Namesd
@@ -18,14 +20,17 @@ public partial class MobileContact : ContentPage
     IEnumerable<ContactGroup> totalContactItems = new List<ContactGroup>(1000);
     public GetSelectedContactItem getSelectedContact;
     public Thickness ContactViewCellMargin = new Thickness(20, 20, 20, 20);
-
-    public MobileContact(IContact contact)
+    KKContactViewModel kKContactViewModel;
+    public MobileContact(KKContactViewModel vm)
     {
         InitializeComponent();
-        _contact = contact;
+        kKContactViewModel = vm;
+        // var kkcontactviewmodel = new KKContactViewModel();
+        BindingContext = vm;
+        //_contact = contact;
         if (DeviceInfo.Platform == DevicePlatform.Android)
         {
-            searchText.BackgroundColor = Colors.White;
+            //  searchText.BackgroundColor = Colors.White;
         }
 
         searchText.IsSpellCheckEnabled = false;
@@ -34,12 +39,13 @@ public partial class MobileContact : ContentPage
         searchText.IsVisible = kkContactControl.EnableSearchBar;
         LblLoadingText.Text = kkContactControl.Loadingtext;
 
-        _contact.CustomPermissionStatus += Contact_CustomPermissionStatus;
+        // _contact.CustomPermissionStatus += Contact_CustomPermissionStatus;
         SetCloseButton();
 
     }
     public void SetCloseButton()
     {
+
         if (!string.IsNullOrEmpty(kkContactControl.CloseButtonImageName))
         {
             dismisbutton.IsVisible = true;
@@ -58,12 +64,20 @@ public partial class MobileContact : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        CheckContactAccessPermission();
+        kKContactViewModel.CalulateAndGetTotalPageCount();
+        kKContactViewModel.CheckPermission();
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        kKContactViewModel.RestViewModel();
+        BindingContext = null;
     }
 
     private void CheckContactAccessPermission()
     {
-        _contact.CheckPermission();
+        //_contact.CheckPermission();
     }
     void Handle_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -116,9 +130,9 @@ public partial class MobileContact : ContentPage
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                bottomLayout.IsVisible = false;
+                // bottomLayout.IsVisible = false;
                 // Code to run on the main thrteead
-                contactList.ItemsSource = totalContactItems;
+                // contactList.ItemsSource = totalContactItems;
             });
         });
 
@@ -146,7 +160,7 @@ public partial class MobileContact : ContentPage
     }
     public void HandleListSelected(object sender, SelectedItemChangedEventArgs eventArgs)
     {
-        contactList.SelectedItem = null;
+        //  contactList.SelectedItem = null;
     }
     public void HandleItemTapped(object sender, ItemTappedEventArgs e)
     {

@@ -55,7 +55,7 @@ namespace MauiPhoneContactLibrary.iOS
         public Dictionary<string, object> GetAllContactFromPhone()
         {
             NSError error;
-           CNContactStore store = new CNContactStore();
+            CNContactStore store = new CNContactStore();
             CNContactFetchRequest request = new CNContactFetchRequest(AllKeys);
             request.SortOrder = CNContactSortOrder.GivenName;
             totalContactListWithoutGrouping = new List<ContactItem>();
@@ -72,31 +72,32 @@ namespace MauiPhoneContactLibrary.iOS
         {
             var rawContacts = new List<CNContact>(1000); // Pre-allocate capacity
             NSError error;
-                
+
             using var store = new CNContactStore();
             var request = new CNContactFetchRequest(AllKeys); // Keep AllKeys for full data
             request.SortOrder = CNContactSortOrder.GivenName;
-             
+
             // Phase 1: Collect raw CNContact objects only (milliseconds)
-            store.EnumerateContacts(request, out error, (contact, ref stop) => {
+            store.EnumerateContacts(request, out error, (contact, ref stop) =>
+            {
                 rawContacts.Add(contact);  // ~1μs per contact
             });
-                
-                if (error != null) throw new Exception($"Contact fetch failed: {error.LocalizedDescription}");
-                
-                // Phase 2: Parallel processing (see below)
-             return await ProcessContactsParallel(rawContacts);
+
+            if (error != null) throw new Exception($"Contact fetch failed: {error.LocalizedDescription}");
+
+            // Phase 2: Parallel processing (see below)
+            return await ProcessContactsParallel(rawContacts);
         }
         private async Task<Dictionary<string, object>> ProcessContactsParallel(List<CNContact> rawContacts)
-       {
+        {
             // Parallel extraction of ALL properties
             var processTasks = rawContacts.Select(contact => Task.Run(() => ProcessSingleContact(contact))).ToArray();
             var allItems = await Task.WhenAll(processTasks);
-            
+
             // Parallel grouping (maintains original order)
             var groupTasks = allItems.Select(item => Task.Run(() => GroupContact(item))).ToArray();
             var groupedItems = await Task.WhenAll(groupTasks);
-            
+
             return new Dictionary<string, object>
             {
                 { "Group", totalContactList },  // Your alphabetized groups
@@ -112,39 +113,31 @@ namespace MauiPhoneContactLibrary.iOS
             GetName(contact, item);
             GetPhoneNumber(contact, item);
             // ... all other conditional extractions
-              //Birthday
-            if (kkContactControl.ShowBithday)GetBirthDay(contact, item);
-             //Email
-            if (kkContactControl.ShowEmail)GetEmails(contact, item);
+            //Birthday
+            if (kkContactControl.ShowBithday) GetBirthDay(contact, item);
+            //Email
+            if (kkContactControl.ShowEmail) GetEmails(contact, item);
             //Address
-            if (kkContactControl.ShowAddress)GetAddress(contact, item);
+            if (kkContactControl.ShowAddress) GetAddress(contact, item);
             //GetCompany
-             if (kkContactControl.ShowCompany) GetCompany(contact, item);
-             //GetUrls
-             if (kkContactControl.ShowUrl) GetUrls(contact, item);
-              //GetDate
+            if (kkContactControl.ShowCompany) GetCompany(contact, item);
+            //GetUrls
+            if (kkContactControl.ShowUrl) GetUrls(contact, item);
+            //GetDate
             if (kkContactControl.GetDate) GetDate(contact, item);
-            
+
             return item;
         }
 
-private ContactItem GroupContact(ContactItem item)
-{
-    if (!string.IsNullOrEmpty(item.DisplayName))
-    {
-        var firstLetter = item.DisplayName.Substring(0, 1).ToUpper();
-        var index = Array.IndexOf(alphate, firstLetter);
-        lock (totalContactList) // Thread-safe grouping
+        private ContactItem GroupContact(ContactItem item)
         {
-            totalContactList[Math.Min(index, 26)].Add(item);
+            var index = GroupContactHelper.GetGroupIndex(item.DisplayName);
+            lock (totalContactList) // Thread-safe grouping
+            {
+                totalContactList[index].Add(item);
+            }
+            return item;
         }
-    }
-    else
-    {
-        lock (totalContactList) totalContactList[26].Add(item);
-    }
-    return item;
-}
 
 
 
