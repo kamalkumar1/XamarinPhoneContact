@@ -5,12 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:XamarinPhoneContact.ViewModel"
     xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+    xmlns:local="clr-namespace:XamarinPhoneContact.View"
     x:DataType="vm:KKContactViewModel"
     x:Class="XamarinPhoneContact.View.MobileContact">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -20,52 +20,26 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0"
                   Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Button IsVisible="False"
-                        x:Name="clearButton"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        FontSize="15"
-                        FontAttributes="Bold"
-                        Margin="0"
-                        Padding="0,0,0,0"
-                        Text="Clear All">
-                </Button>
-                <Image x:Name="dismisbutton"
-                       Aspect="AspectFit"
-                       Grid.Row="1"
-                       Grid.Column="1"
-                       Margin="0,10,10,15"
-                       HeightRequest="25"
-                       WidthRequest="25">
-
-                </Image>
-                <Button x:Name="dismisbuttonText"
-                        Margin="0,5,10,5"
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        FontSize="15"
-                        FontAttributes="Bold"></Button>
+                <SearchBar x:Name="searchText"
+                           Text="{Binding SearchText}"
+                           BackgroundColor="White"
+                           Placeholder="Search contacts..."
+                           FontAttributes="Bold"
+                           PlaceholderColor="Gray"
+                           SearchCommand="{Binding SearchCommand}">
+                </SearchBar>
             </Grid>
-            <SearchBar x:Name="searchText"
-                       BackgroundColor="White"
-                       Grid.Row="1"
-                       Grid.Column="0">
-            </SearchBar>
             <CollectionView
                 IsGrouped="True"
-                Grid.Row="2"
+                SelectionMode="Single"
+                SelectionChanged="contactList_SelectionChanged"
+                SelectedItem="{Binding SelectedContactItem, Mode=TwoWay}"
+                SelectionChangedCommand="{Binding ContactSelectedCommand}"
+                SelectionChangedCommandParameter="{Binding SelectedContactItem}"
+                Grid.Row="1"
                 VerticalScrollBarVisibility="Never"
                 Grid.Column="0"
-                RemainingItemsThreshold="5"
+                RemainingItemsThreshold="1"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
                 ItemsSource="{Binding ContactGroups}"
                 x:Name="contactList">
@@ -73,7 +47,6 @@
                     <LinearItemsLayout ItemSpacing="5"
                                        Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
-
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate x:DataType="model:ContactGroup">
                         <Grid Padding="8"
@@ -86,69 +59,92 @@
                 </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ContactItem">
-                        <Border
-                            Margin="10,0,10,0"
-                            Padding="0"
-                            BackgroundColor="White"
-                            StrokeThickness="1"
-                            Stroke="#CCCCCC">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10"/>
-                            </Border.StrokeShape>
-                            <Grid
-                                RowSpacing="0"
-                                ColumnSpacing="0"
-                                Margin="0,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackLayout HeightRequest="80"
-                                             Spacing="0"
-                                             Grid.Row="0"
-                                             Grid.Column="0">
-                                    <Label HeightRequest="40"
-                                           Padding="10,10,0,10"
-                                           TextColor="Black"
-                                           Text="{Binding DisplayName}"
-                                           FontAttributes="Bold"
-                                           FontSize="16"/>
-                                    <Label HeightRequest="40"
-                                           Padding="10,10,0,10"
-                                           Text="{Binding  GetPhones[0].PhoneNumber}"
-                                           FontSize="14"/>
-                                </StackLayout>
-                                <!-- <Image HeightRequest="20"
-                                       WidthRequest="20"
-                                       Margin="5,5,20,0"
-                                       Grid.Row="0"
-                                       Grid.Column="1"
-                                       IsVisible="{Binding Itemselcted}"
-                                       Source="checkmark"
-                                       Aspect="AspectFit"></Image> -->
-
-
-                            </Grid>
-                        </Border>
+                        <Grid
+                            RowSpacing="0"
+                            ColumnSpacing="0"
+                            Margin="0,0,0,0">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal"/>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor"
+                                                    Value="Transparent"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout HeightRequest="80"
+                                         Spacing="0"
+                                         Grid.Row="0"
+                                         Grid.Column="0">
+                                <Label HeightRequest="40"
+                                       Padding="10,20,0,0"
+                                       FontAttributes="Bold"
+                                       FontSize="16">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding DisplayName}"
+                                                  FontAttributes="Bold"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label HeightRequest="40"
+                                       Padding="10,10,0,10"
+                                       FontSize="14">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span TextColor="Black"
+                                                  Text="{Binding  GetPhones[0].PhoneNumber}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+                            <Image x:Name="TickImage"
+                                   HeightRequest="20"
+                                   WidthRequest="20"
+                                   Margin="5,5,20,0"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   Opacity="0"
+                                   Source="checkmark"
+                                   Aspect="AspectFit">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image"
+                                                 Binding="{Binding Itemselcted}"
+                                                 Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <local:ScaleAnimationTriggerAction/>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <local:ScaleOutAnimationTriggerAction/>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <StackLayout Grid.Row="3"
-                         Grid.Column="0"
-                         x:Name="bottomLayout"
-                         IsVisible="{Binding Itemselcted}"
-                         Padding="0">
-                <Label x:Name="LblLoadingText"
-                       VerticalTextAlignment="Center"
-                       HorizontalTextAlignment="Center"
-                       Padding="0,12,0,12"
-                       FontAttributes="Bold"
-                       FontSize="Medium"></Label>
+            <StackLayout
+                Grid.Row="2"
+                InputTransparent="{Binding IsLoadingMore}"
+                Grid.Column="0"
+                Padding="0">
+                <Grid
+                    IsVisible="{Binding IsLoadingMore}">
+                    <ActivityIndicator
+                        IsRunning="{Binding IsLoadingMore}"
+                        IsVisible="{Binding IsLoadingMore}"/>
+                </Grid>
             </StackLayout>
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

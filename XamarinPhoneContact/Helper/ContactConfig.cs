@@ -5,39 +5,8 @@ namespace XamarinPhoneContact.Helper
     public static class kkContactControl
     {
 
-        /// <summary>
-        /// The color of the list separator.
-        /// </summary>
-        public static Color ListSepratorColor = Color.FromArgb("#D3D3D3");
-        /// <summary>
-        /// The Close button background color.
-        /// </summary>
-        public static Color CloseButtonBackgroundColor = Color.FromArgb("#D3D3D3");
-        /// <summary>
-        /// Close button text color.
-        /// </summary>
-        public static Color CloseButtonTextColor = Color.FromArgb("#FFFFFF");
-        /// <summary>
-        /// Close Button Image icon name
-        /// </summary>
-        public static string? CloseButtonImageName;
-        /// <summary>
-        /// Close Button Title
-        /// </summary>
-        public static string CloseButtonTitle = "Close";
-        /// <summary>
-        /// Enable the search bar.
-        /// </summary>
+
         public static bool EnableSearchBar = true;
-        /// <summary>
-        /// Enable the CloseButton.
-        /// </summary>
-        public static bool Dismisbutton = true;
-        /// <summary>
-        /// Enable MutliSelectionTickMark.
-        /// </summary>
-        public static bool EnableMultiSelectionTickMark;
-        // private void GetButonImageName
         /// <summary>
         /// Get Birthday detail while select the contact.
         /// </summary>
@@ -85,7 +54,7 @@ namespace XamarinPhoneContact.Helper
 
         public int ContactPermission = 1107;
 
-        public int PageSize = 15;
+        public int PageSize = 10;
 
 
     }

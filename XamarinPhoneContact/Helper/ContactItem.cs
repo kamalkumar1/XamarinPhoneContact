@@ -47,7 +47,7 @@ namespace XamarinPhoneContact.Helper
         public string Date { get; set; }
         public string type { get; set; }
     }
-    public struct ContactItem
+    public class ContactItem : INotifyPropertyChanged
     {
         public int Id { get; set; }
         /// <summary>
@@ -66,6 +66,23 @@ namespace XamarinPhoneContact.Helper
         public Company? GetCompany { get; set; }
         public List<Address>? GetAddress { get; set; }
         public List<DateList>? GetDateList { get; set; }
+        private bool _itemselcted;
+        public bool Itemselcted
+        {
+            get { return _itemselcted; }
+            set
+            {
+                if (_itemselcted == value)
+                    return;
+                _itemselcted = value;
+                OnPropertyChanged();
+            }
+        }
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
     }
 }

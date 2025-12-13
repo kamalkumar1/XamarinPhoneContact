@@ -34,10 +34,10 @@ public partial class MobileContact : ContentPage
         }
 
         searchText.IsSpellCheckEnabled = false;
-        dismisbutton.BackgroundColor = Colors.Transparent;
-        dismisbutton.IsVisible = kkContactControl.Dismisbutton;
+        // dismisbutton.BackgroundColor = Colors.Transparent;
+        // dismisbutton.IsVisible = kkContactControl.Dismisbutton;
         searchText.IsVisible = kkContactControl.EnableSearchBar;
-        LblLoadingText.Text = kkContactControl.Loadingtext;
+        // LblLoadingText.Text = kkContactControl.Loadingtext;
 
         // _contact.CustomPermissionStatus += Contact_CustomPermissionStatus;
         SetCloseButton();
@@ -46,19 +46,19 @@ public partial class MobileContact : ContentPage
     public void SetCloseButton()
     {
 
-        if (!string.IsNullOrEmpty(kkContactControl.CloseButtonImageName))
-        {
-            dismisbutton.IsVisible = true;
-            dismisbuttonText.IsVisible = false;
-            dismisbutton.Source = kkContactControl.CloseButtonImageName;
-        }
-        else if (!string.IsNullOrEmpty(kkContactControl.CloseButtonTitle))
-        {
-            dismisbutton.IsVisible = false;
-            dismisbuttonText.IsVisible = true;
-            dismisbuttonText.Text = kkContactControl.CloseButtonTitle;
+        // if (!string.IsNullOrEmpty(kkContactControl.CloseButtonImageName))
+        // {
+        //     dismisbutton.IsVisible = true;
+        //     dismisbuttonText.IsVisible = false;
+        //     dismisbutton.Source = kkContactControl.CloseButtonImageName;
+        // }
+        // else if (!string.IsNullOrEmpty(kkContactControl.CloseButtonTitle))
+        // {
+        //     dismisbutton.IsVisible = false;
+        //     dismisbuttonText.IsVisible = true;
+        //     dismisbuttonText.Text = kkContactControl.CloseButtonTitle;
 
-        }
+        // }
 
     }
     protected override void OnAppearing()
@@ -92,7 +92,7 @@ public partial class MobileContact : ContentPage
         var permission = (ContactEnum)sender;
         if (permission == ContactEnum.Granted)
         {
-            LoadContact();
+            //LoadContact();
         }
     }
     void SearchList(string searchBarText)
@@ -120,44 +120,6 @@ public partial class MobileContact : ContentPage
             Debug.WriteLine(ex);
         }
     }
-    async void LoadContact()
-    {
-        bottomLayout.IsVisible = true;
-        await Task.Run(async () =>
-        {
-            totalContactItems = await _contact.GetAllContactFromPhoneAsync();
-            //totalContactItems = await _contact.GetAllContactFromPhoneAndStoreToLocalDbAsync();
-
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                // bottomLayout.IsVisible = false;
-                // Code to run on the main thrteead
-                // contactList.ItemsSource = totalContactItems;
-            });
-        });
-
-    }
-    public void Handle_clear(object sender, EventArgs e)
-    {
-        // var selectedlist = (from s in totalContactItemsWithoutGrouping
-        //                     where s.Itemselcted == true
-        //                     select s).ToList();
-        // foreach (var item in selectedlist)
-        // {
-        //     var index = totalContactItemsWithoutGrouping.ToList().IndexOf(item);
-        //     item.Itemselcted = false;
-        //     totalContactItemsWithoutGrouping.ToList()[index] = item;
-        // }
-        // if (string.IsNullOrEmpty(searchText.Text))
-        // {
-        //     contactList.ItemsSource = totalContactItems;
-        // }
-        // else
-        // {
-        //     contactList.ItemsSource = totalContactItemsWithoutGrouping;
-        // }
-
-    }
     public void HandleListSelected(object sender, SelectedItemChangedEventArgs eventArgs)
     {
         //  contactList.SelectedItem = null;
@@ -181,6 +143,22 @@ public partial class MobileContact : ContentPage
     public void Dismiss_Selected(object sender, EventArgs e)
     {
         Navigation.PopModalAsync();
+    }
+
+    private async void contactList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+            return;
+
+        var selectedItem = e.CurrentSelection[0] as ContactItem;
+        if (selectedItem == null)
+            return;
+
+        selectedItem.Itemselcted = !selectedItem.Itemselcted;
+
+
+        // Clear selection to allow re-selecting the same item
+        contactList.SelectedItem = null;
     }
 }
 
