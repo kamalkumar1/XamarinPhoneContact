@@ -36,11 +36,8 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-
 	</PropertyGroup>
-<PropertyGroup>
-  <MauiXamlInflator>SourceGen</MauiXamlInflator>
-</PropertyGroup>
+	
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -72,6 +69,12 @@
 	<ItemGroup>
 	  <Compile Update="View/KKGroupContactView.xaml.cs">
 	    <DependentUpon>KKGroupContactView.xaml</DependentUpon>
+	  </Compile>
+		<Compile Update="View/SampleContentPage.xaml.cs">
+	    <DependentUpon>SampleContentPage.xaml</DependentUpon>
+	  </Compile>
+		<Compile Update="View/KKSingleContactView.xaml.cs">
+	    <DependentUpon>KKSingleContactView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

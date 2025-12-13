@@ -31,13 +31,22 @@ public static class MauiProgram
 			});
 		//builder.Services.AddTransient<IContact, ContactList>();
 		builder.Services.AddSingleton<AppShell>();
+		// Dependency Injection for Service and Interface
 		builder.Services.AddTransient<IKKControlSetup, KKContactBaseControl>();
 		builder.Services.AddTransient<ISqlLiteSetup, SQlLiteSetup>();
 		builder.Services.AddTransient<IKKCurdOperation, KKCurdOperation>();
 		builder.Services.AddTransient<IKKContactControlDbOperation, KKContactControlDbOperation>();
 		builder.Services.AddTransient<IKKPhoneContactData, ReadPhoneContactData>();
-		builder.Services.AddTransient<MobileContact>();
-		builder.Services.AddTransient<KKContactViewModel>();
+
+		// Dependency Injection for View and ViewModel
+		builder.Services.AddTransient<KKGroupContactView>();
+		builder.Services.AddTransient<KKGroupContactViewModel>();
+		builder.Services.AddTransient<KKSingleContactView>();
+		builder.Services.AddTransient<KKSingleContactViewModel>();
+
+		builder.Services.AddTransient<SampleContentPage>();
+		builder.Services.AddTransient<KKSampleContentPageViewModel>();
+
 		builder.Services.AddTransient<IKKContactPermissionRequest, ContactPermissionRequest>();
 		builder.Services.AddTransient<IKKGetContact, KKGetContact>();
 

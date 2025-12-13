@@ -1,5 +1,4 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using XamarinPhoneContact.Helper;
 using XamarinPhoneContact.Interface;
 using XamarinPhoneContact.Model;
@@ -23,21 +22,16 @@ namespace XamarinPhoneContact
         {
             try
             {
-                // kkContactControl.EnableMultiSelectionTickMark = true;
-                // kkContactControl.CloseButtonImageName = "deletebutton.png";
-                // IKKPhoneContactData phoneContactData = MauiServiceProvider.GetService<IKKPhoneContactData>();
-                // IContact contact = new ContactList(phoneContactData); // Assuming Contact implements IContact
-                // MobileContact mobile = new MobileContact(KK);
-                // mobile.getSelectedContact += Mobile_GetSelectedContactItem;
-                // await Navigation.PushModalAsync(mobile);
-                await Shell.Current.GoToAsync(nameof(MobileContact));
+                await Shell.Current.GoToAsync(nameof(SampleContentPage));
+                // Option 1: Direct navigation
+                // await Navigation.PushAsync(new SampleContentPage());
 
-
+                // Option 2: Modal navigation
+                // await Navigation.PushModalAsync(new SampleContentPage());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-
             }
         }
         private void Mobile_GetSelectedContactItem(KKSqlTableForContact contactItem)
