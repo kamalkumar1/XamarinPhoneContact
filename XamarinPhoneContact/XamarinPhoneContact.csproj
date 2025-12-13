@@ -69,4 +69,10 @@
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="View/KKGroupContactView.xaml.cs">
+	    <DependentUpon>KKGroupContactView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

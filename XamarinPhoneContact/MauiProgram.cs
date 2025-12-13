@@ -65,10 +65,18 @@ public static class MauiProgram
 					}));
 #elif ANDROID
 				events.AddAndroid(android => android
-		.OnCreate((activity, bundle) =>
+		.OnCreate(async (activity, bundle) =>
 		{
-			// your init code here
-			MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
+			await Task.Run(async () =>
+				{
+						// 1️⃣ First - Waits for completion
+						await MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
+						
+						// 2️⃣ Second - Only runs AFTER first completes
+						await MauiServiceProvider.GetService<IKKPhoneContactData>().GetAllContactFromPhoneAndStoreToLocalDbAsync();
+						
+						//Debug.WriteLine("✅ Both steps completed sequentially");
+				});
 		})
 );
 #endif
