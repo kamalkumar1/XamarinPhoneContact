@@ -15,7 +15,7 @@ XamarinPhoneContact/obj/Debug/net8.0-windows10.0.19041.0/win10-x64/.NETCoreApp,V
 *.inputs
 /XamarinPhoneContact/obj/Debug/net8.0-windows10.0.19041.0/win10-x64
 /XamarinPhoneContact/obj
-/XamarinPhoneContact
+# /XamarinPhoneContact
 XamarinPhoneContact/XamarinPhoneContact.csproj.user
 *.user
 XamarinPhoneContact/XamarinPhoneContact.csproj.user
@@ -46,3 +46,7 @@ MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/Pl
 MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/MauiPhoneContactLibraryTestPjt.build.appxrecipe
 MauiPhoneContactLibraryTestPjt/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/AppxManifest.xml
 /MauiPhoneContactLibraryTestPjt/bin
+XamarinPhoneContact/Platforms/.DS_Store
+XamarinPhoneContact/.DS_Store
+XamarinPhoneContact/bin/Debug/net10.0-android/com.companyname.xamarinphonecontact-Signed.apk
+/XamarinPhoneContact/bin

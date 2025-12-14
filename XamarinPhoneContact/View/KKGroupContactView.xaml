@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:maui="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:XamarinPhoneContact.ViewModel"
+    xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+    xmlns:local="clr-namespace:XamarinPhoneContact.View"
+    x:DataType="vm:KKGroupContactViewModel"
+    x:Class="XamarinPhoneContact.View.KKGroupContactView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0"
+              Grid.Column="0">
+            <SearchBar x:Name="searchText"
+                       Text="{Binding SearchText}"
+                       BackgroundColor="White"
+                       Placeholder="Search contacts..."
+                       FontAttributes="Bold"
+                       PlaceholderColor="Gray"
+                       SearchCommand="{Binding SearchCommand}">
+            </SearchBar>
+        </Grid>
+        <CollectionView
+            IsGrouped="False"
+            ItemSizingStrategy="MeasureFirstItem"
+            SelectionMode="Single"
+            SelectionChanged="contactList_SelectionChanged"
+            SelectedItem="{Binding SelectedContactItem, Mode=TwoWay}"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Never"
+            Grid.Column="0"
+            RemainingItemsThreshold="5"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+            ItemsSource="{Binding Singlecontactitem}"
+            x:Name="contactList">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="5"
+                                   Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <!-- <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate x:DataType="model:ContactGroup">
+                        <Grid Padding="8"
+                              BackgroundColor="#EEEEEE">
+                            <Label FontSize="18"
+                                   Text="{Binding Title}"
+                                   FontAttributes="Bold"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate> -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:ContactItem">
+                    <Grid
+                        RowSpacing="0"
+                        ColumnSpacing="0"
+                        Margin="0,0,0,0">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal"/>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor"
+                                                Value="Transparent"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout HeightRequest="80"
+                                     Spacing="0"
+                                     Grid.Row="0"
+                                     Grid.Column="0">
+                            <Label HeightRequest="40"
+                                   Padding="10,20,0,0"
+                                   FontAttributes="Bold"
+                                   FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding DisplayName}"
+                                              FontAttributes="Bold"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label HeightRequest="40"
+                                   Padding="10,10,0,10"
+                                   FontSize="14">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span TextColor="Black"
+                                              Text="{Binding  GetPhones[0].PhoneNumber}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                        <Image x:Name="TickImage"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               IsVisible="{OnPlatform Android={Binding Itemselcted}, Default=False}"
+                               Margin="5,5,20,0"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               Opacity="0"
+                               Source="checkmark"
+                               Aspect="AspectFit">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding Itemselcted}"
+                                             Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <local:ScaleAnimationTriggerAction/>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <local:ScaleOutAnimationTriggerAction/>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <StackLayout
+            Grid.Row="2"
+            InputTransparent="{Binding IsLoadingMore}"
+            Grid.Column="0"
+            Padding="0">
+            <Grid
+                IsVisible="{Binding IsLoadingMore}">
+                <ActivityIndicator
+                    IsRunning="{Binding IsLoadingMore}"
+                    IsVisible="{Binding IsLoadingMore}"/>
+            </Grid>
+        </StackLayout>
+    </Grid>
+</ContentView>

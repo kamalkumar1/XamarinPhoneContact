@@ -1,0 +1,226 @@
+using System;
+using System.Diagnostics;
+using SQLite;
+using XamarinPhoneContact.Helper;
+using XamarinPhoneContact.Interface;
+using XamarinPhoneContact.Interface.LocalDB;
+using XamarinPhoneContact.Model.LocalSql;
+using XamarinPhoneContact.Model.LocalSql.Sqltable;
+
+namespace XamarinPhoneContact.Model;
+
+public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
+{
+
+  public KKCurdOperation(ISqlLiteSetup sqlLiteSetup) : base(sqlLiteSetup)
+  {
+  }
+  public async Task<int> InsertContactData(List<KKSqlTableForContact> contactModels)
+  {
+    try
+    {
+      var result = await GetSQLiteAsyncConnection().InsertAllAsync(contactModels);
+      return result;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in InsertContactData: " + ex.Message);
+    }
+  }
+
+  public async Task<int> UpsertContactData(KKSqlTableForContact contactModel)
+  {
+    try
+    {
+      var conn = GetSQLiteAsyncConnection();
+
+      // Check if ContactID exists
+      var existingContact = await conn.Table<KKSqlTableForContact>()
+        .Where(c => c.ContactID == contactModel.ContactID)
+        .FirstOrDefaultAsync();
+
+      if (existingContact != null)
+      {
+        // Update existing record
+        contactModel.Id = existingContact.Id; // Preserve the primary key
+        return await conn.UpdateAsync(contactModel);
+      }
+      else
+      {
+        // Insert new record
+        return await conn.InsertAsync(contactModel);
+      }
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in UpsertContactData: " + ex.Message);
+    }
+  }
+
+  public async Task<int> UpsertContactDataBulk(List<KKSqlTableForContact> contactModels)
+  {
+    try
+    {
+      var conn = GetSQLiteAsyncConnection();
+      int totalAffected = 0;
+
+      // Process each contact
+      foreach (var contactModel in contactModels)
+      {
+        var existingContact = await conn.Table<KKSqlTableForContact>()
+          .Where(c => c.ContactID == contactModel.ContactID)
+          .FirstOrDefaultAsync();
+
+        if (existingContact != null)
+        {
+          // Update existing record
+          contactModel.Id = existingContact.Id;
+          totalAffected += await conn.UpdateAsync(contactModel);
+        }
+        else
+        {
+          // Insert new record
+          totalAffected += await conn.InsertAsync(contactModel);
+        }
+      }
+
+      return totalAffected;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in UpsertContactDataBulk: " + ex.Message);
+    }
+  }
+  public async Task<List<KKSqlTableForContact>> ReadContactData(int pageIndex)
+  {
+    try
+    {
+
+      Debug.WriteLine("pageIndex: " + pageIndex);
+      int pageSize = ContactConfig.Instance.PageSize;
+      Debug.WriteLine("_currentPageSize: " + pageSize);
+      var skipCount = pageIndex * pageSize;
+      Debug.WriteLine("skipCount: " + skipCount);
+      var result = await GetSQLiteAsyncConnection()
+            .Table<KKSqlTableForContact>()
+            .Skip(skipCount)
+            .Take(pageSize)
+            .ToListAsync();
+      return result;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in ReadContactData: " + ex.Message);
+    }
+  }
+  public async Task<List<KKSqlTableForContact>> SearchAndReadContactData(string query, int pageIndex)
+  {
+    try
+    {
+      const int pageSize = 15;
+      var skipCount = pageIndex * pageSize;
+      var result = await GetSQLiteAsyncConnection()
+            .Table<KKSqlTableForContact>().Where(s => s.DisplayName == query ||
+                      s.DisplayName.StartsWith(query))
+            .Skip(skipCount)
+            .Take(pageSize)
+            .ToListAsync();
+      return result;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in ReadContactData: " + ex.Message);
+    }
+  }
+
+  public async Task<bool> GetFullSyncUpdate()
+  {
+    try
+    {
+      var result = await GetSQLiteAsyncConnection()
+        .Table<KKSqlTableUpdate>()
+        .Where(c => c.IsDataFullyLoaded == true)
+        .FirstOrDefaultAsync();
+      return result != null && result.IsDataFullyLoaded;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in GetUpdatedContacts: " + ex.Message);
+    }
+  }
+  public async Task<bool> CheckContactExistsInDb(string contactId)
+  {
+    try
+    {
+      var result = GetSQLiteAsyncConnection();
+      var count = await result.ExecuteScalarAsync<int>(
+        "SELECT COUNT(*) FROM KKSqlTableForContact WHERE ContactID = ?",
+        contactId);
+      return count > 0;
+    }
+    catch (Exception ex)
+    {
+      Debug.WriteLine($"Error checking contact existence: {ex.Message}");
+      return false;
+    }
+  }
+  public async Task<int> DeleteContactsByIds(string contactIds)
+  {
+    try
+    {
+      var conn = GetSQLiteAsyncConnection();
+
+      var result = await conn.ExecuteAsync(
+        "DELETE FROM KKSqlTableForContact WHERE ContactID = ?",
+        contactIds);
+      Debug.WriteLine($"Deleted contact ID: {contactIds}, Rows affected: {result}");
+      return result;
+    }
+    catch (Exception ex)
+    {
+      Debug.WriteLine($"Error deleting contacts: {ex.Message}");
+      return 0;
+    }
+  }
+
+  public async Task<int> InsertSyncUpdate(bool updateStatus)
+  {
+    try
+    {
+      var syncUpdate = new KKSqlTableUpdate
+      {
+        IsDataFullyLoaded = updateStatus,
+      };
+      var result = await GetSQLiteAsyncConnection().InsertAsync(syncUpdate);
+      return result;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Error in InsertSyncUpdate: " + ex.Message);
+    }
+  }
+  public async Task<int> TotalCount()
+  {
+    try
+    {
+      var result = await GetSQLiteAsyncConnection().Table<KKSqlTableForContact>().CountAsync();
+      return result;
+    }
+    catch (Exception ex)
+    {
+      Debug.WriteLine(ex);
+      return 0;
+    }
+
+  }
+
+  public async Task<int> TotalCount(string query)
+  {
+    var result = await GetSQLiteAsyncConnection().
+                      Table<KKSqlTableForContact>().Where(s => s.DisplayName == query ||
+                      s.DisplayName.StartsWith(query)).
+                      CountAsync();
+    return result;
+
+  }
+}
