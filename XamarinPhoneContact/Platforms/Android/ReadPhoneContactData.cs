@@ -102,9 +102,9 @@ public class ReadPhoneContactData : IKKPhoneContactData
   }
   async Task<bool> LoadCursorData(ICursor myCursor, ContentResolver contentResolver)
   {
+    var contactIds = new List<(string Id, string DisplayName)>();
     try
     {
-      var contactIds = new List<(string Id, string DisplayName)>();
       // First pass: collec all contact IDs (fast, sequential)
       while (myCursor.MoveToNext())
       {
@@ -136,6 +136,10 @@ public class ReadPhoneContactData : IKKPhoneContactData
     {
       myCursor.Close();
       Debug.WriteLine("KKControl: LoadCursorData finished");
+      contactIds.Clear();
+      contactIds = null;
+      GC.Collect();
+
     }
   }
 

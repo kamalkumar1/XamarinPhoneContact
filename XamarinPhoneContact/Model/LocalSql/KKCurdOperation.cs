@@ -101,11 +101,47 @@ public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
       Debug.WriteLine("_currentPageSize: " + pageSize);
       var skipCount = pageIndex * pageSize;
       Debug.WriteLine("skipCount: " + skipCount);
+
+
       var result = await GetSQLiteAsyncConnection()
-            .Table<KKSqlTableForContact>()
-            .Skip(skipCount)
-            .Take(pageSize)
-            .ToListAsync();
+    .QueryAsync<KKSqlTableForContact>(
+        @"SELECT * FROM KKSqlTableForContact 
+            ORDER BY 
+              -- Level 1: A-Z first, then numbers, symbols, others
+              CASE 
+                WHEN DisplayName GLOB '[A-Za-z]*' THEN 0 
+                WHEN DisplayName GLOB '[0-9]*' THEN 1
+                WHEN DisplayName GLOB '[!@#$%^&*]*' THEN 2
+                ELSE 3 
+              END ASC,
+              -- Level 2: Case-insensitive sort within each group
+              upper(DisplayName) COLLATE NOCASE ASC 
+            LIMIT ? OFFSET ?",
+        pageSize, skipCount);
+
+      //   var result = await GetSQLiteAsyncConnection()
+      // .QueryAsync<KKSqlTableForContact>(
+      //     @"SELECT * FROM KKSqlTableForContact 
+      //       ORDER BY 
+      //         CASE 
+      //           WHEN DisplayName GLOB '[A-Za-z]*' THEN 0 
+      //           ELSE 1 
+      //         END ASC,
+      //         upper(DisplayName) COLLATE NOCASE ASC 
+      //       LIMIT ? OFFSET ?",
+      //     pageSize, skipCount);
+
+      //   var result = await GetSQLiteAsyncConnection()
+      // .QueryAsync<KKSqlTableForContact>(
+      //     "SELECT * FROM KKSqlTableForContact " +
+      //     "ORDER BY upper(DisplayName) ASC " +
+      //     "LIMIT ? OFFSET ?",
+      //     pageSize, skipCount);
+      // var result = await GetSQLiteAsyncConnection()
+      //       .Table<KKSqlTableForContact>().OrderBy(c => c.DisplayName.ToUpperInvariant() ?? string.Empty)
+      //       .Skip(skipCount)
+      //       .Take(pageSize)
+      //       .ToListAsync();
       return result;
     }
     catch (Exception ex)

@@ -27,17 +27,15 @@
             </SearchBar>
         </Grid>
         <CollectionView
-            ItemSizingStrategy="{OnPlatform Android=MeasureFirstItem, Default=MeasureAllItems}"
             SelectionMode="Single"
-            SelectionChanged="contactList_SelectionChanged"
-            SelectedItem="{Binding SelectedContactItem, Mode=TwoWay}"
+            SelectionChanged="ContactList_SelectionChangedEvent"
             Grid.Row="1"
             VerticalScrollBarVisibility="Never"
             Grid.Column="0"
             RemainingItemsThreshold="5"
             RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
             ItemsSource="{Binding Singlecontactitem}"
-            x:Name="contactList">
+            x:Name="singlecontactList">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="5"
                                    Orientation="Vertical"/>
@@ -95,7 +93,7 @@
                         <Image x:Name="TickImage"
                                HeightRequest="20"
                                WidthRequest="20"
-                               IsVisible="{OnPlatform Android={Binding Itemselcted}, Default=False}"
+                               IsVisible="{OnPlatform iOS=True, Default={Binding Itemselcted}}"
                                Margin="5,5,20,0"
                                Grid.Row="0"
                                Grid.Column="1"

@@ -7,6 +7,8 @@ namespace XamarinPhoneContact.View;
 public partial class KKSingleContactView : ContentView
 {
 	KKSingleContactViewModel? kKSingleContactViewModel;
+	private bool _isProcessingSelection = false;
+
 	public KKSingleContactView()
 	{
 		InitializeComponent();
@@ -43,18 +45,46 @@ public partial class KKSingleContactView : ContentView
 		Unloaded -= OnUnloaded;
 	}
 
-	private void contactList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	private async void ContactList_SelectionChangedEvent(object sender, SelectionChangedEventArgs e)
 	{
-		if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+		// Prevent duplicate processing
+		if (_isProcessingSelection)
 			return;
 
-		var selectedItem = e.CurrentSelection[0] as ContactItem;
-		if (selectedItem == null)
-			return;
+		try
+		{
+			// Only process if there's a new selection (not deselection)
+			if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+				return;
 
-		selectedItem.Itemselcted = !selectedItem.Itemselcted;
+			_isProcessingSelection = true;
 
-		// Clear selection to allow re-selecting the same item
-		contactList.SelectedItem = null;
+			var selectedItem = e.CurrentSelection[0] as ContactItem;
+			if (selectedItem != null)
+			{
+				selectedItem.Itemselcted = !selectedItem.Itemselcted;
+
+				// Update ViewModel with selected contact
+				if (kKSingleContactViewModel != null)
+				{
+					kKSingleContactViewModel.UpdateSelectedContact(selectedItem);
+				}
+			}
+
+			// Small delay to allow UI to update before clearing selection
+			await Task.Delay(50);
+
+			// Clear selection to allow re-selecting the same item
+			if (singlecontactList != null)
+				singlecontactList.SelectedItem = null;
+		}
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"Error in contactList_SelectionChanged: {ex.Message}");
+		}
+		finally
+		{
+			_isProcessingSelection = false;
+		}
 	}
 }

@@ -21,6 +21,9 @@ public partial class KKSingleContactViewModel : ObservableObject
   int _totalPagecount;
 
   private bool _isLoadMoreInProgress = false;
+  private CancellationTokenSource? _searchCts;
+  private string _lastSearchQuery = string.Empty;
+
   [ObservableProperty]
   private ObservableCollection<ContactItem> singlecontactitem = new ObservableCollection<ContactItem>();
 
@@ -32,6 +35,9 @@ public partial class KKSingleContactViewModel : ObservableObject
 
   [ObservableProperty]
   string searchText = string.Empty;
+
+  [ObservableProperty]
+  private ObservableCollection<ContactItem> selectedContacts = new ObservableCollection<ContactItem>();
 
   public KKSingleContactViewModel(IKKGetContact kKReadDataFromLocalDB, IKKContactPermissionRequest kKContactPermissionRequest)
   {
@@ -101,31 +107,102 @@ public partial class KKSingleContactViewModel : ObservableObject
 
   public void RestViewModel()
   {
+    _searchCts?.Cancel();
+    _searchCts?.Dispose();
+    _searchCts = null;
     _kKReadDataFromLocalDB = null;
     _kKContactPermissionRequest = null;
     Singlecontactitem.Clear();
   }
 
-  partial void OnSearchTextChanged(string value)
+  async partial void OnSearchTextChanged(string value)
   {
-    PerformSearch(value);
+    await PerformSearchWithDebounce(value);
+  }
+
+  private async Task PerformSearchWithDebounce(string query)
+  {
+    // Cancel previous search
+    _searchCts?.Cancel();
+    _searchCts = new CancellationTokenSource();
+    var token = _searchCts.Token;
+
+    try
+    {
+      // Debounce: wait 300ms for user to stop typing
+      await Task.Delay(300, token);
+
+      // Avoid duplicate searches
+      if (_lastSearchQuery == query)
+        return;
+
+      _lastSearchQuery = query;
+      await PerformSearch(query, token);
+    }
+    catch (TaskCanceledException)
+    {
+      // Search was cancelled by new input, ignore
+    }
   }
 
   [RelayCommand]
-  void Search()
+  async Task Search()
   {
-    PerformSearch(SearchText);
+    _searchCts?.Cancel();
+    await PerformSearch(SearchText, CancellationToken.None);
   }
 
-  void PerformSearch(string query)
+  async Task PerformSearch(string query, CancellationToken cancellationToken)
   {
-    if (string.IsNullOrEmpty(query))
+    try
     {
-      // Show all contacts
+      if (string.IsNullOrEmpty(query))
+      {
+        _currentPageSize = 0;
+        var contacts = await _kKReadDataFromLocalDB.GetAllContactFromLocalDb(_currentPageSize);
+
+        if (cancellationToken.IsCancellationRequested)
+          return;
+
+        Singlecontactitem.Clear();
+        AddContactToGroup(contacts);
+      }
+      else
+      {
+        var contacts = await _kKReadDataFromLocalDB.GetContactFromLocalDbWithSearch(query, _currentPageSize);
+
+        if (cancellationToken.IsCancellationRequested)
+          return;
+
+        Singlecontactitem.Clear();
+        if (contacts != null && contacts.Any())
+        {
+          AddContactToGroup(contacts);
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      if (ex is not TaskCanceledException)
+        Debug.WriteLine($"Error in PerformSearch: {ex.Message}");
+    }
+  }
+
+  public void UpdateSelectedContact(ContactItem contact)
+  {
+    if (contact.Itemselcted)
+    {
+      if (!SelectedContacts.Contains(contact))
+        SelectedContacts.Add(contact);
     }
     else
     {
-      // Filter contacts
+      SelectedContacts.Remove(contact);
     }
+  }
+
+  public List<ContactItem> GetSelectedContacts()
+  {
+    return Singlecontactitem.Where(c => c.Itemselcted).ToList();
   }
 }
