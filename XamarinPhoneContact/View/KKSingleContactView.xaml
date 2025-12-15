@@ -17,42 +17,24 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0"
               Grid.Column="0">
-            <SearchBar x:Name="searchText"
-                       Text="{Binding SearchText}"
-                       BackgroundColor="White"
-                       Placeholder="Search contacts..."
-                       FontAttributes="Bold"
-                       PlaceholderColor="Gray"
-                       SearchCommand="{Binding SearchCommand}">
-            </SearchBar>
+            <local:ContactSearchBar
+                x:Name="searchText"
+                SearchTextValue="{Binding SearchText}"
+                SearchCommandValue="{Binding SearchCommand}"/>
         </Grid>
-        <CollectionView
-            SelectionMode="Single"
-            SelectionChanged="ContactList_SelectionChangedEvent"
+        <local:ContactCollectionView
             Grid.Row="1"
-            VerticalScrollBarVisibility="Never"
             Grid.Column="0"
-            RemainingItemsThreshold="5"
-            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
-            ItemsSource="{Binding Singlecontactitem}"
-            x:Name="singlecontactList">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="5"
-                        Orientation="Vertical"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:ContactItem">
-                    <local:ContactItemView/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            x:Name="singlecontactList"
+            SelectionChanged="ContactList_SelectionChangedEvent"
+            ContactItems="{Binding Singlecontactitem}"
+            LoadMoreCommand="{Binding LoadMoreCommand}"/>
         <StackLayout
             Grid.Row="2"
             InputTransparent="{Binding IsLoadingMore}"
             Grid.Column="0"
             Padding="0">
-            <Grid
-                IsVisible="{Binding IsLoadingMore}">
+            <Grid IsVisible="{Binding IsLoadingMore}">
                 <ActivityIndicator
                     IsRunning="{Binding IsLoadingMore}"
                     IsVisible="{Binding IsLoadingMore}"/>

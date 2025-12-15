@@ -72,7 +72,6 @@ public partial class KKSingleContactViewModel : ObservableObject
     }
   }
 
-
   [RelayCommand]
   private async Task LoadMore()
   {
@@ -173,6 +172,7 @@ public partial class KKSingleContactViewModel : ObservableObject
 
         if (cancellationToken.IsCancellationRequested)
           return;
+
 
         Singlecontactitem.Clear();
         if (contacts != null && contacts.Any())

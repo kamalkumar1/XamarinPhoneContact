@@ -4,17 +4,24 @@
              xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
              xmlns:local="clr-namespace:XamarinPhoneContact.View"
              x:Class="XamarinPhoneContact.View.ContactItemView"
-             x:DataType="model:ContactItem">
+             x:DataType="model:ContactItem"
+             BackgroundColor="Transparent">
   <Grid RowSpacing="0"
         ColumnSpacing="0"
-        Margin="0,0,0,0">
+        Margin="0,0,0,0"
+        BackgroundColor="Transparent">
     <VisualStateManager.VisualStateGroups>
       <VisualStateGroup Name="CommonStates">
-        <VisualState Name="Normal"/>
+        <VisualState Name="Normal">
+          <VisualState.Setters>
+            <Setter Property="BackgroundColor"
+                Value="Transparent"/>
+          </VisualState.Setters>
+        </VisualState>
         <VisualState Name="Selected">
           <VisualState.Setters>
             <Setter Property="BackgroundColor"
-                    Value="Transparent"/>
+                Value="Transparent"/>
           </VisualState.Setters>
         </VisualState>
       </VisualStateGroup>
