@@ -6,7 +6,7 @@ namespace XamarinPhoneContact.Examples;
 /// Example of how to customize contact views using ContactConfig
 /// Place this configuration in MauiProgram.cs or App.xaml.cs before creating any contact views
 /// </summary>
-public static class ContactConfigExample
+public static class ContactThemeConfiguration
 {
   public static void ConfigureContactViews()
   {

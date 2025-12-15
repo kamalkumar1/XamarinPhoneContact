@@ -11,7 +11,7 @@
                        Orientation="Vertical"/>
   </CollectionView.ItemsLayout>
   <CollectionView.GroupHeaderTemplate>
-    <DataTemplate x:DataType="model:ContactGroup">
+    <DataTemplate  x:DataType="model:ContactGroup">
       <local:GroupHeaderView GroupTitle="{Binding Title}"/>
     </DataTemplate>
   </CollectionView.GroupHeaderTemplate>
