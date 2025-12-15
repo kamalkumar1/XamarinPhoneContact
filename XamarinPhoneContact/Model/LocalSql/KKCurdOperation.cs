@@ -121,7 +121,7 @@ public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
       var skipCount = pageIndex * pageSize;
       var result = await GetSQLiteAsyncConnection()
             .Table<KKSqlTableForContact>().Where(s => s.DisplayName == query ||
-                      s.DisplayName.StartsWith(query))
+                      (s.DisplayName != null && s.DisplayName.StartsWith(query)))
             .Skip(skipCount)
             .Take(pageSize)
             .ToListAsync();
@@ -218,7 +218,7 @@ public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
   {
     var result = await GetSQLiteAsyncConnection().
                       Table<KKSqlTableForContact>().Where(s => s.DisplayName == query ||
-                      s.DisplayName.StartsWith(query)).
+                      (s.DisplayName != null && s.DisplayName.StartsWith(query))).
                       CountAsync();
     return result;
 

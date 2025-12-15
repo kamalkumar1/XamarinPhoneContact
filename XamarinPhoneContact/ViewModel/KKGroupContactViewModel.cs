@@ -19,7 +19,6 @@ public partial class KKGroupContactViewModel : ObservableObject
   IKKContactPermissionRequest _kKContactPermissionRequest;
   int _currentPageSize = -1;
   int _totalPagecount;
-  List<ContactItem> _preloaditemItems;
   private bool _isLoadMoreInProgress = false;
 
   [ObservableProperty]

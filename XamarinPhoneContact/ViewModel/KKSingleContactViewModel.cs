@@ -19,7 +19,7 @@ public partial class KKSingleContactViewModel : ObservableObject
   IKKContactPermissionRequest _kKContactPermissionRequest;
   int _currentPageSize = -1;
   int _totalPagecount;
-  List<ContactItem> _preloaditemItems;
+
   private bool _isLoadMoreInProgress = false;
   [ObservableProperty]
   private ObservableCollection<ContactItem> singlecontactitem = new ObservableCollection<ContactItem>();
@@ -60,7 +60,7 @@ public partial class KKSingleContactViewModel : ObservableObject
 
   }
 
-  async void OnPermissionStatusChanged(object sender, EventArgs eventArgs)
+  async void OnPermissionStatusChanged(object? sender, EventArgs eventArgs)
   {
     var result = (ContactEnum)sender;
     if (result == ContactEnum.Granted)

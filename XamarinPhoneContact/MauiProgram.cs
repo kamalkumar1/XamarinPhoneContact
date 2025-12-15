@@ -128,14 +128,14 @@ public static class MauiProgram
 				events.AddiOS(iOS => iOS.WillFinishLaunching((app, __) =>
 					{
 						// Initialize contact control asynchronously
-						Task.Run(async () => await InitializeContactControlAsync());
+						_ = Task.Run(async () => await InitializeContactControlAsync());
 						return true;
 					}));
 #elif ANDROID
 				events.AddAndroid(android => android
 		.OnCreate(async (activity, bundle) =>
 		{
-			Task.Run(async () => await InitializeContactControlAsync());
+			_ = Task.Run(async () => await InitializeContactControlAsync());
 		})
 );
 #endif

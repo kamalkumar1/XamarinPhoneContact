@@ -117,8 +117,8 @@ public struct CNContactHelper
       List<Emailids> emailslist = new List<Emailids>();
       foreach (var obj in contact.EmailAddresses)
       {
-        var type = Regex.Replace(obj.Label, @"[^0-9a-zA-Z]+", "") ?? "";
-        var email = Regex.Replace(obj.Value, @"[^0-9a-zA-Z@]+", "") ?? "";
+        var type = Regex.Replace(obj.Label ?? "", @"[^0-9a-zA-Z]+", "");
+        var email = Regex.Replace(obj.Value ?? "", @"[^0-9a-zA-Z@]+", "");
         Emailids email1 = new Emailids();
         email1.Emailid = email;
         email1.Type = type;
@@ -140,7 +140,7 @@ public struct CNContactHelper
       foreach (var obj in contact.PostalAddresses)
       {
         Address address = new Address();
-        var type = Regex.Replace(obj.Label, @"[^0-9a-zA-Z]+", "") ?? "";
+        var type = Regex.Replace(obj.Label ?? "", @"[^0-9a-zA-Z]+", "");
         var street = obj.Value.Street;
         var city = obj.Value.City;
         var state = obj.Value.State;
@@ -181,7 +181,7 @@ public struct CNContactHelper
       foreach (var obj in contact.UrlAddresses)
       {
         Url url1 = new Url();
-        url1.URL = Regex.Replace(obj.Value, @"[^0-9a-zA-Z@]+", "") ?? "";
+        url1.URL = Regex.Replace(obj.Value ?? "", @"[^0-9a-zA-Z@]+", "");
         url.Add(url1);
       }
       item.Urlslist = JsonSerializer.Serialize(url);
@@ -199,12 +199,12 @@ public struct CNContactHelper
       List<DateList> dateLists = new List<DateList>();
       foreach (var obj in contact.Dates)
       {
-        var type = Regex.Replace(obj.Label, @"[^0-9a-zA-Z]+", "") ?? "";
+        var type = Regex.Replace(obj.Label ?? "", @"[^0-9a-zA-Z]+", "");
         var datestring = obj.Value;
         DateList list = new DateList();
-        var month = contact.Birthday.Month.ToString() ?? "";
-        var day = contact.Birthday.Day.ToString() ?? "";
-        var year = contact.Birthday.Year.ToString() ?? "";
+        var month = contact.Birthday?.Month.ToString() ?? "";
+        var day = contact.Birthday?.Day.ToString() ?? "";
+        var year = contact.Birthday?.Year.ToString() ?? "";
         list.Date = day + "/" + month + "/" + year;
         list.type = type;
         dateLists.Add(list);
@@ -281,7 +281,7 @@ public struct CNContactHelper
   /// <summary>
   /// Load history token from preferences
   /// </summary>
-  public NSData LoadHistoryToken()
+  public NSData? LoadHistoryToken()
   {
     try
     {

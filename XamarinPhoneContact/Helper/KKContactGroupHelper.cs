@@ -16,7 +16,7 @@ public static class KKContactGroupHelper
 {
   public readonly static string[] Alphate = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#" };
 
-  static ObservableCollection<ContactGroup> groupcontactItems;
+  static ObservableCollection<ContactGroup>? groupcontactItems;
   public static ObservableCollection<ContactGroup> CreateDefaultGroups()
   {
     try

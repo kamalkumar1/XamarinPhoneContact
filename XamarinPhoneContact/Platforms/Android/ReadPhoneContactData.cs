@@ -1,7 +1,5 @@
-using System;
-using System.ComponentModel;
+
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Android.Content;
 using Android.Database;
 using Android.Provider;

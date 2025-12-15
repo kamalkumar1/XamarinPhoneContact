@@ -112,6 +112,7 @@ public class ReadUpdatePhoneContactData : IReadUpdatePhoneContactData
 
           // Contact was added or updated
           // Check if contact exists in our database
+          if (_kKCurdOperation == null) continue;
           var existsInDb = await _kKCurdOperation.CheckContactExistsInDb(contactId);
 
           var contact = _cNContactHelper.ProcessSingleContact(contactId, displayName, contentResolver);
@@ -159,8 +160,20 @@ public class ReadUpdatePhoneContactData : IReadUpdatePhoneContactData
     ICursor? deletedCursor = null;
     try
     {
+      if (contentResolver == null)
+      {
+        Debug.WriteLine("ContentResolver is null");
+        return;
+      }
+
       deletedCursor = null;
       var delteuri = ContactsContract.DeletedContacts.ContentUri;
+      if (delteuri == null)
+      {
+        Debug.WriteLine("Deleted contacts URI is null");
+        return;
+      }
+
       string[] projection = {
                     ContactsContract.IDeletedContactsColumns.ContactId,
                     ContactsContract.IDeletedContactsColumns.ContactDeletedTimestamp
@@ -181,6 +194,7 @@ public class ReadUpdatePhoneContactData : IReadUpdatePhoneContactData
       if (deletedCursor == null || deletedCursor.Count == 0)
       {
         Debug.WriteLine("No deleted changes found since last sync");
+        return;
       }
       Debug.WriteLine($"Found {deletedCursor.Count} Deleted contacts");
 

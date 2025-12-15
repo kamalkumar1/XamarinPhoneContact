@@ -6,7 +6,7 @@ namespace XamarinPhoneContact.View;
 
 public partial class KKSingleContactView : ContentView
 {
-	KKSingleContactViewModel kKSingleContactViewModel;
+	KKSingleContactViewModel? kKSingleContactViewModel;
 	public KKSingleContactView()
 	{
 		InitializeComponent();
@@ -21,7 +21,7 @@ public partial class KKSingleContactView : ContentView
 	}
 
 
-	private async void OnLoaded(object sender, EventArgs e)
+	private async void OnLoaded(object? sender, EventArgs e)
 	{
 		if (kKSingleContactViewModel != null)
 		{
@@ -30,7 +30,7 @@ public partial class KKSingleContactView : ContentView
 		}
 	}
 
-	private void OnUnloaded(object sender, EventArgs e)
+	private void OnUnloaded(object? sender, EventArgs e)
 	{
 		if (kKSingleContactViewModel != null)
 		{
