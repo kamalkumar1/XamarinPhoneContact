@@ -78,4 +78,8 @@
 	  </Compile>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="KKAnimation/" />
+	</ItemGroup>
+
 </Project>

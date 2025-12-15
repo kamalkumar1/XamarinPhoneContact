@@ -38,82 +38,11 @@
             x:Name="singlecontactList">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="5"
-                                   Orientation="Vertical"/>
+                        Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:ContactItem">
-                    <Grid
-                        RowSpacing="0"
-                        ColumnSpacing="0"
-                        Margin="0,0,0,0">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-                                <VisualState Name="Normal"/>
-                                <VisualState Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor"
-                                                Value="Transparent"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackLayout HeightRequest="80"
-                                     Spacing="0"
-                                     Grid.Row="0"
-                                     Grid.Column="0">
-                            <Label HeightRequest="40"
-                                   Padding="10,20,0,0"
-                                   FontAttributes="Bold"
-                                   FontSize="16">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding DisplayName}"
-                                              FontAttributes="Bold"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label HeightRequest="40"
-                                   Padding="10,10,0,10"
-                                   FontSize="14">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span TextColor="Black"
-                                              Text="{Binding  GetPhones[0].PhoneNumber}"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                        </StackLayout>
-                        <Image x:Name="TickImage"
-                               HeightRequest="20"
-                               WidthRequest="20"
-                               IsVisible="{OnPlatform iOS=True, Default={Binding Itemselcted}}"
-                               Margin="5,5,20,0"
-                               Grid.Row="0"
-                               Grid.Column="1"
-                               Opacity="0"
-                               Source="checkmark"
-                               Aspect="AspectFit">
-                            <Image.Triggers>
-                                <DataTrigger TargetType="Image"
-                                             Binding="{Binding Itemselcted}"
-                                             Value="True">
-                                    <DataTrigger.EnterActions>
-                                        <local:ScaleAnimationTriggerAction/>
-                                    </DataTrigger.EnterActions>
-                                    <DataTrigger.ExitActions>
-                                        <local:ScaleOutAnimationTriggerAction/>
-                                    </DataTrigger.ExitActions>
-                                </DataTrigger>
-                            </Image.Triggers>
-                        </Image>
-                    </Grid>
+                    <local:ContactItemView/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
