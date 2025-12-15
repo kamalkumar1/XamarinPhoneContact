@@ -56,6 +56,49 @@ namespace XamarinPhoneContact.Helper
 
         public int PageSize = 20;
 
+        // SearchBar Configuration
+        public string SearchBarPlaceholder = "Search contacts...";
+        public Color SearchBarBackgroundColor = Colors.White;
+        public Color SearchBarTextColor = Colors.Black;
+        public Color SearchBarPlaceholderColor = Colors.Gray;
+        public Color SearchBarIconColor = Colors.AliceBlue;
+        public double SearchBarFontSize = 14;
+        public string SearchBarFontFamily = "Arial";
+        public FontAttributes SearchBarFontAttributes = FontAttributes.Bold;
+
+        // CollectionView Configuration
+        public int CollectionViewItemSpacing = 5;
+        public int RemainingItemsThreshold = 5;
+        public bool ShowVerticalScrollBar = false;
+        public SelectionMode CollectionSelectionMode = SelectionMode.Single;
+
+        // Group Header Configuration
+        public double GroupHeaderFontSize = 16;
+        public FontAttributes GroupHeaderFontAttributes = FontAttributes.Bold;
+        public Thickness GroupHeaderPadding = new Thickness(10, 5);
+        public Color GroupHeaderBackgroundColor = Colors.LightGray;
+        public Color GroupHeaderTextColor = Colors.Black;
+
+        // Contact Item Configuration
+        public double ContactItemHeight = 80;
+        public double ContactNameFontSize = 16;
+        public FontAttributes ContactNameFontAttributes = FontAttributes.Bold;
+        public double ContactNamePadding = 10;
+        public Color ContactNameTextColor = Colors.Black;
+
+        public double ContactPhoneFontSize = 14;
+        public Color ContactPhoneTextColor = Colors.Black;
+        public Thickness ContactPhonePadding = new Thickness(10, 10, 0, 10);
+
+        // Selection Checkmark Configuration
+        public double CheckmarkSize = 20;
+        public string CheckmarkIcon = "checkmark";
+        public Thickness CheckmarkMargin = new Thickness(5, 5, 20, 0);
+        public bool ShowCheckmarkAnimation = true;
+
+        // Selected Item Background Configuration
+        public Color SelectedItemBackgroundColor = Colors.Transparent;
+        public Color NormalItemBackgroundColor = Colors.Transparent;
 
     }
 

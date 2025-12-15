@@ -34,41 +34,34 @@
       <ColumnDefinition Width="*"/>
       <ColumnDefinition Width="Auto"/>
     </Grid.ColumnDefinitions>
-    <StackLayout HeightRequest="80"
-                 Spacing="0"
+    <StackLayout Spacing="0"
                  Grid.Row="0"
-                 Grid.Column="0">
+                 Grid.Column="0"
+                 StyleId="ContactInfoStack">
       <Label HeightRequest="40"
              Padding="10,20,0,0"
-             FontAttributes="Bold"
-             FontSize="16">
+             StyleId="NameLabel">
         <Label.FormattedText>
           <FormattedString>
-            <Span Text="{Binding DisplayName}"
-                  FontAttributes="Bold"/>
+            <Span Text="{Binding DisplayName}"/>
           </FormattedString>
         </Label.FormattedText>
       </Label>
       <Label HeightRequest="40"
-             Padding="10,10,0,10"
-             FontSize="14">
+             StyleId="PhoneLabel">
         <Label.FormattedText>
           <FormattedString>
-            <Span TextColor="Black"
-                  Text="{Binding GetPhones[0].PhoneNumber}"/>
+            <Span Text="{Binding GetPhones[0].PhoneNumber}"/>
           </FormattedString>
         </Label.FormattedText>
       </Label>
     </StackLayout>
     <Image x:Name="TickImage"
-           HeightRequest="20"
-           WidthRequest="20"
+           StyleId="TickImage"
            IsVisible="{OnPlatform iOS=True, Default={Binding Itemselcted}}"
-           Margin="5,5,20,0"
            Grid.Row="0"
            Grid.Column="1"
            Opacity="0"
-           Source="checkmark"
            Aspect="AspectFit">
       <Image.Triggers>
         <DataTrigger TargetType="Image"

@@ -24,50 +24,13 @@
             SearchTextValue="{Binding SearchText}"
             SearchCommandValue="{Binding SearchCommand}"/>
 
-        <CollectionView
+        <local:GroupedContactCollectionView
             Grid.Row="1"
             Grid.Column="0"
-            IsVisible="True"
-            IsGrouped="True"
             x:Name="GroupContactCollectionView"
-            SelectionMode="Single"
-            VerticalScrollBarVisibility="Never"
-            ItemsSource="{Binding ContactGroups}"
-            SelectionChanged="contactList_SelectionChanged">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="5"
-                                   Orientation="Vertical"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.GroupHeaderTemplate>
-                <DataTemplate x:DataType="model:ContactGroup">
-                    <Label Text="{Binding Title}"
-                           FontAttributes="Bold"
-                           FontSize="16"
-                           Padding="10,5"
-                           BackgroundColor="LightGray"/>
-                </DataTemplate>
-            </CollectionView.GroupHeaderTemplate>
-            <CollectionView.ItemTemplate>
-                <!-- Define the template for each contact item -->
-                <DataTemplate x:DataType="model:ContactItem">
-                    <!--! Define the visual representation of a contact item by ContactItemView -->
-                    <local:ContactItemView>
-                        <!-- Removing the default selected  background color of collection view item -->
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-                                <VisualState Name="Normal"/>
-                                <VisualState Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor"
-                                                Value="Transparent"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </local:ContactItemView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            SelectionChanged="contactList_SelectionChanged"
+            ContactGroups="{Binding ContactGroups}"
+            LoadMoreCommand="{Binding LoadMoreCommand}"/>
 
         <Grid Grid.Row="2"
               Grid.Column="0"

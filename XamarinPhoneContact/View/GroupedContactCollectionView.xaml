@@ -3,10 +3,18 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
                 xmlns:local="clr-namespace:XamarinPhoneContact.View"
-                x:Class="XamarinPhoneContact.View.ContactCollectionView">
+                x:Class="XamarinPhoneContact.View.GroupedContactCollectionView"
+                IsGrouped="True"
+                x:Name="ThisCollectionView">
   <CollectionView.ItemsLayout>
-    <LinearItemsLayout Orientation="Vertical"/>
+    <LinearItemsLayout x:Name="ItemsLayoutConfig"
+                       Orientation="Vertical"/>
   </CollectionView.ItemsLayout>
+  <CollectionView.GroupHeaderTemplate>
+    <DataTemplate x:DataType="model:ContactGroup">
+      <local:GroupHeaderView GroupTitle="{Binding Title}"/>
+    </DataTemplate>
+  </CollectionView.GroupHeaderTemplate>
   <CollectionView.ItemTemplate>
     <!-- Define the template for each contact item -->
     <DataTemplate x:DataType="model:ContactItem">

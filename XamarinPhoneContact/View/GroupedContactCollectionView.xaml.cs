@@ -4,20 +4,20 @@ using XamarinPhoneContact.Helper;
 
 namespace XamarinPhoneContact.View;
 
-public partial class ContactCollectionView : CollectionView
+public partial class GroupedContactCollectionView : CollectionView
 {
-  public static readonly BindableProperty ContactItemsProperty =
-      BindableProperty.Create(nameof(ContactItems), typeof(ObservableCollection<ContactItem>), typeof(ContactCollectionView), null,
-          propertyChanged: OnContactItemsChanged);
+  public static readonly BindableProperty ContactGroupsProperty =
+      BindableProperty.Create(nameof(ContactGroups), typeof(ObservableCollection<ContactGroup>), typeof(GroupedContactCollectionView), null,
+          propertyChanged: OnContactGroupsChanged);
 
   public static readonly BindableProperty LoadMoreCommandProperty =
-      BindableProperty.Create(nameof(LoadMoreCommand), typeof(ICommand), typeof(ContactCollectionView), null,
+      BindableProperty.Create(nameof(LoadMoreCommand), typeof(ICommand), typeof(GroupedContactCollectionView), null,
           propertyChanged: OnLoadMoreCommandChanged);
 
-  public ObservableCollection<ContactItem> ContactItems
+  public ObservableCollection<ContactGroup> ContactGroups
   {
-    get => (ObservableCollection<ContactItem>)GetValue(ContactItemsProperty);
-    set => SetValue(ContactItemsProperty, value);
+    get => (ObservableCollection<ContactGroup>)GetValue(ContactGroupsProperty);
+    set => SetValue(ContactGroupsProperty, value);
   }
 
   public ICommand LoadMoreCommand
@@ -26,7 +26,7 @@ public partial class ContactCollectionView : CollectionView
     set => SetValue(LoadMoreCommandProperty, value);
   }
 
-  public ContactCollectionView()
+  public GroupedContactCollectionView()
   {
     InitializeComponent();
     ApplyConfiguration();
@@ -47,19 +47,19 @@ public partial class ContactCollectionView : CollectionView
     }
   }
 
-  private static void OnContactItemsChanged(BindableObject bindable, object oldValue, object newValue)
+  private static void OnContactGroupsChanged(BindableObject bindable, object oldValue, object newValue)
   {
-    var control = (ContactCollectionView)bindable;
+    var control = (GroupedContactCollectionView)bindable;
 
     MainThread.BeginInvokeOnMainThread(() =>
     {
-      control.ItemsSource = newValue as ObservableCollection<ContactItem>;
+      control.ItemsSource = newValue as ObservableCollection<ContactGroup>;
     });
   }
 
   private static void OnLoadMoreCommandChanged(BindableObject bindable, object oldValue, object newValue)
   {
-    var control = (ContactCollectionView)bindable;
+    var control = (GroupedContactCollectionView)bindable;
     control.RemainingItemsThresholdReachedCommand = newValue as ICommand;
   }
 }

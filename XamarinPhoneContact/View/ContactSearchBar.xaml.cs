@@ -36,12 +36,35 @@ public partial class ContactSearchBar : SearchBar
   {
     InitializeComponent();
 
+    // Apply configuration from ContactConfig
+    ApplyConfiguration();
+
     // Listen to internal Text changes and propagate to SearchTextValue
     this.TextChanged += OnInternalTextChanged;
     this.SearchCommand = SearchCommandValue;
   }
 
-  private void OnInternalTextChanged(object sender, TextChangedEventArgs e)
+  private void ApplyConfiguration()
+  {
+    var config = Helper.ContactConfig.Instance;
+
+    this.Placeholder = config.SearchBarPlaceholder;
+    this.BackgroundColor = config.SearchBarBackgroundColor;
+    this.TextColor = config.SearchBarTextColor;
+    this.PlaceholderColor = config.SearchBarPlaceholderColor;
+    this.FontSize = config.SearchBarFontSize;
+    this.FontFamily = config.SearchBarFontFamily;
+    this.FontAttributes = config.SearchBarFontAttributes;
+
+    // SearchIconColor is not available on all platforms, set conditionally
+    try
+    {
+      this.SetValue(SearchBar.SearchIconColorProperty, config.SearchBarIconColor);
+    }
+    catch { /* Ignore if not supported */ }
+  }
+
+  private void OnInternalTextChanged(object? sender, TextChangedEventArgs e)
   {
     // Update the bindable property when user types
     if (SearchTextValue != e.NewTextValue)
