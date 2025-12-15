@@ -12,7 +12,6 @@ namespace XamarinPhoneContact.Platforms.iOS
         public ContactPermissionRequest()
         {
         }
-        public event EventHandler? CustomPermissionStatus;
         private UIViewController? GetRootViewController()
         {
             var window = UIApplication.SharedApplication.ConnectedScenes
@@ -47,7 +46,7 @@ namespace XamarinPhoneContact.Platforms.iOS
 
                 if (authStatus == CNAuthorizationStatus.Authorized)
                 {
-                    CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
+
                     return true;
                 }
 
@@ -105,57 +104,6 @@ namespace XamarinPhoneContact.Platforms.iOS
             });
 
             return tcs.Task;
-        }
-        public void RequestPermissions()
-        {
-            CNAuthorizationStatus authStatus = CNContactStore.GetAuthorizationStatus(CNEntityType.Contacts);
-            if (authStatus == CNAuthorizationStatus.Denied || authStatus == CNAuthorizationStatus.Restricted)
-            {
-                Debug.WriteLine("Contacts Denied or Restricted");
-                var okCancelAlertController = UIAlertController.Create("Alert", "Need permission to access contac", UIAlertControllerStyle.Alert);
-                //Add Actions
-                okCancelAlertController.AddAction(UIAlertAction.Create("Setting", UIAlertActionStyle.Default, (UIAlertAction obj) =>
-                {
-                    MoveToSetting();
-                }));
-                okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
-                //Present Alert
-                GetRootViewController().PresentViewController(okCancelAlertController, true, () =>
-                {
-                    CustomPermissionStatus?.Invoke(ContactEnum.Denied, EventArgs.Empty);
-                });
-
-            }
-            else if (authStatus == CNAuthorizationStatus.NotDetermined)
-            {
-                var store = new CNContactStore();
-                store.RequestAccess(CNEntityType.Contacts, (granted, error) =>
-                {
-                    if (!granted)
-                    {
-                        var okCancelAlertController = UIAlertController.Create("Alert ", "Need permission to access contact", UIAlertControllerStyle.Alert);
-                        //Add Actions
-                        okCancelAlertController.AddAction(UIAlertAction.Create("Setting", UIAlertActionStyle.Default, (UIAlertAction obj) =>
-                        {
-                            MoveToSetting();
-                        }));
-                        okCancelAlertController.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
-                        GetRootViewController().PresentViewController(okCancelAlertController, true, () =>
-                        {
-                            CustomPermissionStatus?.Invoke(ContactEnum.Denied, EventArgs.Empty);
-                        });
-                    }
-                    else
-                    {
-                        CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
-                    }
-                });
-            }
-            else
-            {
-                CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
-
-            }
         }
     }
 }

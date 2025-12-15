@@ -9,18 +9,21 @@
                 RemainingItemsThreshold="5">
   <CollectionView.ItemsLayout>
     <LinearItemsLayout ItemSpacing="5"
-        Orientation="Vertical"/>
+                       Orientation="Vertical"/>
   </CollectionView.ItemsLayout>
   <CollectionView.ItemTemplate>
+    <!-- Define the template for each contact item -->
     <DataTemplate x:DataType="model:ContactItem">
+      <!--! Define the visual representation of a contact item by ContactItemView -->
       <local:ContactItemView>
+        <!-- Removing the default selected  background color of collection view item -->
         <VisualStateManager.VisualStateGroups>
           <VisualStateGroup Name="CommonStates">
             <VisualState Name="Normal"/>
             <VisualState Name="Selected">
               <VisualState.Setters>
                 <Setter Property="BackgroundColor"
-                    Value="Transparent"/>
+                        Value="Transparent"/>
               </VisualState.Setters>
             </VisualState>
           </VisualStateGroup>

@@ -1,148 +1,98 @@
-using System;
-using System.ComponentModel;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using XamarinPhoneContact.Helper;
 using XamarinPhoneContact.Interface;
 using XamarinPhoneContact.Service.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
+using KKPhone.ViewModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using XamarinPhoneContact.Model;
 
 namespace XamarinPhoneContact.ViewModel;
 
-public partial class KKGroupContactViewModel : ObservableObject
+public partial class KKGroupContactViewModel : BaseViewModel
 {
-  IKKGetContact _kKReadDataFromLocalDB;
-  IKKContactPermissionRequest _kKContactPermissionRequest;
-  int _currentPageSize = -1;
-  int _totalPagecount;
-  private bool _isLoadMoreInProgress = false;
 
   [ObservableProperty]
   private ObservableCollection<ContactGroup> contactGroups = new();
-  [ObservableProperty]
-  private ObservableCollection<ContactItem> singlecontactitem = new();
-
-  [ObservableProperty]
-  bool isLoadingMore = false;
-
-  [ObservableProperty]
-  ContactItem? selectedContactItem;
-
-  [ObservableProperty]
-  string searchText = string.Empty;
-
-  bool isGrouping = false;
-
+  public int TotalCount = 0;
   public KKGroupContactViewModel(IKKGetContact kKReadDataFromLocalDB, IKKContactPermissionRequest kKContactPermissionRequest)
+    : base(kKReadDataFromLocalDB, kKContactPermissionRequest)
   {
-    _kKReadDataFromLocalDB = kKReadDataFromLocalDB;
-    _kKContactPermissionRequest = kKContactPermissionRequest;
-    IsLoadingMore = false;
   }
 
-  public void CheckPermission()
+  public async Task LoadGroupContactsAsync()
   {
-    _kKContactPermissionRequest.CustomPermissionStatus -= OnPermissionStatusChanged;
-    _kKContactPermissionRequest.CustomPermissionStatus += OnPermissionStatusChanged;
-    _kKContactPermissionRequest.RequestPermissions();
-  }
-
-  async void OnPermissionStatusChanged(object sender, EventArgs eventArgs)
-  {
-    var result = (ContactEnum)sender;
-    if (result == ContactEnum.Granted)
+    Debug.WriteLine("LoadGroupContactsAsync started");
+    var contacts = await LoadContactsAsync();
+    Debug.WriteLine($"LoadContactsAsync returned {contacts?.Count ?? 0} contacts");
+    if (contacts != null)
     {
-      var stopwatch = Stopwatch.StartNew();
-      await LoadContactsAsync();
-      stopwatch.Stop();
-      Debug.WriteLine($"LoadContactsAsync took: {stopwatch.ElapsedMilliseconds} ms");
+      AddContactsToGroups(contacts);
     }
     else
     {
-      Debug.WriteLine("Permission denied to load the contact. Check your setting in phone");
+      Debug.WriteLine("No contacts returned from LoadContactsAsync");
     }
   }
 
-  public async Task CalulateAndGetTotalPageCount()
+  void AddContactsToGroups(List<ContactItem> contacts)
   {
-    var totalItems = await _kKReadDataFromLocalDB.TotalCount();
-    _totalPagecount = (totalItems + ContactConfig.Instance.PageSize - 1) / ContactConfig.Instance.PageSize;
-  }
-
-  public async Task LoadContactsAsync()
-  {
-    ContactGroups = KKContactGroupHelper.CreateDefaultGroups();
-    _currentPageSize++;
-    var contacts = await _kKReadDataFromLocalDB.GetAllContactFromLocalDb(_currentPageSize);
-    if (!isGrouping)
+    if (contacts == null || contacts.Count == 0)
     {
-      foreach (var contact in contacts)
-      {
-        Singlecontactitem.Add(contact);
-      }
+      Debug.WriteLine("No contacts to add to groups");
+      return;
     }
-    else
+    TotalCount = TotalCount + contacts.Count;
+    var groupedContacts = KKContactGroupHelper.CreateGroupsWithSections(contacts);
+    Debug.WriteLine($"groupedContacts has {groupedContacts.Count} groups");
+
+    ContactGroups = groupedContacts;
+    isGrouping = true;
+
+    Debug.WriteLine($"ContactGroups property now has {ContactGroups.Count} groups with total {contacts.Count} contacts");
+    foreach (var group in ContactGroups)
     {
-      if (contacts?.Any() == true)
-      {
-        AddContactToGroup(contacts);
-        //_currentPageSize++;
-        // await LoadePreLoadItem();
-      }
 
-    }
-
-  }
-
-  void AddContactToGroup(List<ContactItem> contacts)
-  {
-    foreach (var contact in contacts)
-    {
-      if (isGrouping == false)
-      {
-        Singlecontactitem.Add(contact);
-      }
-      else
-      {
-        int targetIndex = KKContactGroupHelper.GetGroupIndex(contact.DisplayName);
-        ContactGroups[targetIndex].Add(contact);
-
-      }
-
+      Debug.WriteLine($"  Group '{group.Title}': {group.Count} contacts");
     }
   }
-
 
   [RelayCommand]
   private async Task LoadMore()
   {
-    if (_isLoadMoreInProgress || IsLoadingMore)
-      return;
+    Debug.WriteLine($"LoadMore called - IsLoadingMore: {IsLoadingMore}, InProgress: {_isLoadMoreInProgress}");
 
-    if (_currentPageSize >= _totalPagecount)
+    if (_isLoadMoreInProgress || IsLoadingMore)
     {
-      Debug.WriteLine("No more data to load");
+      Debug.WriteLine("LoadMore already in progress, returning");
       return;
     }
 
+    if (_currentPageSize >= _totalPagecount)
+    {
+      Debug.WriteLine($"No more data to load - CurrentPage: {_currentPageSize}, TotalPages: {_totalPagecount}");
+      return;
+    }
+
+    Debug.WriteLine($"LoadMore executing - CurrentPage: {_currentPageSize}, TotalPages: {_totalPagecount}");
     _isLoadMoreInProgress = true;
     IsLoadingMore = true;
 
     try
     {
+      _currentPageSize++;
       var contacts = await _kKReadDataFromLocalDB.GetContactFromLocalDbWithPagantion(_currentPageSize);
       if (contacts != null && contacts.Any())
       {
-        AddContactToGroup(contacts);
-        _currentPageSize++;
-        // await LoadePreLoadItem();
-      }
-      await Task.Delay(100);
+        TotalCount = TotalCount + contacts.Count;
+        foreach (var contact in contacts)
+        {
 
+          KKContactGroupHelper.AddContactToGroupedCollection(ContactGroups, contact);
+        }
+      }
+      //_currentPageSize++;
+      await Task.Delay(100);
     }
     catch (Exception ex)
     {
@@ -157,14 +107,13 @@ public partial class KKGroupContactViewModel : ObservableObject
 
   public void RestViewModel()
   {
-    _kKContactPermissionRequest.CustomPermissionStatus -= OnPermissionStatusChanged;
-    _kKReadDataFromLocalDB = null;
-    _kKContactPermissionRequest = null;
-    KKContactGroupHelper.CreateDefaultGroups().Clear();
-    Singlecontactitem.Clear();
+    //_kKContactPermissionRequest.CustomPermissionStatus -= OnPermissionStatusChanged;
+    ContactGroups?.Clear();
+    Singlecontactitem?.Clear();
   }
 
-  partial void OnSearchTextChanged(string value)
+  [RelayCommand]
+  void OnSearchTextChanged(string value)
   {
     PerformSearch(value);
   }
