@@ -1,4 +1,4 @@
-namespace XamarinPhoneContact.View;
+namespace XamarinPhoneContact.KKAnimation;
 
 public class ScaleAnimationTriggerAction : TriggerAction<Image>
 {

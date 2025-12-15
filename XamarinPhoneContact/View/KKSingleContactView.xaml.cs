@@ -25,11 +25,11 @@ public partial class KKSingleContactView : ContentView
 
 	private async void OnLoaded(object? sender, EventArgs e)
 	{
-		if (kKSingleContactViewModel != null)
-		{
-			await kKSingleContactViewModel.CalulateAndGetTotalPageCount();
-			await kKSingleContactViewModel.LoadContactsAsync();
-		}
+		// if (kKSingleContactViewModel != null)
+		// {
+		// 	await kKSingleContactViewModel.CalulateAndGetTotalPageCount();
+		// 	await kKSingleContactViewModel.LoadContactsAsync();
+		// }
 	}
 
 	private void OnUnloaded(object? sender, EventArgs e)

@@ -153,19 +153,34 @@ public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
   {
     try
     {
-      const int pageSize = 15;
+      int pageSize = ContactConfig.Instance.PageSize;
       var skipCount = pageIndex * pageSize;
+      var searchPattern = $"%{query}%";
+      var startsWithPattern = $"{query}%";
+
       var result = await GetSQLiteAsyncConnection()
-            .Table<KKSqlTableForContact>().Where(s => s.DisplayName == query ||
-                      (s.DisplayName != null && s.DisplayName.StartsWith(query)))
-            .Skip(skipCount)
-            .Take(pageSize)
-            .ToListAsync();
+            .QueryAsync<KKSqlTableForContact>(
+                @"SELECT * FROM KKSqlTableForContact 
+                  WHERE DisplayName LIKE ? COLLATE NOCASE
+                  ORDER BY 
+                    CASE 
+                      WHEN upper(DisplayName) = upper(?) THEN 0
+                      WHEN upper(DisplayName) LIKE upper(?) THEN 1
+                      ELSE 2
+                    END ASC,
+                    upper(DisplayName) COLLATE NOCASE ASC
+                  LIMIT ? OFFSET ?",
+                searchPattern,     // WHERE clause - contains anywhere
+                query,             // Exact match (highest priority)
+                startsWithPattern, // Starts with query
+                pageSize,
+                skipCount);
+
       return result;
     }
     catch (Exception ex)
     {
-      throw new Exception("Error in ReadContactData: " + ex.Message);
+      throw new Exception("Error in SearchAndReadContactData: " + ex.Message);
     }
   }
 
@@ -252,11 +267,19 @@ public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
 
   public async Task<int> TotalCount(string query)
   {
-    var result = await GetSQLiteAsyncConnection().
-                      Table<KKSqlTableForContact>().Where(s => s.DisplayName == query ||
-                      (s.DisplayName != null && s.DisplayName.StartsWith(query))).
-                      CountAsync();
-    return result;
-
+    try
+    {
+      var searchPattern = $"%{query}%";
+      var result = await GetSQLiteAsyncConnection()
+                        .ExecuteScalarAsync<int>(
+                            "SELECT COUNT(*) FROM KKSqlTableForContact WHERE DisplayName LIKE ? COLLATE NOCASE",
+                            searchPattern);
+      return result;
+    }
+    catch (Exception ex)
+    {
+      Debug.WriteLine($"Error in TotalCount with query: {ex.Message}");
+      return 0;
+    }
   }
 }

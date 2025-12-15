@@ -18,20 +18,23 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0"
-                Grid.Column="0">
+              Grid.Column="0">
             <local:ContactSearchBar
                 x:Name="searchText"
                 SearchTextValue="{Binding SearchText}"
                 SearchCommandValue="{Binding SearchCommand}"/>
         </Grid>
-        <local:ContactCollectionView
-            Grid.Row="1"
-            Grid.Column="0"
-            x:Name="contactList"
-            SelectionChanged="contactList_SelectionChanged"
-            ContactItems="{Binding Singlecontactitem}"
-            LoadMoreCommand="{Binding LoadMoreCommand}"/>
-        <StackLayout
+        <HorizontalStackLayout>
+            <local:ContactCollectionView
+                Grid.Row="1"
+                Grid.Column="0"
+                x:Name="contactList"
+                SelectionChanged="contactList_SelectionChanged"
+                ContactItems="{Binding Singlecontactitem}"
+                LoadMoreCommand="{Binding LoadMoreCommand}"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout
             Grid.Row="2"
             InputTransparent="{Binding IsLoadingMore}"
             Grid.Column="0"
@@ -41,6 +44,6 @@
                     IsRunning="{Binding IsLoadingMore}"
                     IsVisible="{Binding IsLoadingMore}"/>
             </Grid>
-        </StackLayout>
+        </HorizontalStackLayout>
     </Grid>
 </ContentView>

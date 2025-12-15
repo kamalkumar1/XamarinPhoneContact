@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+             xmlns:ani="clr-namespace:XamarinPhoneContact.KKAnimation"
              xmlns:local="clr-namespace:XamarinPhoneContact.View"
              x:Class="XamarinPhoneContact.View.ContactItemView"
              x:DataType="model:ContactItem"
@@ -15,13 +16,13 @@
         <VisualState Name="Normal">
           <VisualState.Setters>
             <Setter Property="BackgroundColor"
-                Value="Transparent"/>
+                    Value="Transparent"/>
           </VisualState.Setters>
         </VisualState>
         <VisualState Name="Selected">
           <VisualState.Setters>
             <Setter Property="BackgroundColor"
-                Value="Transparent"/>
+                    Value="Transparent"/>
           </VisualState.Setters>
         </VisualState>
       </VisualStateGroup>
@@ -74,10 +75,10 @@
                      Binding="{Binding Itemselcted}"
                      Value="True">
           <DataTrigger.EnterActions>
-            <local:ScaleAnimationTriggerAction/>
+            <ani:ScaleAnimationTriggerAction/>
           </DataTrigger.EnterActions>
           <DataTrigger.ExitActions>
-            <local:ScaleOutAnimationTriggerAction/>
+            <ani:ScaleOutAnimationTriggerAction/>
           </DataTrigger.ExitActions>
         </DataTrigger>
       </Image.Triggers>

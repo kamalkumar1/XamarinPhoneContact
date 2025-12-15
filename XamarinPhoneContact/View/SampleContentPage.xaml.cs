@@ -20,6 +20,15 @@ public partial class SampleContentPage : ContentPage
 		contentGrid.Children.Add(_contactView);
 	}
 
+	protected override async void OnAppearing()
+	{
+		base.OnAppearing();
+		if (_viewModel != null)
+		{
+			await _viewModel.CalulateAndGetTotalPageCount();
+			await _viewModel.LoadContactsAsync();
+		}
+	}
 
 	private void OnGetSelectedContacts()
 	{

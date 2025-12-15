@@ -112,6 +112,8 @@ public partial class KKSingleContactViewModel : ObservableObject
     _kKReadDataFromLocalDB = null;
     _kKContactPermissionRequest = null;
     Singlecontactitem.Clear();
+    _currentPageSize = -1;
+    _totalPagecount = 0;
   }
 
   async partial void OnSearchTextChanged(string value)
@@ -168,6 +170,7 @@ public partial class KKSingleContactViewModel : ObservableObject
       }
       else
       {
+        _currentPageSize = 0;
         var contacts = await _kKReadDataFromLocalDB.GetContactFromLocalDbWithSearch(query, _currentPageSize);
 
         if (cancellationToken.IsCancellationRequested)
