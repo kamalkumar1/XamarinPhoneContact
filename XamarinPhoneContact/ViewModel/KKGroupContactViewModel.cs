@@ -19,6 +19,9 @@ public partial class KKGroupContactViewModel : BaseViewModel
   [ObservableProperty]
   private ObservableCollection<ContactItem> selectedContacts = new ObservableCollection<ContactItem>();
 
+  [ObservableProperty]
+  private string searchText = string.Empty;
+
   private CancellationTokenSource? _searchCts;
   private string _lastSearchQuery = string.Empty;
   private bool _isSearchActive = false;
@@ -146,6 +149,11 @@ public partial class KKGroupContactViewModel : BaseViewModel
     ContactGroups?.Clear();
     Singlecontactitem?.Clear();
     SelectedContacts?.Clear();
+  }
+
+  partial void OnSearchTextChanged(string value)
+  {
+    _ = PerformSearchWithDebounce(value);
   }
   private async Task PerformSearchWithDebounce(string query)
   {
