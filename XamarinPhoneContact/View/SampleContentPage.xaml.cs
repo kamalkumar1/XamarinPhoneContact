@@ -65,14 +65,32 @@ public partial class SampleContentPage : ContentPage
 
 	private void OnGetSelectedContacts()
 	{
-		// Get all selected contacts
-		var selectedContacts = _viewModel.GetSelectedContacts();
-
-		// Or observe the SelectedContacts collection
-		foreach (var contact in selectedContacts)
+		if (_viewModel != null)
 		{
-			Debug.WriteLine($"Selected: {contact.DisplayName}");
+			// Get all selected contacts
+			var selectedContacts = _viewModel.GetSelectedContacts();
+
+			// Or observe the SelectedContacts collection
+			foreach (var contact in selectedContacts)
+			{
+				Debug.WriteLine($"Selected: {contact.DisplayName}");
+			}
+			_viewModel?.RestViewModel();
 		}
+
+		if (_groupViewModel != null)
+		{
+			// Get all selected contacts
+			var selectedContacts = _groupViewModel.GetSelectedContacts();
+
+			// Or observe the SelectedContacts collection
+			foreach (var contact in selectedContacts)
+			{
+				Debug.WriteLine($"Selected: {contact.DisplayName}");
+			}
+			_groupViewModel?.RestViewModel();
+		}
+
 	}
 
 	protected override void OnDisappearing()
@@ -81,7 +99,6 @@ public partial class SampleContentPage : ContentPage
 		OnGetSelectedContacts();
 		// Optional: Clean up if needed
 		contentGrid.Children.Clear();
-		_viewModel?.RestViewModel();
 		BindingContext = null;
 	}
 }

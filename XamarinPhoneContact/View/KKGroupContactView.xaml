@@ -33,8 +33,7 @@
             SelectionMode="Single"
             VerticalScrollBarVisibility="Never"
             ItemsSource="{Binding ContactGroups}"
-            SelectionChanged="contactList_SelectionChanged"
-            RemainingItemsThreshold="2">
+            SelectionChanged="contactList_SelectionChanged">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="5"
                                    Orientation="Vertical"/>
@@ -69,20 +68,15 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <!-- <local:ContactCollectionView
-                IsVisible="False"
-                x:Name="contactList"
-                SelectionChanged="contactList_SelectionChanged"
-                ContactItems="{Binding Singlecontactitem}"
-                LoadMoreCommand="{Binding LoadMoreCommand}"/> -->
-        <Grid
-            Grid.Row="2"
-            Grid.Column="0"
-            IsVisible="{Binding IsLoadingMore}"
-            Padding="10">
-            <ActivityIndicator
-                IsRunning="{Binding IsLoadingMore}"
-                IsVisible="{Binding IsLoadingMore}"/>
+
+        <Grid Grid.Row="2"
+              Grid.Column="0"
+              IsVisible="{Binding IsLoadingMore}"
+              Padding="10">
+            <ActivityIndicator Grid.Row="0"
+                               Grid.Column="0"
+                               IsRunning="{Binding IsLoadingMore}"
+                               IsVisible="{Binding IsLoadingMore}"/>
         </Grid>
     </Grid>
 </ContentView>

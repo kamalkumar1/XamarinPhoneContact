@@ -7,21 +7,13 @@ using XamarinPhoneContact.ViewModel;
 
 namespace XamarinPhoneContact.View;
 
-public class Namesd
-{
-    public string? name;
-    public string? display;
-}
-public delegate void GetSelectedContactItem(KKSqlTableForContact contactItem);
 [XamlCompilation(XamlCompilationOptions.Compile)]
 
 public partial class KKGroupContactView : ContentView
 {
-    IContact? _contact;
-    IEnumerable<ContactGroup> totalContactItems = new List<ContactGroup>(1000);
-    public GetSelectedContactItem? getSelectedContact;
-    public Thickness ContactViewCellMargin = new Thickness(20, 20, 20, 20);
-    KKGroupContactViewModel? KKGroupContactViewModel;
+
+    KKGroupContactViewModel? _KKGroupContactViewModel;
+    private bool _isProcessingSelection = false;
 
     public KKGroupContactView()
     {
@@ -30,7 +22,7 @@ public partial class KKGroupContactView : ContentView
 
     public KKGroupContactView(KKGroupContactViewModel vm) : this()
     {
-        KKGroupContactViewModel = vm;
+        _KKGroupContactViewModel = vm;
         BindingContext = vm;
 
         // Subscribe to CollectionView scrolled event for load more
@@ -43,7 +35,7 @@ public partial class KKGroupContactView : ContentView
 
     private async void OnCollectionViewScrolled(object? sender, ItemsViewScrolledEventArgs e)
     {
-        if (KKGroupContactViewModel._totalPagecount <= KKGroupContactViewModel._currentPageSize)
+        if (_KKGroupContactViewModel._totalPagecount <= _KKGroupContactViewModel._currentPageSize)
         {
             Debug.WriteLine("All pages loaded, no more data to load.");
             return;
@@ -67,9 +59,9 @@ public partial class KKGroupContactView : ContentView
         if (totalItems > 0 && lastVisibleIndex >= totalItems - threshold)
         {
             Debug.WriteLine("Threshold reached, triggering LoadMore");
-            if (KKGroupContactViewModel != null)
+            if (_KKGroupContactViewModel != null)
             {
-                await KKGroupContactViewModel.LoadMoreCommand.ExecuteAsync(null);
+                await _KKGroupContactViewModel.LoadMoreCommand.ExecuteAsync(null);
             }
         }
     }
@@ -86,7 +78,7 @@ public partial class KKGroupContactView : ContentView
             GroupContactCollectionView.Scrolled -= OnCollectionViewScrolled;
         }
 
-        KKGroupContactViewModel?.RestViewModel();
+        _KKGroupContactViewModel?.RestViewModel();
         BindingContext = null;
 
         // Unsubscribe to prevent memory leaks
@@ -96,16 +88,44 @@ public partial class KKGroupContactView : ContentView
 
     private async void contactList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+        // Prevent duplicate processing
+        if (_isProcessingSelection)
             return;
 
-        var selectedItem = e.CurrentSelection[0] as ContactItem;
-        if (selectedItem == null)
-            return;
+        try
+        {
+            // Only process if there's a new selection (not deselection)
+            if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+                return;
 
-        selectedItem.Itemselcted = !selectedItem.Itemselcted;
+            _isProcessingSelection = true;
 
-        // Clear selection to allow re-selecting the same item
-        //  contactList.SelectedItem = null;
+            var selectedItem = e.CurrentSelection[0] as ContactItem;
+            if (selectedItem != null)
+            {
+                selectedItem.Itemselcted = !selectedItem.Itemselcted;
+
+                // Update ViewModel with selected contact
+                if (_KKGroupContactViewModel != null)
+                {
+                    _KKGroupContactViewModel.UpdateSelectedContact(selectedItem);
+                }
+            }
+
+            // Small delay to allow UI to update before clearing selection
+            await Task.Delay(50);
+
+            // Clear selection to allow re-selecting the same item
+            if (GroupContactCollectionView != null)
+                GroupContactCollectionView.SelectedItem = null;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in contactList_SelectionChanged: {ex.Message}");
+        }
+        finally
+        {
+            _isProcessingSelection = false;
+        }
     }
 }

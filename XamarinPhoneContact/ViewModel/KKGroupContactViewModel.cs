@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using KKPhone.ViewModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace XamarinPhoneContact.ViewModel;
 
@@ -14,7 +15,14 @@ public partial class KKGroupContactViewModel : BaseViewModel
 
   [ObservableProperty]
   private ObservableCollection<ContactGroup> contactGroups = new();
-  public int TotalCount = 0;
+
+  [ObservableProperty]
+  private ObservableCollection<ContactItem> selectedContacts = new ObservableCollection<ContactItem>();
+
+  private CancellationTokenSource? _searchCts;
+  private string _lastSearchQuery = string.Empty;
+  private bool _isSearchActive = false;
+
   public KKGroupContactViewModel(IKKGetContact kKReadDataFromLocalDB, IKKContactPermissionRequest kKContactPermissionRequest)
     : base(kKReadDataFromLocalDB, kKContactPermissionRequest)
   {
@@ -42,7 +50,7 @@ public partial class KKGroupContactViewModel : BaseViewModel
       Debug.WriteLine("No contacts to add to groups");
       return;
     }
-    TotalCount = TotalCount + contacts.Count;
+
     var groupedContacts = KKContactGroupHelper.CreateGroupsWithSections(contacts);
     Debug.WriteLine($"groupedContacts has {groupedContacts.Count} groups");
 
@@ -81,17 +89,16 @@ public partial class KKGroupContactViewModel : BaseViewModel
     try
     {
       _currentPageSize++;
-      var contacts = await _kKReadDataFromLocalDB.GetContactFromLocalDbWithPagantion(_currentPageSize);
+      var contacts = await FetchContactsAsync(_currentPageSize);
+
       if (contacts != null && contacts.Any())
       {
-        TotalCount = TotalCount + contacts.Count;
         foreach (var contact in contacts)
         {
-
           KKContactGroupHelper.AddContactToGroupedCollection(ContactGroups, contact);
         }
       }
-      //_currentPageSize++;
+
       await Task.Delay(100);
     }
     catch (Exception ex)
@@ -105,34 +112,97 @@ public partial class KKGroupContactViewModel : BaseViewModel
     }
   }
 
-  public void RestViewModel()
+  private async Task<List<ContactItem>> FetchContactsAsync(int pageSize)
   {
-    //_kKContactPermissionRequest.CustomPermissionStatus -= OnPermissionStatusChanged;
-    ContactGroups?.Clear();
-    Singlecontactitem?.Clear();
+    return _isSearchActive && !string.IsNullOrEmpty(_lastSearchQuery)
+      ? await _kKReadDataFromLocalDB.GetContactFromLocalDbWithSearch(_lastSearchQuery, pageSize)
+      : await _kKReadDataFromLocalDB.GetContactFromLocalDbWithPagantion(pageSize);
   }
 
-  [RelayCommand]
-  void OnSearchTextChanged(string value)
+  public void UpdateSelectedContact(ContactItem contact)
   {
-    PerformSearch(value);
-  }
-
-  [RelayCommand]
-  void Search()
-  {
-    PerformSearch(SearchText);
-  }
-
-  void PerformSearch(string query)
-  {
-    if (string.IsNullOrEmpty(query))
+    if (contact.Itemselcted)
     {
-      // Show all contacts
+      if (!SelectedContacts.Contains(contact))
+        SelectedContacts.Add(contact);
     }
     else
     {
-      // Filter contacts
+      SelectedContacts.Remove(contact);
     }
   }
+
+  public List<ContactItem> GetSelectedContacts()
+  {
+    var allContacts = ContactGroups.SelectMany(g => g).ToList();
+    return allContacts.Where(c => c.Itemselcted).ToList();
+  }
+
+  public void RestViewModel()
+  {
+    _searchCts?.Cancel();
+    _searchCts?.Dispose();
+    _searchCts = null;
+    ContactGroups?.Clear();
+    Singlecontactitem?.Clear();
+    SelectedContacts?.Clear();
+  }
+  private async Task PerformSearchWithDebounce(string query)
+  {
+    // Cancel previous search
+    _searchCts?.Cancel();
+    _searchCts = new CancellationTokenSource();
+    var token = _searchCts.Token;
+
+    try
+    {
+      // Debounce: wait 300ms for user to stop typing
+      await Task.Delay(300, token);
+
+      // Avoid duplicate searches
+      if (_lastSearchQuery == query)
+        return;
+
+      _lastSearchQuery = query;
+      await PerformSearch(query, token);
+    }
+    catch (TaskCanceledException)
+    {
+      // Search was cancelled by new input, ignore
+    }
+  }
+
+  [RelayCommand]
+  async Task Search()
+  {
+    _searchCts?.Cancel();
+    await PerformSearch(SearchText, CancellationToken.None);
+  }
+  async Task PerformSearch(string query, CancellationToken cancellationToken)
+  {
+    try
+    {
+      _currentPageSize = 0;
+      _isSearchActive = !string.IsNullOrEmpty(query);
+
+      var contacts = await FetchContactsAsync(_currentPageSize);
+
+      if (cancellationToken.IsCancellationRequested)
+        return;
+
+      ContactGroups.Clear();
+
+      if (contacts != null && contacts.Any())
+      {
+        AddContactsToGroups(contacts);
+      }
+    }
+    catch (Exception ex)
+    {
+      if (ex is not TaskCanceledException)
+        Debug.WriteLine($"Error in PerformSearch: {ex.Message}");
+    }
+  }
+
+
 }
