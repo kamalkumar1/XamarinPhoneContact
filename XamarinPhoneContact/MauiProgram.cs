@@ -66,7 +66,13 @@ public static class MauiProgram
 			// 1️⃣ First - Waits for completion
 			System.Diagnostics.Debug.WriteLine("🔵 Step 1: Initializing KKControlSetup...");
 
-			await MauiServiceProvider.GetService<IKKControlSetup>().Initialize();
+			var controlSetup = MauiServiceProvider.GetService<IKKControlSetup>();
+			if (controlSetup == null)
+			{
+				System.Diagnostics.Debug.WriteLine("❌ Error: IKKControlSetup service is null");
+				return;
+			}
+			await controlSetup.Initialize();
 
 			System.Diagnostics.Debug.WriteLine("✅ Step 1: KKControlSetup initialized successfully");
 

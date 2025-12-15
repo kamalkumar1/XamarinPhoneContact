@@ -5,45 +5,11 @@ using XamarinPhoneContact.Helper;
 
 namespace XamarinPhoneContact.Model;
 
-// public class SqlName
-// {
-//     public string? Prefix { get; set; }
-//     public string? Suffix { get; set; }
-//     public string? FirstName { get; set; }
-//     public string? MiddleName { get; set; }
-//     public string? LastName { get; set; }
-// }
-// public class SqlEmailids
-// {
-//     // public string id { get; set; }
-//     public string? Emailid { get; set; }
-//     public string? Type { get; set; }
-// }
-// public class SqlUrl
-// {
-//     public string URL { get; set; }
-// }
-// public class SqlPhone
-// {
-//     // public string Phoneid { get; set;}
-//     public string PhoneNumber { get; set; }
-//     public string Type { get; set; }
-// }
-// public class SqlCompany
-// {
-//     public string CompanyName { get; set; }
-//     public string Role { get; set; }
-// }
-// public class SqlAddress
-// {
-//     public string Type { get; set; }
-//     public string FullAddress { get; set; }
 
-// }
 public class SqlDateList
 {
-    public string Date { get; set; }
-    public string type { get; set; }
+    public string? Date { get; set; }
+    public string? type { get; set; }
 }
 public class KKSqlTableForContact
 {

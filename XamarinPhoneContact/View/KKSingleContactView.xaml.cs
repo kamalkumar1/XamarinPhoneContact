@@ -26,7 +26,7 @@ public partial class KKSingleContactView : ContentView
 		if (kKSingleContactViewModel != null)
 		{
 			await kKSingleContactViewModel.CalulateAndGetTotalPageCount();
-			kKSingleContactViewModel.CheckPermission();
+			await kKSingleContactViewModel.LoadContactsAsync();
 		}
 	}
 
@@ -39,8 +39,8 @@ public partial class KKSingleContactView : ContentView
 		BindingContext = null;
 
 		// Unsubscribe to prevent memory leaks
-		this.Loaded -= OnLoaded;
-		this.Unloaded -= OnUnloaded;
+		Loaded -= OnLoaded;
+		Unloaded -= OnUnloaded;
 	}
 
 	private void contactList_SelectionChanged(object sender, SelectionChangedEventArgs e)

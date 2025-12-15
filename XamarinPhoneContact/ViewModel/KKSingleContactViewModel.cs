@@ -40,42 +40,6 @@ public partial class KKSingleContactViewModel : ObservableObject
     IsLoadingMore = false;
   }
 
-  public void CheckPermission()
-  {
-    try
-    {
-
-      _kKContactPermissionRequest.CustomPermissionStatus += OnPermissionStatusChanged;
-      _kKContactPermissionRequest.RequestPermissions();
-    }
-    catch (Exception ex)
-    {
-      Debug.WriteLine($"CheckPermission Exception: {ex.Message}");
-    }
-    finally
-    {
-      _kKContactPermissionRequest.CustomPermissionStatus -= OnPermissionStatusChanged;
-
-    }
-
-  }
-
-  async void OnPermissionStatusChanged(object? sender, EventArgs eventArgs)
-  {
-    var result = (ContactEnum)sender;
-    if (result == ContactEnum.Granted)
-    {
-      var stopwatch = Stopwatch.StartNew();
-      await LoadContactsAsync();
-      stopwatch.Stop();
-      Debug.WriteLine($"LoadContactsAsync took: {stopwatch.ElapsedMilliseconds} ms");
-    }
-    else
-    {
-      Debug.WriteLine("Permission denied to load the contact. Check your setting in phone");
-    }
-  }
-
   public async Task CalulateAndGetTotalPageCount()
   {
     var totalItems = await _kKReadDataFromLocalDB.TotalCount();
@@ -84,6 +48,12 @@ public partial class KKSingleContactViewModel : ObservableObject
 
   public async Task LoadContactsAsync()
   {
+    var permissionStatus = await _kKContactPermissionRequest.GetContactAuthorizationStatus();
+    if (permissionStatus != true)
+    {
+      Debug.WriteLine("Contact permission not granted.");
+      return;
+    }
     _currentPageSize++;
     var contacts = await _kKReadDataFromLocalDB.GetAllContactFromLocalDb(_currentPageSize);
     AddContactToGroup(contacts);
@@ -102,13 +72,10 @@ public partial class KKSingleContactViewModel : ObservableObject
   {
     if (_isLoadMoreInProgress || IsLoadingMore)
       return;
-
     if (_currentPageSize >= _totalPagecount)
       return;
-
     _isLoadMoreInProgress = true;
     IsLoadingMore = true;
-
     try
     {
       _currentPageSize++;
@@ -120,7 +87,6 @@ public partial class KKSingleContactViewModel : ObservableObject
 
       }
       await Task.Delay(100);
-
     }
     catch (Exception ex)
     {
