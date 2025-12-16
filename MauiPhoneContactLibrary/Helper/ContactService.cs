@@ -1,6 +1,6 @@
 using System;
 
-namespace MauiPhoneContactLibrary.Helper;
+namespace XamarinPhoneContact.Helper;
 
 public class ContactService
 {

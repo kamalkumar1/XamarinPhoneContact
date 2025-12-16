@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MauiPhoneContactLibrary.Helper
+namespace XamarinPhoneContact.Helper
 {
     public enum ContactEnum
     {
