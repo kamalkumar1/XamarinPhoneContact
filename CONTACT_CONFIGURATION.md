@@ -303,6 +303,8 @@ config.PageSize = 50;
 6. **AnimatedSelectionTickMark** - when Individual contact item get selected
 6. **DarkMode** - It will support both dark and light mode feature
 
+## Secuirty 
+
 ## Notes
 
 - Changes to configuration should be made before views are created
