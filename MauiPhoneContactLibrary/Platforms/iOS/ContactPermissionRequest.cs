@@ -2,10 +2,10 @@
 using Contacts;
 using Foundation;
 using System.Diagnostics;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
 
-namespace XamarinPhoneContact.Platforms.iOS
+namespace MauiPhoneContactLibrary.Platforms.iOS
 {
     public class ContactPermissionRequest : IKKContactPermissionRequest
     {

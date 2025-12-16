@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace XamarinPhoneContact;
+namespace MauiPhoneContactLibrary;
 
 public class Program
 {

@@ -4,11 +4,11 @@ using System.Text.Json;
 using Android.Content;
 using Android.Database;
 using Android.Provider;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Model;
-using XamarinPhoneContact.Model.SecureKeyGenrator;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Model;
+using MauiPhoneContactLibrary.Model.SecureKeyGenrator;
 
-namespace XamarinPhoneContact.Platforms.Android;
+namespace MauiPhoneContactLibrary.Platforms.Android;
 
 public struct CNContactHelper
 {

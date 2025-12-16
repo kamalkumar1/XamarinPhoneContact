@@ -1,17 +1,17 @@
 using System;
 using System.ComponentModel;
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Service.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Service.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using XamarinPhoneContact.Model;
+using MauiPhoneContactLibrary.Model;
 
-namespace XamarinPhoneContact.ViewModel;
+namespace MauiPhoneContactLibrary.ViewModel;
 
 public partial class KKSingleContactViewModel : ObservableObject
 {

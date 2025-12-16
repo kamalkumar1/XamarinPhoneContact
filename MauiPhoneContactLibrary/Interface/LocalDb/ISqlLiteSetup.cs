@@ -1,7 +1,7 @@
 using System;
 using SQLite;
 
-namespace XamarinPhoneContact.Interface.LocalDB;
+namespace MauiPhoneContactLibrary.Interface.LocalDB;
 
 public interface ISqlLiteSetup
 {

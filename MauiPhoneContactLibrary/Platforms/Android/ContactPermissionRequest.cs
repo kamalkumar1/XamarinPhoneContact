@@ -2,10 +2,10 @@ using Android;
 using Android.Content.PM;
 using Android.OS;
 using AndroidX.Core.Content;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
 
-namespace XamarinPhoneContact.Platforms.Android;
+namespace MauiPhoneContactLibrary.Platforms.Android;
 
 public class ContactPermissionRequest : IKKContactPermissionRequest
 {
@@ -42,7 +42,7 @@ public class ContactPermissionRequest : IKKContactPermissionRequest
   {
     // var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity as Activity ?? throw new InvalidOperationException("No activity");
     // var obj = ActivityCompat.RequestPermissions(activity, new[] { Manifest.Permission.ReadContacts }, 1107);
-    var status = await MainThread.InvokeOnMainThreadAsync(async () => 
+    var status = await MainThread.InvokeOnMainThreadAsync(async () =>
       await Permissions.RequestAsync<Permissions.ContactsRead>());
     if (status == PermissionStatus.Granted)
     {

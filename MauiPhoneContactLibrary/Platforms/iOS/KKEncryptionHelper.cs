@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Foundation;
 
-namespace XamarinPhoneContact.Platforms.iOS;
+namespace MauiPhoneContactLibrary.Platforms.iOS;
 
 public static class KKEncryptionHelperiOS
 {

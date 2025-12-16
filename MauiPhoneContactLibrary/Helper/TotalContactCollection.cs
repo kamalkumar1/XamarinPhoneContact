@@ -1,6 +1,6 @@
 using System;
 
-namespace XamarinPhoneContact.Helper;
+namespace MauiPhoneContactLibrary.Helper;
 
 public struct TotalContactCollection
 {

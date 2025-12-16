@@ -3,12 +3,12 @@ using System.Diagnostics;
 using Android.Content;
 using Android.Database;
 using Android.Provider;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Model;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Model;
 
-namespace XamarinPhoneContact.Platforms.Android;
+namespace MauiPhoneContactLibrary.Platforms.Android;
 
 public class ReadPhoneContactData : IKKPhoneContactData
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace XamarinPhoneContact.Interface;
+namespace MauiPhoneContactLibrary.Interface;
 
 public interface IKKControlSetup
 {

@@ -4,11 +4,11 @@ using System.Security.Cryptography;
 using System.Text;
 using SQLite;
 using SQLitePCL;
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Model.SecureKeyGenrator;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Model.SecureKeyGenrator;
 
-namespace XamarinPhoneContact.Model;
+namespace MauiPhoneContactLibrary.Model;
 
 public class SQlLiteSetup : ISqlLiteSetup
 {

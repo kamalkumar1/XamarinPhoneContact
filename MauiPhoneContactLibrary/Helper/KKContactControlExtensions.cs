@@ -1,20 +1,20 @@
 using Microsoft.Maui.LifecycleEvents;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Interface;
 #if IOS
-using XamarinPhoneContact.Platforms.iOS;
+using MauiPhoneContactLibrary.Platforms.iOS;
 #elif ANDROID
-using XamarinPhoneContact.Platforms.Android;
+using MauiPhoneContactLibrary.Platforms.Android;
 #endif
-using XamarinPhoneContact.Model;
-using XamarinPhoneContact.Model.LocalSql;
-using XamarinPhoneContact.Service.Interface;
-using XamarinPhoneContact.Service;
-using XamarinPhoneContact.View;
-using XamarinPhoneContact.ViewModel;
+using MauiPhoneContactLibrary.Model;
+using MauiPhoneContactLibrary.Model.LocalSql;
+using MauiPhoneContactLibrary.Service.Interface;
+using MauiPhoneContactLibrary.Service;
+using MauiPhoneContactLibrary.View;
+using MauiPhoneContactLibrary.ViewModel;
 using System.Runtime.Versioning;
 
-namespace XamarinPhoneContact.Helper;
+namespace MauiPhoneContactLibrary.Helper;
 
 /// <summary>
 /// Extension methods for configuring KK Contact Control in MAUI applications
@@ -56,12 +56,12 @@ public static class KKContactControlExtensions
     mauiAppBuilder.ConfigureLifecycleEvents(events =>
       {
 #if IOS
-				events.AddiOS(iOS => iOS.WillFinishLaunching((app, __) =>
-					{
-						// Initialize contact control asynchronously
-						_ = Task.Run(async () => await InitializeContactControlAsync());
-						return true;
-					}));
+        events.AddiOS(iOS => iOS.WillFinishLaunching((app, __) =>
+          {
+            // Initialize contact control asynchronously
+            _ = Task.Run(async () => await InitializeContactControlAsync());
+            return true;
+          }));
 #elif ANDROID
         events.AddAndroid(android => android
     .OnCreate(async (activity, bundle) =>

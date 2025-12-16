@@ -1,7 +1,7 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace XamarinPhoneContact.ViewModel;
+namespace MauiPhoneContactLibrary.ViewModel;
 
 public class KKSampleContentPageViewModel : ObservableObject
 {

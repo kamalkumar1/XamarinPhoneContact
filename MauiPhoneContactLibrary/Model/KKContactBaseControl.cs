@@ -1,10 +1,10 @@
 
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Helper;
 using System.Text.RegularExpressions;
 
-namespace XamarinPhoneContact.Model;
+namespace MauiPhoneContactLibrary.Model;
 
 public class KKContactBaseControl : IKKControlSetup
 {

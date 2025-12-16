@@ -1,9 +1,9 @@
 using System;
 using SQLite;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Model;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Model;
 
-namespace XamarinPhoneContact.Interface.LocalDB;
+namespace MauiPhoneContactLibrary.Interface.LocalDB;
 
 public interface IKKCurdOperation
 {

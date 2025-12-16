@@ -5,11 +5,11 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using Contacts;
 using Foundation;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Model;
-using XamarinPhoneContact.Model.SecureKeyGenrator;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Model;
+using MauiPhoneContactLibrary.Model.SecureKeyGenrator;
 
-namespace XamarinPhoneContact.Platforms.iOS;
+namespace MauiPhoneContactLibrary.Platforms.iOS;
 
 
 public struct CNContactHelper

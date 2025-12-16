@@ -1,6 +1,6 @@
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 
-namespace XamarinPhoneContact.Examples;
+namespace MauiPhoneContactLibrary.Examples;
 
 /// <summary>
 /// Example of how to customize contact views using ContactConfig

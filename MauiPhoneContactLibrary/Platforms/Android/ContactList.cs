@@ -12,11 +12,11 @@ using Android.Runtime;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.AppCompat.App;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
 
-namespace XamarinPhoneContact.Platforms.Android
+namespace MauiPhoneContactLibrary.Platforms.Android
 {
     public class ContactList : AppCompatActivity
     {

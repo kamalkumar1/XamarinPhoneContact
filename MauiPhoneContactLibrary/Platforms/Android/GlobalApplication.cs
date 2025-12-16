@@ -4,7 +4,7 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 
-namespace XamarinPhoneContact.Droid
+namespace MauiPhoneContactLibrary.Droid
 {
     [Application]
     public class GlobalApplication :Android.App.Application, Application.IActivityLifecycleCallbacks

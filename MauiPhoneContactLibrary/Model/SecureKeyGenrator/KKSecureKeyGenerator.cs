@@ -11,7 +11,7 @@ using Android.Provider;
 using Android.Content;
 #endif
 
-namespace XamarinPhoneContact.Model.SecureKeyGenrator;
+namespace MauiPhoneContactLibrary.Model.SecureKeyGenrator;
 
 public static class KKSecureKeyGenerator  // ✅ Static class
 {

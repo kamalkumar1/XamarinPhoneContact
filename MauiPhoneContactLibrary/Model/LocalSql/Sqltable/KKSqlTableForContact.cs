@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using SQLite;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 
-namespace XamarinPhoneContact.Model;
+namespace MauiPhoneContactLibrary.Model;
 
 
 public class SqlDateList

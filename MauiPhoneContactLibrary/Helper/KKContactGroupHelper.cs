@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace XamarinPhoneContact.Helper;
+namespace MauiPhoneContactLibrary.Helper;
 
 public enum KKContactResulType
 {

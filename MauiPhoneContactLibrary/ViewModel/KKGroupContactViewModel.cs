@@ -1,6 +1,6 @@
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Service.Interface;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Service.Interface;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
 using KKPhone.ViewModel;
@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading;
 
-namespace XamarinPhoneContact.ViewModel;
+namespace MauiPhoneContactLibrary.ViewModel;
 
 public delegate void GetSingleSelectedContactItem(ContactItem contactItem);
 public partial class KKGroupContactViewModel : BaseViewModel

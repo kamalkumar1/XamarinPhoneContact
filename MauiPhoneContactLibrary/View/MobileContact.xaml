@@ -17,17 +17,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0"
-                    Grid.Column="0">
+                  Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                     <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button IsVisible ="False" x:Name="clearButton"
+                <Button IsVisible="False"
+                        x:Name="clearButton"
                         Grid.Row="0"
                         Grid.Column="1"
                         FontSize="15"
@@ -38,16 +39,16 @@
                         Text="Clear All">
                 </Button>
                 <Image x:Name="dismisbutton"
-                        Aspect="AspectFit"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="0,10,10,15"
-                        HeightRequest="25"
-                        WidthRequest="25">
-                       <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Dismiss_Selected" />
+                       Aspect="AspectFit"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Margin="0,10,10,15"
+                       HeightRequest="25"
+                       WidthRequest="25">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Dismiss_Selected"/>
                     </Image.GestureRecognizers>
-                       </Image>
+                </Image>
                 <Button x:Name="dismisbuttonText"
                         Margin="0,5,10,5"
                         Grid.Row="2"
@@ -57,15 +58,15 @@
                         Clicked="Dismiss_Selected"></Button>
             </Grid>
             <SearchBar x:Name="searchText"
-                    BackgroundColor="White"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    TextChanged="Handle_TextChanged"
-                    SearchButtonPressed="Handle_SearchButtonPressed">
+                       BackgroundColor="White"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       TextChanged="Handle_TextChanged"
+                       SearchButtonPressed="Handle_SearchButtonPressed">
             </SearchBar>
             <ListView Grid.Row="2"
-                    Grid.Column="0"
-                    x:Name="contactList"
+                      Grid.Column="0"
+                      x:Name="contactList"
                       SeparatorVisibility="Default"
                       HasUnevenRows="True"
                       IsGroupingEnabled="True"
@@ -77,8 +78,8 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid RowSpacing="0"
-                                    ColumnSpacing="0"
-                                    Margin="20,20,0,20">
+                                  ColumnSpacing="0"
+                                  Margin="20,20,0,20">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
@@ -97,29 +98,30 @@
                                            FontSize="14"/>
                                 </StackLayout>
                                 <Image HeightRequest="20"
-                                        WidthRequest="20"
-                                        Margin="5,5,20,0"
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="1"
-                                        IsVisible="{Binding Itemselcted}"
+                                       WidthRequest="20"
+                                       Margin="5,5,20,0"
+                                       Grid.Row="0"
+                                       Grid.Column="1"
+                                       Grid.ColumnSpan="1"
+                                       IsVisible="{Binding Itemselcted}"
                                        Source="checkmark"
-                                        Aspect="AspectFit"></Image>
+                                       Aspect="AspectFit"></Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Grid.Row="3"
-                    Grid.Column="0"
-                    x:Name="bottomLayout"
-                    IsVisible="{Binding Itemselcted}"
-                    Padding="0">
-                <Label x:Name="LblLoadingText" VerticalTextAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        Padding="0,12,0,12"
-                        FontAttributes="Bold"
-                        FontSize="Medium"></Label>
+                         Grid.Column="0"
+                         x:Name="bottomLayout"
+                         IsVisible="{Binding Itemselcted}"
+                         Padding="0">
+                <Label x:Name="LblLoadingText"
+                        VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       Padding="0,12,0,12"
+                       FontAttributes="Bold"
+                       FontSize="Medium"></Label>
             </StackLayout>
         </Grid>
 

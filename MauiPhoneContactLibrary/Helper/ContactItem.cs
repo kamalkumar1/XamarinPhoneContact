@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SQLite;
-using XamarinPhoneContact.Model;
+using MauiPhoneContactLibrary.Model;
 
-namespace XamarinPhoneContact.Helper
+namespace MauiPhoneContactLibrary.Helper
 {
 
     public struct Name

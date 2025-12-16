@@ -1,8 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 
-namespace XamarinPhoneContact.Service.Interface;
+namespace MauiPhoneContactLibrary.Service.Interface;
 
 public interface IKKGetContact
 {

@@ -1,7 +1,7 @@
 using System;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 
-namespace XamarinPhoneContact.Interface;
+namespace MauiPhoneContactLibrary.Interface;
 
 public interface IKKPhoneContactData
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace XamarinPhoneContact.Model;
+namespace MauiPhoneContactLibrary.Model;
 
 public static class MauiServiceProvider
 {

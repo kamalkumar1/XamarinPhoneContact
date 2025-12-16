@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace XamarinPhoneContact.Platforms.Android;
+namespace MauiPhoneContactLibrary.Platforms.Android;
 
 [Application]
 public class MainApplication : MauiApplication

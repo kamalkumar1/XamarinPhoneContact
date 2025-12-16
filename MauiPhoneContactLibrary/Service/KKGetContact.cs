@@ -3,13 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.Json;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Model;
-using XamarinPhoneContact.Service.Interface;
-using XamarinPhoneContact.View;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Model;
+using MauiPhoneContactLibrary.Service.Interface;
+using MauiPhoneContactLibrary.View;
 
-namespace XamarinPhoneContact.Service;
+namespace MauiPhoneContactLibrary.Service;
 
 public class KKGetContact : IKKGetContact
 {

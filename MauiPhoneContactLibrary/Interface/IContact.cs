@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 
-namespace XamarinPhoneContact
+namespace MauiPhoneContactLibrary
 {
     public interface IKKContactPermission
     {

@@ -1,13 +1,13 @@
 using System;
 using System.Diagnostics;
 using SQLite;
-using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Interface;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Model.LocalSql;
-using XamarinPhoneContact.Model.LocalSql.Sqltable;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Model.LocalSql;
+using MauiPhoneContactLibrary.Model.LocalSql.Sqltable;
 
-namespace XamarinPhoneContact.Model;
+namespace MauiPhoneContactLibrary.Model;
 
 public class KKCurdOperation : KKContactControlDbOperation, IKKCurdOperation
 {

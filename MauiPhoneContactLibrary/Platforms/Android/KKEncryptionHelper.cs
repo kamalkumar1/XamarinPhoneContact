@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace XamarinPhoneContact.Platforms.Android;
+namespace MauiPhoneContactLibrary.Platforms.Android;
 
 public static class KKEncryptionHelperAndroid
 {

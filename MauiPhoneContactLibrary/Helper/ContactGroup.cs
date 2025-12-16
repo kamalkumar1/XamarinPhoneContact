@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using XamarinPhoneContact.Model;
+using MauiPhoneContactLibrary.Model;
 
-namespace XamarinPhoneContact.Helper
+namespace MauiPhoneContactLibrary.Helper
 {
     public class ContactGroup : ObservableCollection<ContactItem>
     {

@@ -1,12 +1,12 @@
 ﻿using Foundation;
 using Contacts;
-using XamarinPhoneContact.Helper;
+using MauiPhoneContactLibrary.Helper;
 using System.Diagnostics;
-using XamarinPhoneContact.Interface.LocalDB;
-using XamarinPhoneContact.Model;
-using XamarinPhoneContact.Interface;
+using MauiPhoneContactLibrary.Interface.LocalDB;
+using MauiPhoneContactLibrary.Model;
+using MauiPhoneContactLibrary.Interface;
 
-namespace XamarinPhoneContact.Platforms.iOS
+namespace MauiPhoneContactLibrary.Platforms.iOS
 {
     public class ReadPhoneContactData : IKKPhoneContactData
     {

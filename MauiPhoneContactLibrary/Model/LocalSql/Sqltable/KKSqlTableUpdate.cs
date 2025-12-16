@@ -1,6 +1,6 @@
 using System;
 
-namespace XamarinPhoneContact.Model.LocalSql.Sqltable;
+namespace MauiPhoneContactLibrary.Model.LocalSql.Sqltable;
 
 public class KKSqlTableUpdate
 {

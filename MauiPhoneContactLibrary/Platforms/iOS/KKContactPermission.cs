@@ -1,5 +1,5 @@
 using System;
-namespace XamarinPhoneContact.Platforms.iOS;
+namespace MauiPhoneContactLibrary.Platforms.iOS;
 
 public class KKContactPermission : IKKContactPermission
 {
