@@ -1,42 +1,43 @@
-﻿
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using XamarinPhoneContact.Helper;
-using XamarinPhoneContact.Platforms;
+using XamarinPhoneContact.Interface;
+using XamarinPhoneContact.Model;
+#if ANDROID
+using XamarinPhoneContact.Platforms.Android;
+#elif IOS       
+using XamarinPhoneContact.Platforms.iOS;
+#endif
 using XamarinPhoneContact.View;
 namespace XamarinPhoneContact
 {
     public partial class MainPage : ContentPage
     {
-        
+
         public MainPage()
         {
             InitializeComponent();
-           
+
         }
         async void Show_Clicked(object sender, System.EventArgs e)
         {
             try
             {
-                kkContactControl.EnableMultiSelectionTickMark = true;
-                kkContactControl.CloseButtonImageName ="deletebutton.png";
-                 IContact contact = new ContactList(); // Assuming Contact implements IContact
-                 MobileContact mobile = new MobileContact(contact);
-                 mobile.getSelectedContact += Mobile_GetSelectedContactItem;
-                 await Navigation.PushModalAsync(mobile);
-                
+                await Shell.Current.GoToAsync(nameof(SampleContentPage));
+                // Option 1: Direct navigation
+                // await Navigation.PushAsync(new SampleContentPage());
 
+                // Option 2: Modal navigation
+                // await Navigation.PushModalAsync(new SampleContentPage());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-
             }
         }
-        private void Mobile_GetSelectedContactItem(ContactItem contactItem)
+        private void Mobile_GetSelectedContactItem(KKSqlTableForContact contactItem)
         {
-            
-            
+
+
         }
     }
 }

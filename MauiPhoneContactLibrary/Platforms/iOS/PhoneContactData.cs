@@ -13,25 +13,7 @@ namespace MauiPhoneContactLibrary.iOS
     {
         //  string[] chars = { "_", "$", "!", "<", ">" };
         List<ContactItem> totalContactListWithoutGrouping;
-        static string[] alphate = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#" };
-        List<ContactGroup> totalContactList = new List<ContactGroup>
-        {
-            new ContactGroup(alphate[0], alphate[0]){},new ContactGroup(alphate[1], alphate[1]){},
-            new ContactGroup(alphate[2], alphate[2]){},new ContactGroup(alphate[3], alphate[3]){},
-            new ContactGroup(alphate[4], alphate[4]){},new ContactGroup(alphate[5], alphate[5]){},
-            new ContactGroup(alphate[6], alphate[6]){},new ContactGroup(alphate[7], alphate[7]){},
-            new ContactGroup(alphate[8], alphate[8]){},new ContactGroup(alphate[9], alphate[9]){},
-            new ContactGroup(alphate[10], alphate[10]){},new ContactGroup(alphate[11], alphate[11]){},
-            new ContactGroup(alphate[12], alphate[12]){},new ContactGroup(alphate[13], alphate[13]){},
-            new ContactGroup(alphate[14], alphate[14]){},new ContactGroup(alphate[15], alphate[15]){},
-            new ContactGroup(alphate[16], alphate[16]){},new ContactGroup(alphate[17], alphate[17]){},
-            new ContactGroup(alphate[18], alphate[18]){},new ContactGroup(alphate[19], alphate[19]){},
-            new ContactGroup(alphate[20], alphate[20]){},new ContactGroup(alphate[21], alphate[21]){},
-            new ContactGroup(alphate[22], alphate[22]){},new ContactGroup(alphate[23], alphate[23]){},
-            new ContactGroup(alphate[24], alphate[24]){},new ContactGroup(alphate[25], alphate[25]){},
-            new ContactGroup(alphate[26], alphate[26]){}
-
-        };
+        List<ContactGroup> totalContactList = GroupContactHelper.CreateDefaultGroups();
 
         public static NSString[] AllKeys = new NSString[]
         {
@@ -86,6 +68,78 @@ namespace MauiPhoneContactLibrary.iOS
             return dict;
 
         }
+        public async Task<Dictionary<string, object>> GetAllContactFromPhoneAsync()
+        {
+            var rawContacts = new List<CNContact>(1000); // Pre-allocate capacity
+            NSError error;
+
+            using var store = new CNContactStore();
+            var request = new CNContactFetchRequest(AllKeys); // Keep AllKeys for full data
+            request.SortOrder = CNContactSortOrder.GivenName;
+
+            // Phase 1: Collect raw CNContact objects only (milliseconds)
+            store.EnumerateContacts(request, out error, (contact, ref stop) =>
+            {
+                rawContacts.Add(contact);  // ~1μs per contact
+            });
+
+            if (error != null) throw new Exception($"Contact fetch failed: {error.LocalizedDescription}");
+
+            // Phase 2: Parallel processing (see below)
+            return await ProcessContactsParallel(rawContacts);
+        }
+        private async Task<Dictionary<string, object>> ProcessContactsParallel(List<CNContact> rawContacts)
+        {
+            // Parallel extraction of ALL properties
+            var processTasks = rawContacts.Select(contact => Task.Run(() => ProcessSingleContact(contact))).ToArray();
+            var allItems = await Task.WhenAll(processTasks);
+
+            // Parallel grouping (maintains original order)
+            var groupTasks = allItems.Select(item => Task.Run(() => GroupContact(item))).ToArray();
+            var groupedItems = await Task.WhenAll(groupTasks);
+
+            return new Dictionary<string, object>
+            {
+                { "Group", totalContactList },  // Your alphabetized groups
+                { "List", allItems.ToList() }   // Flat list
+            };
+        }
+
+        private ContactItem ProcessSingleContact(CNContact contact)
+        {
+            var item = new ContactItem { ContactID = contact.Identifier ?? "" };
+            // Your existing methods - now run in parallel across contacts
+            GetDisplayName(contact, item);
+            GetName(contact, item);
+            GetPhoneNumber(contact, item);
+            // ... all other conditional extractions
+            //Birthday
+            if (kkContactControl.ShowBithday) GetBirthDay(contact, item);
+            //Email
+            if (kkContactControl.ShowEmail) GetEmails(contact, item);
+            //Address
+            if (kkContactControl.ShowAddress) GetAddress(contact, item);
+            //GetCompany
+            if (kkContactControl.ShowCompany) GetCompany(contact, item);
+            //GetUrls
+            if (kkContactControl.ShowUrl) GetUrls(contact, item);
+            //GetDate
+            if (kkContactControl.GetDate) GetDate(contact, item);
+
+            return item;
+        }
+
+        private ContactItem GroupContact(ContactItem item)
+        {
+            var index = GroupContactHelper.GetGroupIndex(item.DisplayName);
+            lock (totalContactList) // Thread-safe grouping
+            {
+                totalContactList[index].Add(item);
+            }
+            return item;
+        }
+
+
 
         void GetBirthDay(CNContact contact, ContactItem item)
         {

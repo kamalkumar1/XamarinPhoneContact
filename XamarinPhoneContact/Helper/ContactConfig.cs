@@ -2,42 +2,11 @@
 
 namespace XamarinPhoneContact.Helper
 {
-    public static  class kkContactControl
+    public static class kkContactControl
     {
-       
-         /// <summary>
-        /// The color of the list separator.
-        /// </summary>
-        public  static  Color ListSepratorColor = Color.FromArgb("#D3D3D3");
-        /// <summary>
-        /// The Close button background color.
-        /// </summary>
-        public static Color CloseButtonBackgroundColor = Color.FromArgb("#D3D3D3");
-        /// <summary>
-        /// Close button text color.
-        /// </summary>
-        public static Color CloseButtonTextColor = Color.FromArgb("#FFFFFF");
-        /// <summary>
-        /// Close Button Image icon name
-        /// </summary>
-        public static string? CloseButtonImageName;
-        /// <summary>
-        /// Close Button Title
-        /// </summary>
-        public static string CloseButtonTitle = "Close";
-        /// <summary>
-        /// Enable the search bar.
-        /// </summary>
+
+
         public static bool EnableSearchBar = true;
-        /// <summary>
-        /// Enable the CloseButton.
-        /// </summary>
-        public static bool Dismisbutton = true;
-        /// <summary>
-        /// Enable MutliSelectionTickMark.
-        /// </summary>
-        public static bool EnableMultiSelectionTickMark;
-        // private void GetButonImageName
         /// <summary>
         /// Get Birthday detail while select the contact.
         /// </summary>
@@ -61,12 +30,12 @@ namespace XamarinPhoneContact.Helper
         /// <summary>
         /// Get Date like birhtday detail while select the contact.
         /// </summary>
-         public static bool GetDate = false;
+        public static bool GetDate = false;
 
         /// <summary>
         /// While loading the contact below text will be shown
         /// </summary>
-         public static string Loadingtext = "Fetching your contact...";
+        public static string Loadingtext = "Fetching your contact...";
 
     }
     public sealed class ContactConfig
@@ -82,8 +51,57 @@ namespace XamarinPhoneContact.Helper
         public static ContactConfig Instance { get; } = new ContactConfig();
         public bool EnableTextChangedDelegate = true;
         public bool EnableSearchButtonPressedDelegate = true;
-       
+
         public int ContactPermission = 1107;
+
+        public int PageSize = 20;
+
+        // SearchBar Configuration
+        public string SearchBarPlaceholder = "Search contacts...";
+        public Color SearchBarBackgroundColor = Colors.White;
+        public Color SearchBarTextColor = Colors.Black;
+        public Color SearchBarPlaceholderColor = Colors.Gray;
+        public Color SearchBarIconColor = Colors.Gray;
+        public double SearchBarFontSize = 14;
+        public string SearchBarFontFamily = "Arial";
+        public FontAttributes SearchBarFontAttributes = FontAttributes.Bold;
+
+        // CollectionView Configuration
+        public int CollectionViewItemSpacing = 5;
+        public int RemainingItemsThreshold = 5;
+        public bool ShowVerticalScrollBar = false;
+        public SelectionMode CollectionSelectionMode = SelectionMode.Multiple;
+        public Color SeparateColor = Colors.LightGray;
+
+        // Group Header Configuration
+        public double GroupHeaderFontSize = 16;
+        public FontAttributes GroupHeaderFontAttributes = FontAttributes.Bold;
+        public Thickness GroupHeaderPadding = new Thickness(10, 5);
+        public Color GroupHeaderBackgroundColor = Colors.LightGray;
+        public Color GroupHeaderTextColor = Colors.Black;
+
+        // Contact Item Configuration
+        public double ContactItemHeight = 80;
+        public double ContactNameFontSize = 16;
+        public FontAttributes ContactNameFontAttributes = FontAttributes.Bold;
+        public double ContactNamePadding = 10;
+        public Color ContactNameTextColor = Colors.Black;
+
+        public double ContactPhoneFontSize = 14;
+        public Color ContactPhoneTextColor = Colors.Black;
+        public Thickness ContactPhonePadding = new Thickness(10, 10, 0, 10);
+
+        // Selection Checkmark Configuration
+        public double CheckmarkSize = 20;
+        public string CheckmarkIcon = "checkmark";
+        public Thickness CheckmarkMargin = new Thickness(5, 5, 20, 0);
+        public bool ShowCheckmarkAnimation = true;
+
+        // Selected Item Background Configuration
+        public Color SelectedItemBackgroundColor = Colors.Transparent;
+        public Color NormalItemBackgroundColor = Colors.Transparent;
+
+        public Color ContactCellBackgroundColor = Colors.White;
 
     }
 

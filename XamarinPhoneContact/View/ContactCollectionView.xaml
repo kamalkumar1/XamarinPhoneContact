@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CollectionView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+                xmlns:local="clr-namespace:XamarinPhoneContact.View"
+                x:Class="XamarinPhoneContact.View.ContactCollectionView">
+  <CollectionView.ItemsLayout>
+    <LinearItemsLayout Orientation="Vertical"/>
+  </CollectionView.ItemsLayout>
+  <CollectionView.ItemTemplate>
+    <!-- Define the template for each contact item -->
+    <DataTemplate x:DataType="model:ContactItem">
+      <!--! Define the visual representation of a contact item by ContactItemView -->
+      <local:ContactItemView/>
+    </DataTemplate>
+  </CollectionView.ItemTemplate>
+</CollectionView>

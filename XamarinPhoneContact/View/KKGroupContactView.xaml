@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:maui="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:XamarinPhoneContact.ViewModel"
+    xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+    xmlns:local="clr-namespace:XamarinPhoneContact.View"
+    x:DataType="vm:KKGroupContactViewModel"
+    x:Class="XamarinPhoneContact.View.KKGroupContactView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <local:ContactSearchBar
+            Grid.Row="0"
+            Grid.Column="0"
+            x:Name="searchText"
+            SearchTextValue="{Binding SearchText}"
+            SearchCommandValue="{Binding SearchCommand}"/>
+
+        <local:GroupedContactCollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            x:Name="GroupContactCollectionView"
+            SelectionChanged="contactList_SelectionChanged"
+            ContactGroups="{Binding ContactGroups}"
+            LoadMoreCommand="{Binding LoadMoreCommand}"/>
+
+        <Grid Grid.Row="2"
+              Grid.Column="0"
+              IsVisible="{Binding IsLoadingMore}"
+              Padding="10">
+            <ActivityIndicator Grid.Row="0"
+                               Grid.Column="0"
+                               IsRunning="{Binding IsLoadingMore}"
+                               IsVisible="{Binding IsLoadingMore}"/>
+        </Grid>
+    </Grid>
+</ContentView>

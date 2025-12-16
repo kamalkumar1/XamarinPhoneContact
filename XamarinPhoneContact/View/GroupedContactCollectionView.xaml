@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CollectionView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+                xmlns:local="clr-namespace:XamarinPhoneContact.View"
+                x:Class="XamarinPhoneContact.View.GroupedContactCollectionView"
+                IsGrouped="True"
+                x:Name="ThisCollectionView">
+  <CollectionView.ItemsLayout>
+    <LinearItemsLayout x:Name="ItemsLayoutConfig"
+                       Orientation="Vertical"/>
+  </CollectionView.ItemsLayout>
+  <CollectionView.GroupHeaderTemplate>
+    <DataTemplate  x:DataType="model:ContactGroup">
+      <local:GroupHeaderView GroupTitle="{Binding Title}"/>
+    </DataTemplate>
+  </CollectionView.GroupHeaderTemplate>
+  <CollectionView.ItemTemplate>
+    <!-- Define the template for each contact item -->
+    <DataTemplate x:DataType="model:ContactItem">
+      <!--! Define the visual representation of a contact item by ContactItemView -->
+      <local:ContactItemView>
+        <!-- Removing the default selected  background color of collection view item -->
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroup Name="CommonStates">
+            <VisualState Name="Normal"/>
+            <VisualState Name="Selected">
+              <VisualState.Setters>
+                <Setter Property="BackgroundColor"
+                        Value="Transparent"/>
+              </VisualState.Setters>
+            </VisualState>
+          </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+      </local:ContactItemView>
+    </DataTemplate>
+  </CollectionView.ItemTemplate>
+</CollectionView>

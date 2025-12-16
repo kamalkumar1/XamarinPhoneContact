@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:XamarinPhoneContact.Helper"
+             xmlns:ani="clr-namespace:XamarinPhoneContact.KKAnimation"
+             xmlns:local="clr-namespace:XamarinPhoneContact.View"
+             x:Class="XamarinPhoneContact.View.ContactItemView"
+             x:DataType="model:ContactItem"
+             BackgroundColor="White">
+  <Grid x:Name="ContactCell"
+        RowSpacing="0"
+        ColumnSpacing="0"
+        Margin="0,0,0,0">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <StackLayout Spacing="0"
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 StyleId="ContactInfoStack">
+      <Label HeightRequest="40"
+             Padding="10,20,0,0"
+             StyleId="NameLabel">
+        <Label.FormattedText>
+          <FormattedString>
+            <Span  Text="{Binding DisplayName}"/>
+          </FormattedString>
+        </Label.FormattedText>
+      </Label>
+      <Label HeightRequest="40"
+             StyleId="PhoneLabel">
+        <Label.FormattedText>
+          <FormattedString>
+            <Span Text="{Binding GetPhones[0].PhoneNumber}"/>
+          </FormattedString>
+        </Label.FormattedText>
+      </Label>
+    </StackLayout>
+    <Image x:Name="TickImage"
+           StyleId="TickImage"
+           IsVisible="{OnPlatform iOS=True, Default={Binding Itemselcted}}"
+           Grid.Row="0"
+           Grid.Column="1"
+           Opacity="0"
+           Aspect="AspectFit">
+      <Image.Triggers>
+        <DataTrigger TargetType="Image"
+                     Binding="{Binding Itemselcted}"
+                     Value="True">
+          <DataTrigger.EnterActions>
+            <ani:ScaleAnimationTriggerAction/>
+          </DataTrigger.EnterActions>
+          <DataTrigger.ExitActions>
+            <ani:ScaleOutAnimationTriggerAction/>
+          </DataTrigger.ExitActions>
+        </DataTrigger>
+      </Image.Triggers>
+    </Image>
+  </Grid>
+</ContentView>
