@@ -267,30 +267,45 @@ config.GroupHeaderBackgroundColor = Colors.Blue;
 // In MauiProgram.cs or App.xaml.cs before creating views
 var config = ContactConfig.Instance;
 
-// Customize search bar
-config.SearchBarPlaceholder = "Type to search...";
-config.SearchBarBackgroundColor = Colors.LightBlue;
-config.SearchBarFontSize = 16;
+public int PageSize = 20;
 
-// Customize group headers
-config.GroupHeaderBackgroundColor = Colors.DarkBlue;
-config.GroupHeaderTextColor = Colors.White;
-config.GroupHeaderFontSize = 18;
-
-// Customize contact items
-config.ContactNameFontSize = 18;
-config.ContactNameTextColor = Colors.DarkBlue;
-config.ContactPhoneFontSize = 15;
-config.ContactPhoneTextColor = Colors.Gray;
-
-// Customize selection
-config.CheckmarkSize = 24;
-config.CheckmarkIcon = "check_circle"; // Use your own icon
-config.SelectedItemBackgroundColor = Colors.LightGray;
-
-// Customize pagination
-config.RemainingItemsThreshold = 10;
-config.PageSize = 50;
+// SearchBar Configuration
+public string SearchBarPlaceholder = "Search contacts...";
+public Color SearchBarBackgroundColor = Colors.White;
+public Color SearchBarTextColor = Colors.Black;
+public Color SearchBarPlaceholderColor = Colors.Gray;
+public Color SearchBarIconColor = Colors.Gray;
+public double SearchBarFontSize = 14;
+public string SearchBarFontFamily = "Arial";
+public FontAttributes SearchBarFontAttributes = FontAttributes.Bold;
+// CollectionView Configuration
+public int CollectionViewItemSpacing = 5;
+public int RemainingItemsThreshold = 5;
+public bool ShowVerticalScrollBar = false;
+public SelectionMode CollectionSelectionMode = SelectionMode.Multiple;
+public Color SeparateColor = Colors.LightGray;
+// Group Header Configuration
+public double GroupHeaderFontSize = 16;
+public FontAttributes GroupHeaderFontAttributes = FontAttributes.Bold;
+public Thickness GroupHeaderPadding = new Thickness(10, 5);
+public Color GroupHeaderBackgroundColor = Colors.LightGray;
+public Color GroupHeaderTextColor = Colors.Black;
+// Contact Item Configuration
+public double ContactItemHeight = 80;
+public double ContactNameFontSize = 16;
+public FontAttributes ContactNameFontAttributes = FontAttributes.Bold;
+public double ContactNamePadding = 10;
+public Color ContactNameTextColor = Colors.Black;
+public double ContactPhoneFontSize = 14;
+public Color ContactPhoneTextColor = Colors.Black;
+public Thickness ContactPhonePadding = new Thickness(10, 10, 0, 10);
+// Selection Checkmark Configuration
+public double CheckmarkSize = 20;
+public string CheckmarkIcon = "checkmark";
+public Thickness CheckmarkMargin = new Thickness(5, 5, 20, 0);
+public bool ShowCheckmarkAnimation = true;
+//Contact cell
+public Color ContactCellBackgroundColor = Colors.White;
 ```
 
 ## Components That Use Configuration
@@ -302,8 +317,14 @@ config.PageSize = 50;
 5. **ContactItemView** - Individual contact item display
 6. **AnimatedSelectionTickMark** - when Individual contact item get selected
 6. **DarkMode** - It will support both dark and light mode feature
+7. **Pagination** - Get contact via pagination
 
 ## Secuirty 
+List Secuirty of below given secuirty check followed while saving the Data of the Localdb.
+-Key Genration to encrypte the data.
+  * Per-device uniqueness: deviceid 
+  * Strong KDF is used Derives the key via Rfc2898DeriveBytes.    Pbkdf2 with SHA-256 and 100,000 iterations, slowing offline brute-force attempts.
+  * No hardcoded secrets: All entropy is generated at runtime; nothing sensitive is embedded in code.
 
 ## Notes
 
