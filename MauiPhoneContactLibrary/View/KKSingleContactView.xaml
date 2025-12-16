@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPhoneContactLibrary.View.KKSingleContactView"
+             xmlns:vm="clr-namespace:MauiPhoneContactLibrary.ViewModel"
+             xmlns:model="clr-namespace:MauiPhoneContactLibrary.Helper"
+             x:DataType="vm:KKSingleContactViewModel"
+             xmlns:local="clr-namespace:MauiPhoneContactLibrary.View">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0"
+              Grid.Column="0">
+            <local:ContactSearchBar
+                x:Name="searchText"
+                SearchTextValue="{Binding SearchText}"
+                SearchCommandValue="{Binding SearchCommand}"/>
+        </Grid>
+        <local:ContactCollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            x:Name="singlecontactList"
+            SelectionChanged="ContactList_SelectionChangedEvent"
+            ContactItems="{Binding Singlecontactitem}"
+            LoadMoreCommand="{Binding LoadMoreCommand}"/>
+        <StackLayout
+            Grid.Row="2"
+            InputTransparent="{Binding IsLoadingMore}"
+            Grid.Column="0"
+            Padding="0">
+            <Grid IsVisible="{Binding IsLoadingMore}">
+                <ActivityIndicator
+                    IsRunning="{Binding IsLoadingMore}"
+                    IsVisible="{Binding IsLoadingMore}"/>
+            </Grid>
+        </StackLayout>
+    </Grid>
+</ContentView>
