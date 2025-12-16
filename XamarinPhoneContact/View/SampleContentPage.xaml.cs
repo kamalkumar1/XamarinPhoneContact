@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using XamarinPhoneContact.ViewModel;
+using XamarinPhoneContact.Helper;
+using XamarinPhoneContact.Model;
 
 namespace XamarinPhoneContact.View;
 
@@ -12,15 +14,25 @@ public partial class SampleContentPage : ContentPage
 	private KKGroupContactView _groupContactView;
 
 
-	//public SampleContentPage(KKSingleContactViewModel viewModel)
-	public SampleContentPage(KKGroupContactViewModel viewModel)
+
+
+	public SampleContentPage(KKSingleContactViewModel viewModel)
+	//public SampleContentPage(KKGroupContactViewModel viewModel)
 	{
 		InitializeComponent();
 
-		//SetupSingleContactView(viewModel);
-		SetupGroupContactView(viewModel);
+		SetupSingleContactView(viewModel);
+		//SetupGroupContactView(viewModel);
 		// Create and cache the ContentView
 
+		//For mutiple Selection GetSelectedContacts
+		//GetSelectedContacts method will retunn all selected contacts when mutiple selection enabled
+		//	_groupViewModel.GetSelectedContacts();
+
+	}
+	void OnGetSelectedContactItem(ContactItem contactItem)
+	{
+		Debug.WriteLine($"Single Selected Contact: {contactItem.DisplayName}");
 	}
 	/// <summary>
 	/// This method setups the single contact view with out section based on the uiview 
@@ -34,6 +46,8 @@ public partial class SampleContentPage : ContentPage
 		_contactView = new KKSingleContactView(_viewModel);
 		//page we need to add contact view
 		contentGrid.Children.Add(_contactView);
+		//Get the selected contact item event or on both group and single contact view model For Signle Selection
+		_viewModel.getSingleSelectedContact += OnGetSelectedContactItem;
 	}
 	/// <summary>
 	/// This method setups the group contact view with  section based on the uiview
@@ -47,6 +61,8 @@ public partial class SampleContentPage : ContentPage
 		BindingContext = _groupViewModel;
 		//page we need to add contact view
 		contentGrid.Children.Add(_groupContactView);
+		//Get the selected contact item event or on both group and single contact view model For Signle Selection
+		_groupViewModel.getSingleSelectedContact += OnGetSelectedContactItem;
 	}
 
 	protected override async void OnAppearing()
@@ -97,6 +113,7 @@ public partial class SampleContentPage : ContentPage
 	{
 		base.OnDisappearing();
 		OnGetSelectedContacts();
+		_groupViewModel.getSingleSelectedContact -= OnGetSelectedContactItem;
 		// Optional: Clean up if needed
 		contentGrid.Children.Clear();
 		BindingContext = null;

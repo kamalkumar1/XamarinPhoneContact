@@ -61,7 +61,7 @@ namespace XamarinPhoneContact.Helper
         public Color SearchBarBackgroundColor = Colors.White;
         public Color SearchBarTextColor = Colors.Black;
         public Color SearchBarPlaceholderColor = Colors.Gray;
-        public Color SearchBarIconColor = Colors.AliceBlue;
+        public Color SearchBarIconColor = Colors.Gray;
         public double SearchBarFontSize = 14;
         public string SearchBarFontFamily = "Arial";
         public FontAttributes SearchBarFontAttributes = FontAttributes.Bold;
@@ -70,7 +70,8 @@ namespace XamarinPhoneContact.Helper
         public int CollectionViewItemSpacing = 5;
         public int RemainingItemsThreshold = 5;
         public bool ShowVerticalScrollBar = false;
-        public SelectionMode CollectionSelectionMode = SelectionMode.Single;
+        public SelectionMode CollectionSelectionMode = SelectionMode.Multiple;
+        public Color SeparateColor = Colors.LightGray;
 
         // Group Header Configuration
         public double GroupHeaderFontSize = 16;
@@ -99,6 +100,8 @@ namespace XamarinPhoneContact.Helper
         // Selected Item Background Configuration
         public Color SelectedItemBackgroundColor = Colors.Transparent;
         public Color NormalItemBackgroundColor = Colors.Transparent;
+
+        public Color ContactCellBackgroundColor = Colors.White;
 
     }
 

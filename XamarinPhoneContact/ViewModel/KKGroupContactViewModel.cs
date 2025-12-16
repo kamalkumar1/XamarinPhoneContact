@@ -10,11 +10,13 @@ using System.Threading;
 
 namespace XamarinPhoneContact.ViewModel;
 
+public delegate void GetSingleSelectedContactItem(ContactItem contactItem);
 public partial class KKGroupContactViewModel : BaseViewModel
 {
+  public GetSingleSelectedContactItem? getSingleSelectedContact;
 
   [ObservableProperty]
-  private ObservableCollection<ContactGroup> contactGroups = new();
+  private ObservableCollection<ContactGroup> contactGroups = new ObservableCollection<ContactGroup>();
 
   [ObservableProperty]
   private ObservableCollection<ContactItem> selectedContacts = new ObservableCollection<ContactItem>();
@@ -121,19 +123,47 @@ public partial class KKGroupContactViewModel : BaseViewModel
       ? await _kKReadDataFromLocalDB.GetContactFromLocalDbWithSearch(_lastSearchQuery, pageSize)
       : await _kKReadDataFromLocalDB.GetContactFromLocalDbWithPagantion(pageSize);
   }
-
-  public void UpdateSelectedContact(ContactItem contact)
+  public void UpdateSingleSelectedContact(ContactItem contact)
   {
-    if (contact.Itemselcted)
+    ContactItem previouslySelected = (ContactItem)contactGroups.SelectMany(g => g).FirstOrDefault(c => c.Itemselcted == true);
+    if (previouslySelected != null)
     {
-      if (!SelectedContacts.Contains(contact))
-        SelectedContacts.Add(contact);
+      var previouslySelectedIndex = previouslySelected != null ? contactGroups.SelectMany(g => g).ToList().IndexOf(previouslySelected) : -1;
+      var oldselecteditem = contactGroups.SelectMany(g => g).ToList()[previouslySelectedIndex];
+      if (oldselecteditem != null)
+      {
+        oldselecteditem.Itemselcted = false;
+        if (oldselecteditem.Id == contact.Id)
+        {
+          contact.Itemselcted = false;
+          return;
+        }
+        contact.Itemselcted = true;
+        getSingleSelectedContact?.Invoke(contact);
+      }
     }
     else
     {
-      SelectedContacts.Remove(contact);
+      contact.Itemselcted = true;
+      getSingleSelectedContact?.Invoke(contact);
+    }
+
+  }
+
+  public void UpdateMultipleSelectedContacts(ContactItem currentselctedcontact)
+  {
+    currentselctedcontact.Itemselcted = !currentselctedcontact.Itemselcted;
+    if (currentselctedcontact.Itemselcted)
+    {
+      if (!SelectedContacts.Contains(currentselctedcontact))
+        SelectedContacts.Add(currentselctedcontact);
+    }
+    else
+    {
+      SelectedContacts.Remove(currentselctedcontact);
     }
   }
+
 
   public List<ContactItem> GetSelectedContacts()
   {

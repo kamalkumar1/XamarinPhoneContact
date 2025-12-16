@@ -1,6 +1,7 @@
 ﻿using XamarinPhoneContact.Interface;
 using XamarinPhoneContact.Model;
 using XamarinPhoneContact.Examples;
+using XamarinPhoneContact.Helper;
 
 namespace XamarinPhoneContact;
 
@@ -28,13 +29,16 @@ public partial class App : Application
 
 	private void ApplyTheme(AppTheme theme)
 	{
+		var config = ContactConfig.Instance;
 		if (theme == AppTheme.Dark)
 		{
 			ContactThemeConfiguration.ApplyDarkTheme();
+			config.CollectionViewItemSpacing = 5;
 		}
 		else
 		{
 			ContactThemeConfiguration.ApplyLightTheme();
+			config.CollectionViewItemSpacing = 3;
 		}
 	}
 

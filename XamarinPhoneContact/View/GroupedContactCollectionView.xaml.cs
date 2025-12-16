@@ -38,7 +38,8 @@ public partial class GroupedContactCollectionView : CollectionView
 
     this.RemainingItemsThreshold = config.RemainingItemsThreshold;
     this.VerticalScrollBarVisibility = config.ShowVerticalScrollBar ? ScrollBarVisibility.Always : ScrollBarVisibility.Never;
-    this.SelectionMode = config.CollectionSelectionMode;
+    this.SelectionMode = SelectionMode.Single;
+    BackgroundColor = config.SeparateColor;
 
     // Apply ItemsLayout configuration
     if (this.ItemsLayout is LinearItemsLayout layout)

@@ -15,6 +15,7 @@ namespace XamarinPhoneContact.ViewModel;
 
 public partial class KKSingleContactViewModel : ObservableObject
 {
+  public GetSingleSelectedContactItem? getSingleSelectedContact;
   IKKGetContact _kKReadDataFromLocalDB;
   IKKContactPermissionRequest _kKContactPermissionRequest;
   int _currentPageSize = -1;
@@ -190,17 +191,44 @@ public partial class KKSingleContactViewModel : ObservableObject
         Debug.WriteLine($"Error in PerformSearch: {ex.Message}");
     }
   }
-
-  public void UpdateSelectedContact(ContactItem contact)
+  public void UpdateSingleSelectedContact(ContactItem contact)
   {
-    if (contact.Itemselcted)
+    ContactItem previouslySelected = Singlecontactitem.FirstOrDefault(c => c.Itemselcted == true);
+    if (previouslySelected != null)
     {
-      if (!SelectedContacts.Contains(contact))
-        SelectedContacts.Add(contact);
+      var previouslySelectedIndex = previouslySelected != null ? Singlecontactitem.ToList().IndexOf(previouslySelected) : -1;
+      var oldselecteditem = Singlecontactitem.ToList()[previouslySelectedIndex];
+      if (oldselecteditem != null)
+      {
+        oldselecteditem.Itemselcted = false;
+        if (oldselecteditem.Id == contact.Id)
+        {
+          contact.Itemselcted = false;
+          return;
+        }
+        contact.Itemselcted = true;
+        getSingleSelectedContact?.Invoke(contact);
+      }
     }
     else
     {
-      SelectedContacts.Remove(contact);
+      contact.Itemselcted = true;
+      getSingleSelectedContact?.Invoke(contact);
+    }
+
+  }
+
+  public void UpdateMultipleSelectedContacts(ContactItem currentselctedcontact)
+  {
+    currentselctedcontact.Itemselcted = !currentselctedcontact.Itemselcted;
+    if (currentselctedcontact.Itemselcted)
+    {
+      if (!SelectedContacts.Contains(currentselctedcontact))
+        SelectedContacts.Add(currentselctedcontact);
+    }
+    else
+    {
+      SelectedContacts.Remove(currentselctedcontact);
     }
   }
 

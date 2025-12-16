@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using XamarinPhoneContact.Helper;
 using XamarinPhoneContact.Model;
 using XamarinPhoneContact.ViewModel;
@@ -58,22 +59,27 @@ public partial class KKSingleContactView : ContentView
 				return;
 
 			_isProcessingSelection = true;
-
+			var selectedItem2 = e.CurrentSelection.FirstOrDefault();
 			var selectedItem = e.CurrentSelection[0] as ContactItem;
 			if (selectedItem != null)
 			{
-				selectedItem.Itemselcted = !selectedItem.Itemselcted;
-
-				// Update ViewModel with selected contact
-				if (kKSingleContactViewModel != null)
+				var config = ContactConfig.Instance;
+				if (config.CollectionSelectionMode == SelectionMode.Single)
 				{
-					kKSingleContactViewModel.UpdateSelectedContact(selectedItem);
+					kKSingleContactViewModel.UpdateSingleSelectedContact(selectedItem);
 				}
+				else
+				{
+					kKSingleContactViewModel.UpdateMultipleSelectedContacts(selectedItem);
+				}
+			}
+			else
+			{
+				Debug.WriteLine("No valid contact item selected.");
 			}
 
 			// Small delay to allow UI to update before clearing selection
 			await Task.Delay(50);
-
 			// Clear selection to allow re-selecting the same item
 			if (singlecontactList != null)
 				singlecontactList.SelectedItem = null;

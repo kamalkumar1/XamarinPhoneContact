@@ -7,27 +7,19 @@ using XamarinPhoneContact.ViewModel;
 
 namespace XamarinPhoneContact.View;
 
-public class Namesd
-{
-    public string? name;
-    public string? display;
-}
-public delegate void GetSelectedContactItem(KKSqlTableForContact contactItem);
+
 [XamlCompilation(XamlCompilationOptions.Compile)]
 
 public partial class KKGroupContactView : ContentView
 {
-    IContact? _contact;
-    IEnumerable<ContactGroup> totalContactItems = new List<ContactGroup>(1000);
-    public GetSelectedContactItem? getSelectedContact;
-    public Thickness ContactViewCellMargin = new Thickness(20, 20, 20, 20);
     KKGroupContactViewModel? KKGroupContactViewModel;
-    
+    private bool _isProcessingSelection = false;
+
     public KKGroupContactView()
     {
         InitializeComponent();
     }
-    
+
     public KKGroupContactView(KKGroupContactViewModel vm) : this()
     {
         KKGroupContactViewModel = vm;
@@ -80,7 +72,7 @@ public partial class KKGroupContactView : ContentView
         {
             GroupContactCollectionView.Scrolled -= OnCollectionViewScrolled;
         }
-        
+
         KKGroupContactViewModel?.RestViewModel();
         BindingContext = null;
 
@@ -88,19 +80,52 @@ public partial class KKGroupContactView : ContentView
         this.Loaded -= OnLoaded;
         this.Unloaded -= OnUnloaded;
     }
-    
+
     private async void contactList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+        // Prevent duplicate processing
+        if (_isProcessingSelection)
             return;
 
-        var selectedItem = e.CurrentSelection[0] as ContactItem;
-        if (selectedItem == null)
-            return;
+        try
+        {
+            // Only process if there's a new selection (not deselection)
+            if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+                return;
 
-        selectedItem.Itemselcted = !selectedItem.Itemselcted;
+            _isProcessingSelection = true;
+            var selectedItem2 = e.CurrentSelection.FirstOrDefault();
+            var selectedItem = e.CurrentSelection[0] as ContactItem;
+            if (selectedItem != null)
+            {
+                var config = ContactConfig.Instance;
+                if (config.CollectionSelectionMode == SelectionMode.Single)
+                {
+                    KKGroupContactViewModel.UpdateSingleSelectedContact(selectedItem);
+                }
+                else
+                {
+                    KKGroupContactViewModel.UpdateMultipleSelectedContacts(selectedItem);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("No valid contact item selected.");
+            }
 
-        // Clear selection to allow re-selecting the same item
-        //  contactList.SelectedItem = null;
+            // Small delay to allow UI to update before clearing selection
+            await Task.Delay(50);
+            // Clear selection to allow re-selecting the same item
+            if (GroupContactCollectionView != null)
+                GroupContactCollectionView.SelectedItem = null;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in contactList_SelectionChanged: {ex.Message}");
+        }
+        finally
+        {
+            _isProcessingSelection = false;
+        }
     }
 }

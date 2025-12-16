@@ -15,11 +15,13 @@ public partial class ContactItemView : ContentView
     // Apply background colors from config
     this.BackgroundColor = config.NormalItemBackgroundColor;
 
+    ContactCell.BackgroundColor = config.ContactCellBackgroundColor;
+
     // Apply configuration to the main container
     if (this.Content is Grid grid && grid.Children.Count > 0)
     {
       // Apply visual states for selection
-      ApplyVisualStates(grid, config);
+      // ApplyVisualStates(grid, config);
 
       // Find and configure the StackLayout containing contact info
       var stackLayout = grid.Children.FirstOrDefault(c => c is StackLayout) as StackLayout;
@@ -30,9 +32,16 @@ public partial class ContactItemView : ContentView
         // Configure name label
         if (stackLayout.Children.Count > 0 && stackLayout.Children[0] is Label nameLabel)
         {
-          nameLabel.FontSize = config.ContactNameFontSize;
-          nameLabel.FontAttributes = config.ContactNameFontAttributes;
-          nameLabel.TextColor = config.ContactNameTextColor;
+
+          // Create FormattedText dynamically
+          var formattedString = new FormattedString();
+          var nameSpan = new Span();
+          nameSpan.SetBinding(Span.TextProperty, new Binding("DisplayName"));
+          nameSpan.FontSize = config.ContactNameFontSize;
+          nameSpan.FontAttributes = config.ContactNameFontAttributes;
+          nameSpan.TextColor = config.ContactNameTextColor;
+          formattedString.Spans.Add(nameSpan);
+          nameLabel.FormattedText = formattedString;
         }
 
         // Configure phone label

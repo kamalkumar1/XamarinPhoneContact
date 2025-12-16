@@ -120,10 +120,12 @@ public static class ContactThemeConfiguration
     config.SearchBarPlaceholderColor = Colors.Gray;
     config.GroupHeaderBackgroundColor = Color.FromRgba("#1C1C1E");
     config.GroupHeaderTextColor = Colors.White;
-    config.ContactNameTextColor = Colors.White;
+    config.ContactNameTextColor = Colors.WhiteSmoke;
     config.ContactPhoneTextColor = Color.FromRgba("#AEAEB2");
     config.SelectedItemBackgroundColor = Color.FromRgba("#3A3A3C");
     config.NormalItemBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.SeparateColor = Color.FromRgba("#3A3A3C");
   }
 
   /// <summary>
