@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using XamarinPhoneContact.Helper;
 
-namespace MauiPhoneContactLibrary
+namespace XamarinPhoneContact
 {
+    public interface IKKContactPermission
+    {
+        void CheckPermission();
+        event EventHandler CustomPermissionStatus;
+    }
     public interface IContact
     {
-        Dictionary<string, object> GetAllContact();
+        Task<List<ContactGroup>> GetAllContactFromPhoneAsync();
         void CheckPermission();
         event EventHandler CustomPermissionStatus;
     }
