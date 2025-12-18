@@ -18,7 +18,7 @@
 		<Title>KK.MAUIPHONECONTACTLIBARY</Title>
 		<Company>Valelas</Company>
 		<Copyright>@2025</Copyright>
-		<PackageIcon>Copilot_20250531_131700.png</PackageIcon>
+		<PackageIcon>Nuget_icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/kamalkumar1/XamarinPhoneContact</RepositoryUrl>
 		<PackageTags>MAUI;CONTACT;MOBILE CONTACT;iOS;ANDROID;CONTACT;PHONE</PackageTags>
 		<PackageReleaseNotes>Given Support .Net 8 and above
@@ -31,7 +31,7 @@ Support latest android and iOS</PackageReleaseNotes>
 - Smooth UI experience with **MAUI**</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<FileVersion>1.0.0.0</FileVersion>
-		<PackageLicenseFile>MIT License.txt</PackageLicenseFile>
+		<PackageLicenseFile>MITLicense.txt</PackageLicenseFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -48,6 +48,17 @@ Support latest android and iOS</PackageReleaseNotes>
 	  <MauiXaml Update="View\MobileContact.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\..\Downloads\Nuget_icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="MITLicense.txt">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
