@@ -76,8 +76,9 @@ public partial class SampleContentPage : ContentPage
 		base.OnAppearing();
 
 		var permissionStatus = await _kKContactPermissionRequest.GetContactAuthorizationStatus();
-		if (permissionStatus != true)
+		if (permissionStatus)
 		{
+
 			Debug.WriteLine("Contact permission not granted.");
 			if (_groupViewModel != null)
 			{
