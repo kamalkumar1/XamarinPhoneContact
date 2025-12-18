@@ -3,29 +3,6 @@
 All contact-related UI properties can be customized through the `ContactConfig` class. This allows you to change the appearance and behavior of contact lists without modifying XAML files.
 
 ## Setup
-
-### Initialize the Contact Control
-
-Before using any contact views, you must initialize the contact control in your `MauiProgram.cs`:
-
-```csharp
-using XamarinPhoneContact.Helper;
-public static class MauiProgram
-{
-    public static MauiApp CreateMauiApp()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .SetKKContactControl(); // Add this line
-
-        return builder.Build();
-    }
-}
-```
-
-**Important:** The `SetKKContactControl()` method must be called during app initialization to register all necessary handlers and services for the contact control library.
-
 ### iOS Permissions
 
 Add the following permissions to your `Info.plist` file to access contacts on iOS:
@@ -71,9 +48,38 @@ The library handles runtime permission requests automatically. However, you shou
 
 The library provides two main contact view controls that you can integrate into your XAML pages. 
 It has single and multi selection feature in the property. 
+For Grouped Contact List use  KKGroupContactView   and KKGroupContactViewModel
+For With out Grouping Contact List use  KKGroupContactView   and KKSingleContactViewModel
+Add the your own selection image config file.
 This can be implemented via both ViewModel and code behid as Well:
+Use the  var config = ContactConfig.Instance to customsie the all atrubutres in the control like font,image, backgroud color, placeholdr text. 
 
-#### 1. KKSingleContactView (Ungrouped Contact List)
+### Initialize the Contact Control
+
+Before using any contact views, you must initialize the contact control in your `MauiProgram.cs`:
+
+```csharp
+using XamarinPhoneContact.Helper;
+public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .SetKKContactControl(); // Add this line
+
+        return builder.Build();
+    }
+}
+```
+
+**Important:** The `SetKKContactControl()` method must be called during app initialization to register all necessary handlers and services for the contact control library.
+
+
+
+
+#### 1. KKSingleContactView (Ungrouped Contact List) - integrated ui via xaml
 
 Add the namespace and use the control in your XAML:
 
@@ -92,7 +98,7 @@ Add the namespace and use the control in your XAML:
 </ContentPage>
 ```
 
-#### 2. KKGroupContactView (Grouped Contact List)
+#### 2. KKGroupContactView (Grouped Contact List)- ntegrated ui via xaml
 
 Add the namespace and use the control in your XAML:
 
@@ -111,7 +117,7 @@ Add the namespace and use the control in your XAML:
 </ContentPage>
 ```
 
-#### 3. Using in Code-Behind
+#### 3. Inegrated ui via Code-Behind and load the data from code
 
 You can also create and configure views programmatically:
 
@@ -151,8 +157,10 @@ public partial class SampleContentPage : ContentPage
 	{
 		_viewModel = viewModel;
 		BindingContext = _viewModel;
-		_contactView = new KKSingleContactView(_viewModel);
+		
 		//page we need to add contact view
+    //Avoid this line if UI lareday ingeated in xaml page
+    _contactView = new KKSingleContactView(_viewModel);
 		contentGrid.Children.Add(_contactView);
 	}
   /// <summary>
@@ -163,10 +171,13 @@ public partial class SampleContentPage : ContentPage
 	{
 		// Create and cache the ContentView
 		_groupViewModel = viewModel;
-		_groupContactView = new KKGroupContactView(_groupViewModel);
 		BindingContext = _groupViewModel;
-		//page we need to add contact view
+
+    //page we need to add contact view
+    //Avoid this line if UI lareday ingeated in xaml page
+    		_groupContactView = new KKGroupContactView(_groupViewModel);
 		contentGrid.Children.Add(_groupContactView);
+		
 	}
 }
 ```
@@ -203,18 +214,7 @@ var selectedContacts = _viewModel.GetSelectedContacts();
 		 BindingContext = null;
 	}
 ```
-## How to Use
 
-Access the configuration singleton instance and modify properties before using any contact views:
-
-```csharp
-var config = ContactConfig.Instance;
-
-// Customize properties
-config.SearchBarPlaceholder = "Find contacts...";
-config.ContactNameFontSize = 18;
-config.GroupHeaderBackgroundColor = Colors.Blue;
-```
 
 ## Available Configuration Properties
 
@@ -262,13 +262,22 @@ config.GroupHeaderBackgroundColor = Colors.Blue;
 - `NormalItemBackgroundColor` - Normal item background (default: Transparent)
 
 ## Example Usage
+## How to Use
+
+Access the configuration singleton instance and modify properties before using any contact views:
 
 ```csharp
-// In MauiProgram.cs or App.xaml.cs before creating views
 var config = ContactConfig.Instance;
 
+//Setup you ruf estimation target user contact count
+ //By doing this you avoid the buffer memory allocation in the list.
+config.ExpectedTotalPhoneContact =2000
+// Customize properties
+config.SearchBarPlaceholder = "Find contacts...";
+config.ContactNameFontSize = 18;
+config.GroupHeaderBackgroundColor = Colors.Blue;
+//use this property define my contact be taken while scrolling the contact list 
 public int PageSize = 20;
-
 // SearchBar Configuration
 public string SearchBarPlaceholder = "Search contacts...";
 public Color SearchBarBackgroundColor = Colors.White;
@@ -311,7 +320,7 @@ public Color ContactCellBackgroundColor = Colors.White;
 ## Components That Use Configuration
 
 1. **ContactSearchBar** - Search functionality
-2. **ContactCollectionView** - Flat contact list(Ungrouped Collectionview)
+2. **ContactCollectionView** - Flat contact list(Ungrouped contact list)
 3. **GroupedContactCollectionView** - Grouped contact list
 4. **GroupHeaderView** - Group section headers
 5. **ContactItemView** - Individual contact item display
@@ -320,10 +329,11 @@ public Color ContactCellBackgroundColor = Colors.White;
 7. **Pagination** - Get contact via pagination
 
 ## Secuirty 
-List Secuirty of below given secuirty check followed while saving the Data of the Localdb.
+List Secuirty of below given secuirty check  and encryption followed while saving the Data of the Localdb.
 -Key Genration to encrypte the data.
   * Per-device uniqueness: deviceid 
-  * Strong KDF is used Derives the key via Rfc2898DeriveBytes.    Pbkdf2 with SHA-256 and 100,000 iterations, slowing offline brute-force attempts.
+  * Strong KDF is used Derives the key via Rfc2898DeriveBytes.    
+  * Pbkdf2 with SHA-256 and 100,000 iterations, slowing offline brute-force attempts.
   * No hardcoded secrets: All entropy is generated at runtime; nothing sensitive is embedded in code.
 
 ## Notes
