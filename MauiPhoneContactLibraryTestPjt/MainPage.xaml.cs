@@ -23,12 +23,13 @@ namespace MauiPhoneContactLibraryTestPjt
         {
             try
             {
-                kkContactControl.EnableMultiSelectionTickMark = true;
+             //   kkContactControl.EnableMultiSelectionTickMark = true;
               //  kkContactControl.CloseButtonImageName = "deletebutton.png";
-                IContact contact = new ContactList(); // Assuming Contact implements IContact
-                MobileContact mobile = new MobileContact(contact);
-                mobile.getSelectedContact += Mobile_GetSelectedContactItem;
-                await Navigation.PushModalAsync(mobile);
+              //  IContact contact = new ContactList(); // Assuming Contact implements IContact
+              //  MobileContact mobile = new MobileContact(contact);
+              //  mobile.getSelectedContact += Mobile_GetSelectedContactItem;
+            //  var testpage = new TestContactPage();
+                await Shell.Current.GoToAsync(nameof(TestContactPage));
 
 
             }

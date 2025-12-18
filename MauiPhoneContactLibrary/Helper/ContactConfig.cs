@@ -56,6 +56,9 @@ namespace MauiPhoneContactLibrary.Helper
 
         public int PageSize = 20;
 
+        //Expected Total Contact Count to fetch from Phone Contact
+        public int ExpectedTotalPhoneContact = 1000;
+
         // SearchBar Configuration
         public string SearchBarPlaceholder = "Search contacts...";
         public Color SearchBarBackgroundColor = Colors.White;

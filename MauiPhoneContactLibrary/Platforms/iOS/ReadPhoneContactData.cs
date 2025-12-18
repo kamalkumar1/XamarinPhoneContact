@@ -13,7 +13,7 @@ namespace MauiPhoneContactLibrary.Platforms.iOS
         CNContactStore? _store;
         CNContactFetchRequest? _request;
         CNContactHelper _cNContactHelper;
-        List<CNContact> _mastertotalcncontact = new List<CNContact>(1000);
+        List<CNContact> _mastertotalcncontact = new List<CNContact>(ContactConfig.Instance.ExpectedTotalPhoneContact);
         IKKCurdOperation? _kKCurdOperation;
 
         public ReadPhoneContactData(IKKCurdOperation kKCurdOperation)

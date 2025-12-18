@@ -9,23 +9,20 @@ namespace MauiPhoneContactLibraryTestPjt
    
     public class MainActivity : MauiAppCompatActivity
     {
-        internal static MainActivity Instance { get; private set; }
-        public ICallBackInterface callBackInterface;
+       
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
             base.OnCreate(savedInstanceState);
-            Instance = this;
-            ContactList.Init(this);
+          
 
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            if (callBackInterface != null)
-                callBackInterface.RequestPermissionsResults(requestCode, permissions, grantResults);
+           
         }
     }
 }
