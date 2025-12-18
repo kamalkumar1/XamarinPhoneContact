@@ -4,15 +4,10 @@ using XamarinPhoneContact.Helper;
 
 namespace XamarinPhoneContact
 {
-    public interface IKKContactPermission
-    {
-        void CheckPermission();
-        event EventHandler CustomPermissionStatus;
-    }
-    public interface IContact
-    {
-        Task<List<ContactGroup>> GetAllContactFromPhoneAsync();
-        void CheckPermission();
-        event EventHandler CustomPermissionStatus;
-    }
+    //public interface IContact
+    //{
+    //    Task<List<ContactGroup>> GetAllContactFromPhoneAsync();
+    //    void CheckPermission();
+    //    event EventHandler CustomPermissionStatus;
+    //}
 }

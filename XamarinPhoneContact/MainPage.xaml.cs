@@ -18,10 +18,20 @@ namespace XamarinPhoneContact
             InitializeComponent();
 
         }
-        async void Show_Clicked(object sender, System.EventArgs e)
+        async Task LoadData()
         {
             try
             {
+               /* var permissioncheck = MauiServiceProvider.GetService<IKKContactPermissionRequest>();
+                if (permissioncheck != null)
+                {
+                    var permissiongranted = await permissioncheck.GetContactAuthorizationStatus();
+                    if(permissiongranted)
+                    {
+                        await Shell.Current.GoToAsync(nameof(SampleContentPage));
+                    }
+                    Debug.WriteLine("Permission denied");
+                }*/
                 await Shell.Current.GoToAsync(nameof(SampleContentPage));
                 // Option 1: Direct navigation
                 // await Navigation.PushAsync(new SampleContentPage());
@@ -33,6 +43,11 @@ namespace XamarinPhoneContact
             {
                 Debug.WriteLine(ex);
             }
+        }
+        async void Show_Clicked(object sender, System.EventArgs e)
+        {
+            await LoadData();
+           
         }
         private void Mobile_GetSelectedContactItem(KKSqlTableForContact contactItem)
         {
