@@ -9,9 +9,6 @@ namespace MauiPhoneContactLibrary.Platforms.iOS
 {
     public class ContactPermissionRequest : IKKContactPermissionRequest
     {
-        public ContactPermissionRequest()
-        {
-        }
         private UIViewController? GetRootViewController()
         {
             var window = UIApplication.SharedApplication.ConnectedScenes

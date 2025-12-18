@@ -24,21 +24,7 @@ public class ContactPermissionRequest : IKKContactPermissionRequest
     }
   }
 
-  public async void RequestPermissions()
-  {
-    var check = GetcontactPermission();
-    if (!check)
-    {
-
-    }
-    else
-    {
-      CustomPermissionStatus?.Invoke(ContactEnum.Granted, EventArgs.Empty);
-    }
-  }
-
-
-  public async Task<bool> SetContactPermission()
+  async Task<bool> SetContactPermission()
   {
     // var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity as Activity ?? throw new InvalidOperationException("No activity");
     // var obj = ActivityCompat.RequestPermissions(activity, new[] { Manifest.Permission.ReadContacts }, 1107);
