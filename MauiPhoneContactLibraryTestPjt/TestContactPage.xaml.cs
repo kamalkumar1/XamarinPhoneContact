@@ -1,5 +1,3 @@
-
-using AndroidX.Lifecycle;
 using MauiPhoneContactLibrary.Helper;
 using MauiPhoneContactLibrary.Interface;
 using MauiPhoneContactLibrary.Model;

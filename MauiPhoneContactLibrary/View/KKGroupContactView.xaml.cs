@@ -4,6 +4,7 @@ using System.Linq;
 using MauiPhoneContactLibrary.Helper;
 using MauiPhoneContactLibrary.Model;
 using MauiPhoneContactLibrary.ViewModel;
+using Microsoft.Maui.Controls;
 
 namespace MauiPhoneContactLibrary.View;
 
@@ -18,6 +19,48 @@ public partial class KKGroupContactView : ContentView
     public KKGroupContactView()
     {
         InitializeComponent();
+        ConfigureAlphabetCollectionViewTemplate();
+    }
+
+    private void ConfigureAlphabetCollectionViewTemplate()
+    {
+        // Helper method to enumerate visual children of a view
+
+        // Use the correct CollectionView for the alphabet list (should be the right-side CollectionView, not GroupContactCollectionView)
+        var alphabetCollectionView = this.FindByName<CollectionView>("AlphabetCollectionView");
+
+        if (alphabetCollectionView != null)
+        {
+            alphabetCollectionView.ItemTemplate = new DataTemplate(() =>
+            {
+                var config = ContactConfig.Instance;
+                var span = new Span
+                {
+                    FontAttributes = FontAttributes.Bold
+                };
+                span.SetBinding(Span.TextProperty, ".");
+                span.SetBinding(Span.FontSizeProperty, new Binding(nameof(ContactConfig.AlphabetFontSize), source: config));
+
+                var formattedString = new FormattedString();
+                formattedString.Spans.Add(span);
+
+                var label = new Label
+                {
+                    FormattedText = formattedString,
+                    BackgroundColor = config.AlphabetBackgroundColor,
+                    Padding = config.AlphabetPadding,
+                    HorizontalTextAlignment = config.AlphabetHorizontalTextAlignment,
+                    VerticalTextAlignment = config.AlphabetVerticalTextAlignment
+                };
+
+                var tapGesture = new TapGestureRecognizer();
+                tapGesture.SetBinding(TapGestureRecognizer.CommandProperty, new Binding("ScrollToLetterCommand", source: BindingContext));
+                tapGesture.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
+                label.GestureRecognizers.Add(tapGesture);
+
+                return label;
+            });
+        }
     }
 
     public KKGroupContactView(KKGroupContactViewModel vm) : this()
@@ -181,7 +224,7 @@ public partial class KKGroupContactView : ContentView
 
             var firstItem = group[0];
 
-            // Scroll so that this item (and thus its header) is at the top
+            // Scroll so that the section header is at the top
             GroupContactCollectionView.ScrollTo(
                 item: firstItem,
                 group: group,

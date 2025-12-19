@@ -32,10 +32,6 @@ namespace MauiPhoneContactLibrary.Helper
         /// </summary>
         public static bool GetDate = false;
 
-        /// <summary>
-        /// While loading the contact below text will be shown
-        /// </summary>
-        public static string Loadingtext = "Fetching your contact...";
 
     }
     public sealed class ContactConfig
@@ -105,6 +101,14 @@ namespace MauiPhoneContactLibrary.Helper
         public Color NormalItemBackgroundColor = Colors.Transparent;
 
         public Color ContactCellBackgroundColor = Colors.White;
+
+        // Alphabet List Configuration
+        public double AlphabetFontSize { get; set; } = 12;
+        public Thickness AlphabetPadding { get; set; } = new Thickness(2, 4, 2, 4);
+        public Color AlphabetBackgroundColor { get; set; } = Colors.White;
+        public Color AlphabetTextColor { get; set; } = Colors.Black;
+        public TextAlignment AlphabetHorizontalTextAlignment { get; set; } = TextAlignment.Center;
+        public TextAlignment AlphabetVerticalTextAlignment { get; set; } = TextAlignment.Center;
 
     }
 

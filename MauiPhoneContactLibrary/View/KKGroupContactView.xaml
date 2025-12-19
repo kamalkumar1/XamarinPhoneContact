@@ -33,21 +33,25 @@
             ContactGroups="{Binding ContactGroups}"
             LoadMoreCommand="{Binding LoadMoreCommand}"/>
 
-        <CollectionView Grid.Row="1"
+        <CollectionView x:Name="AlphabetCollectionView"
+                        Grid.Row="1"
                         Grid.Column="1"
                         ItemsSource="{Binding AlphabetList}"
                         SelectionMode="None"
                         VerticalOptions="Center"
-                        WidthRequest="24">
+                        WidthRequest="30">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type x:String}">
                     <Label Text="{Binding}"
-                           FontSize="10"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center">
+                           FontSize="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetFontSize, Mode=OneWay}"
+                           Padding="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetPadding, Mode=OneWay}"
+                           BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetBackgroundColor, Mode=OneWay}"
+                           TextColor="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetTextColor, Mode=OneWay}"
+                           HorizontalTextAlignment="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetHorizontalTextAlignment, Mode=OneWay}"
+                           VerticalTextAlignment="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetVerticalTextAlignment, Mode=OneWay}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ScrollToLetterCommand}"
                                                   CommandParameter="{Binding}"/>

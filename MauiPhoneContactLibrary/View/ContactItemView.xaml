@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MauiPhoneContactLibrary.View"
              x:Class="MauiPhoneContactLibrary.View.ContactItemView"
              x:DataType="model:ContactItem"
-             BackgroundColor="White">
+             BackgroundColor="Transparent">
   <Grid x:Name="ContactCell"
         RowSpacing="0"
         ColumnSpacing="0"
@@ -42,7 +42,7 @@
     </StackLayout>
     <Image x:Name="TickImage"
            StyleId="TickImage"
-           IsVisible="{OnPlatform iOS=True, Default={Binding Itemselcted}}"
+           IsVisible="{Binding Itemselcted}"
            Grid.Row="0"
            Grid.Column="1"
            Opacity="0"

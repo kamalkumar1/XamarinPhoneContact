@@ -153,18 +153,36 @@ public partial class KKGroupContactViewModel : BaseViewModel
 
   }
 
+  // Add this property to control checkmark visibility (INotifyPropertyChanged required)
+  private bool _isCheckmarkVisible;
+  public bool IsCheckmarkVisible
+  {
+      get => _isCheckmarkVisible;
+      set => SetProperty(ref _isCheckmarkVisible, value);
+  }
+
   public void UpdateMultipleSelectedContacts(ContactItem currentselctedcontact)
   {
+    // Prevent checkmark from being hidden immediately after selection
+    IsCheckmarkVisible = true;
+
     currentselctedcontact.Itemselcted = !currentselctedcontact.Itemselcted;
     if (currentselctedcontact.Itemselcted)
     {
-      if (!SelectedContacts.Contains(currentselctedcontact))
-        SelectedContacts.Add(currentselctedcontact);
+        if (!SelectedContacts.Contains(currentselctedcontact))
+            SelectedContacts.Add(currentselctedcontact);
     }
     else
     {
-      SelectedContacts.Remove(currentselctedcontact);
+        SelectedContacts.Remove(currentselctedcontact);
     }
+
+    // Optionally, you can start a timer here to hide the checkmark after a delay if needed
+    // Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+    // {
+    //     IsCheckmarkVisible = false;
+    //     return false;
+    // });
   }
 
 

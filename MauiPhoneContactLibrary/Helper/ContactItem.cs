@@ -66,7 +66,7 @@ namespace MauiPhoneContactLibrary.Helper
         public Company? GetCompany { get; set; }
         public List<Address>? GetAddress { get; set; }
         public List<DateList>? GetDateList { get; set; }
-        private bool _itemselcted;
+        private bool _itemselcted = false;
         public bool Itemselcted
         {
             get { return _itemselcted; }

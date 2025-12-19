@@ -6,7 +6,7 @@ namespace MauiPhoneContactLibrary.Examples;
 /// Example of how to customize contact views using ContactConfig
 /// Place this configuration in MauiProgram.cs or App.xaml.cs before creating any contact views
 /// </summary>
-public static class ContactThemeConfiguration
+public static class KKContactThemeConfiguration
 {
   public static void ConfigureContactViews()
   {
@@ -86,7 +86,6 @@ public static class ContactThemeConfiguration
     kkContactControl.ShowCompany = true;
     kkContactControl.ShowUrl = false;
     kkContactControl.GetDate = true;
-    kkContactControl.Loadingtext = "Loading contacts...";
 
     config.EnableTextChangedDelegate = true;
     config.EnableSearchButtonPressedDelegate = true;
@@ -98,14 +97,20 @@ public static class ContactThemeConfiguration
   public static void ApplyLightTheme()
   {
     var config = ContactConfig.Instance;
-
     config.SearchBarBackgroundColor = Colors.White;
     config.SearchBarTextColor = Colors.Black;
+    config.SearchBarPlaceholderColor = Colors.Gray;
     config.GroupHeaderBackgroundColor = Colors.LightGray;
     config.GroupHeaderTextColor = Colors.Black;
     config.ContactNameTextColor = Colors.Black;
     config.ContactPhoneTextColor = Colors.Gray;
-    config.SelectedItemBackgroundColor = Color.FromRgba("#F0F0F0");
+    config.SelectedItemBackgroundColor = Color.FromRgba("#E8F4F8");
+    config.NormalItemBackgroundColor = Colors.Transparent;
+    config.ContactCellBackgroundColor = Colors.White;
+    config.SeparateColor = Colors.LightGray;
+    config.AlphabetBackgroundColor = Colors.White;
+    config.AlphabetTextColor = Colors.DarkBlue;
+    config.CheckmarkIcon = "checkmark";
   }
 
   /// <summary>
@@ -126,6 +131,10 @@ public static class ContactThemeConfiguration
     config.NormalItemBackgroundColor = Color.FromRgba("#2C2C2E");
     config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
     config.SeparateColor = Color.FromRgba("#3A3A3C");
+    config.AlphabetBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.AlphabetTextColor = Colors.WhiteSmoke;
+    config.CheckmarkIcon = "checkmark";
+    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
   }
 
   /// <summary>
