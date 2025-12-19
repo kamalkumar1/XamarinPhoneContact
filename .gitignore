@@ -38,6 +38,7 @@ XamarinPhoneContact/XamarinPhoneContact.csproj.user
 *.dat
 *.dylib
 *.pdb
+<<<<<<< Updated upstream
 *.exe
 *.aab
 MauiPhoneContactLibraryTestPjt/bin/Release/net8.0-android/com.test.pjt-Signed.apk
@@ -51,3 +52,24 @@ XamarinPhoneContact/.DS_Store
 XamarinPhoneContact/bin/Debug/net10.0-android/com.companyname.xamarinphonecontact-Signed.apk
 /XamarinPhoneContact/bin
 /XamarinPhoneContact.Forms.kk/obj
+=======
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+/MauiPhoneContactLibrary/bin/Debug
+/MauiPhoneContactLibrary/obj
+/MauiPhoneContactLibraryTestPjt/obj
+/XamarinPhoneContact.Forms.kk/obj
+/XamarinPhoneContact/obj
+/.vs/XamarinPhoneContact/CopilotIndices
+/XamarinPhoneContact/bin
+/XamarinPhoneContact/.vs
+/MauiPhoneContactLibraryTestPjt/bin
+/MauiPhoneContactLibrary/bin
+>>>>>>> Stashed changes
