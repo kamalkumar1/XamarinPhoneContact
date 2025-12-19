@@ -1,3 +1,4 @@
+
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MauiPhoneContactLibrary.Helper;
@@ -6,6 +7,20 @@ namespace MauiPhoneContactLibrary.View;
 
 public partial class ContactCollectionView : CollectionView
 {
+  public static readonly BindableProperty DisableInteractionWhenLoadingProperty =
+    BindableProperty.Create(nameof(DisableInteractionWhenLoading), typeof(bool), typeof(ContactCollectionView), false, propertyChanged: OnDisableInteractionWhenLoadingChanged);
+  public bool DisableInteractionWhenLoading
+  {
+    get => (bool)GetValue(DisableInteractionWhenLoadingProperty);
+    set => SetValue(DisableInteractionWhenLoadingProperty, value);
+  }
+  private static void OnDisableInteractionWhenLoadingChanged(BindableObject bindable, object oldValue, object newValue)
+  {
+    var control = (ContactCollectionView)bindable;
+    bool isDisabled = (bool)newValue;
+    control.InputTransparent = isDisabled;
+    control.IsEnabled = !isDisabled;
+  }
   public static readonly BindableProperty ContactItemsProperty =
       BindableProperty.Create(nameof(ContactItems), typeof(ObservableCollection<ContactItem>), typeof(ContactCollectionView), null,
           propertyChanged: OnContactItemsChanged);

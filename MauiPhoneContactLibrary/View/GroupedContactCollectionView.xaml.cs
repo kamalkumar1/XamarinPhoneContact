@@ -1,3 +1,4 @@
+// ...existing code...
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MauiPhoneContactLibrary.Helper;
@@ -30,6 +31,23 @@ public partial class GroupedContactCollectionView : CollectionView
   {
     InitializeComponent();
     ApplyConfiguration();
+  }
+
+  public static readonly BindableProperty DisableInteractionWhenLoadingProperty =
+      BindableProperty.Create(nameof(DisableInteractionWhenLoading), typeof(bool), typeof(GroupedContactCollectionView), false, propertyChanged: OnDisableInteractionWhenLoadingChanged);
+
+  public bool DisableInteractionWhenLoading
+  {
+    get => (bool)GetValue(DisableInteractionWhenLoadingProperty);
+    set => SetValue(DisableInteractionWhenLoadingProperty, value);
+  }
+
+  private static void OnDisableInteractionWhenLoadingChanged(BindableObject bindable, object oldValue, object newValue)
+  {
+    var control = (GroupedContactCollectionView)bindable;
+    bool isDisabled = (bool)newValue;
+    control.InputTransparent = isDisabled;
+    control.IsEnabled = !isDisabled;
   }
 
   private void ApplyConfiguration()

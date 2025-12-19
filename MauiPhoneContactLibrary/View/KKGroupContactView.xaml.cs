@@ -28,6 +28,9 @@ public partial class KKGroupContactView : ContentView
         // Subscribe to CollectionView scrolled event for load more
         GroupContactCollectionView.Scrolled += OnCollectionViewScrolled;
 
+        // Subscribe to alphabet scroll requests
+        KKGroupContactViewModel.ScrollToLetterRequested += OnScrollToLetterRequested;
+
         // Subscribe to lifecycle events
         // this.Loaded += OnLoaded;
         // this.Unloaded += OnUnloaded;
@@ -73,6 +76,11 @@ public partial class KKGroupContactView : ContentView
             GroupContactCollectionView.Scrolled -= OnCollectionViewScrolled;
         }
 
+        if (KKGroupContactViewModel != null)
+        {
+            KKGroupContactViewModel.ScrollToLetterRequested -= OnScrollToLetterRequested;
+        }
+
         KKGroupContactViewModel?.RestViewModel();
         BindingContext = null;
 
@@ -101,11 +109,11 @@ public partial class KKGroupContactView : ContentView
                 var config = ContactConfig.Instance;
                 if (config.CollectionSelectionMode == SelectionMode.Single)
                 {
-                    KKGroupContactViewModel.UpdateSingleSelectedContact(selectedItem);
+                    KKGroupContactViewModel?.UpdateSingleSelectedContact(selectedItem);
                 }
                 else
                 {
-                    KKGroupContactViewModel.UpdateMultipleSelectedContacts(selectedItem);
+                    KKGroupContactViewModel?.UpdateMultipleSelectedContacts(selectedItem);
                 }
             }
             else
@@ -126,6 +134,68 @@ public partial class KKGroupContactView : ContentView
         finally
         {
             _isProcessingSelection = false;
+        }
+    }
+
+    private async void OnScrollToLetterRequested(string letter)
+    {
+        try
+        {
+            GroupContactCollectionView.DisableInteractionWhenLoading = true;
+            if (KKGroupContactViewModel?.ContactGroups == null || GroupContactCollectionView == null)
+                return;
+            // Find the target group
+            var group = KKGroupContactViewModel?.ContactGroups.FirstOrDefault(g =>
+                string.Equals(g.ShortTitle, letter, StringComparison.OrdinalIgnoreCase) ||
+                (!string.IsNullOrEmpty(g.Title) && string.Equals(g.Title.Substring(0, 1), letter, StringComparison.OrdinalIgnoreCase)) ||
+                string.Equals(g.Title, letter, StringComparison.OrdinalIgnoreCase));
+
+            // If no items yet, keep loading until the group has items or no new data comes in
+            if (group == null || group.Count == 0)
+            {
+                while (true)
+                {
+                    var beforeTotal = KKGroupContactViewModel!.ContactGroups.Sum(g => g.Count);
+                    await KKGroupContactViewModel.LoadMoreCommand.ExecuteAsync(null);
+                    await Task.Delay(100);
+
+                    // Re-evaluate the group after loading
+                    group = KKGroupContactViewModel.ContactGroups.FirstOrDefault(g =>
+                        string.Equals(g.ShortTitle, letter, StringComparison.OrdinalIgnoreCase) ||
+                        (!string.IsNullOrEmpty(g.Title) && string.Equals(g.Title.Substring(0, 1), letter, StringComparison.OrdinalIgnoreCase)) ||
+                        string.Equals(g.Title, letter, StringComparison.OrdinalIgnoreCase));
+
+                    // Break if we found items
+                    if (group != null && group.Count > 0)
+                        break;
+
+                    // Stop trying if no new items were loaded
+                    var afterTotal = KKGroupContactViewModel.ContactGroups.Sum(g => g.Count);
+                    if (afterTotal <= beforeTotal)
+                        break;
+                }
+            }
+
+            if (group is null || group.Count == 0)
+                return;
+
+            var firstItem = group[0];
+
+            // Scroll so that this item (and thus its header) is at the top
+            GroupContactCollectionView.ScrollTo(
+                item: firstItem,
+                group: group,
+                position: ScrollToPosition.Start,
+                animate: false);
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"OnScrollToLetterRequested error: {ex.Message}");
+        }
+        finally
+        {
+            GroupContactCollectionView.DisableInteractionWhenLoading = false;
         }
     }
 }

@@ -7,6 +7,7 @@ using KKPhone.ViewModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MauiPhoneContactLibrary.ViewModel;
 
@@ -27,10 +28,12 @@ public partial class KKGroupContactViewModel : BaseViewModel
   private CancellationTokenSource? _searchCts;
   private string _lastSearchQuery = string.Empty;
   private bool _isSearchActive = false;
-
+  public event Action<string>? ScrollToLetterRequested;
+  public IEnumerable<string> AlphabetList { get; private set; } = Enumerable.Empty<string>();
   public KKGroupContactViewModel(IKKGetContact kKReadDataFromLocalDB, IKKContactPermissionRequest kKContactPermissionRequest)
     : base(kKReadDataFromLocalDB, kKContactPermissionRequest)
   {
+    AlphabetList = Enumerable.Range('A', 26).Select(i => ((char)i).ToString()).ToList();
   }
 
   public async Task LoadGroupContactsAsync()
@@ -216,7 +219,7 @@ public partial class KKGroupContactViewModel : BaseViewModel
     _searchCts?.Cancel();
     await PerformSearch(SearchText, CancellationToken.None);
   }
-  async Task PerformSearch(string query, CancellationToken cancellationToken)
+  public async Task PerformSearch(string query, CancellationToken cancellationToken)
   {
     try
     {
@@ -241,6 +244,15 @@ public partial class KKGroupContactViewModel : BaseViewModel
         Debug.WriteLine($"Error in PerformSearch: {ex.Message}");
     }
   }
+
+  [RelayCommand]
+  private void ScrollToLetter(string letter)
+  {
+    if (string.IsNullOrWhiteSpace(letter)) return;
+    ScrollToLetterRequested?.Invoke(letter);
+
+  }
+
 
 
 }
