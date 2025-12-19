@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using SQLite;
+using MauiPhoneContactLibrary.Model;
 
 namespace MauiPhoneContactLibrary.Helper
 {
-    public class Name
+
+    public struct Name
     {
         public string? Prefix { get; set; }
         public string? Suffix { get; set; }
@@ -12,41 +15,41 @@ namespace MauiPhoneContactLibrary.Helper
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
     }
-    public class Emailids
+    public struct Emailids
     {
         // public string id { get; set; }
         public string? Emailid { get; set; }
         public string? Type { get; set; }
     }
-    public class Url
+    public struct Url
     {
         public string URL { get; set; }
     }
-    public class Phone
+    public struct Phone
     {
         // public string Phoneid { get; set;}
         public string PhoneNumber { get; set; }
         public string Type { get; set; }
     }
-    public class Company
+    public struct Company
     {
         public string CompanyName { get; set; }
         public string Role { get; set; }
     }
-    public class Address
+    public struct Address
     {
         public string Type { get; set; }
         public string FullAddress { get; set; }
 
     }
-    public class DateList
+    public struct DateList
     {
         public string Date { get; set; }
         public string type { get; set; }
     }
     public class ContactItem : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public int Id { get; set; }
         /// <summary>
         /// Unique id of contact
         /// </summary>
@@ -55,9 +58,6 @@ namespace MauiPhoneContactLibrary.Helper
         /// user Birthday date
         /// </summary>
         public string? Birthday { get; set; }
-        /// <summary>
-        /// By
-        /// </summary>
         public string? DisplayName { get; set; }
         public Name? GetNames { get; set; }
         public List<Emailids>? GetEmails { get; set; }
@@ -66,8 +66,7 @@ namespace MauiPhoneContactLibrary.Helper
         public Company? GetCompany { get; set; }
         public List<Address>? GetAddress { get; set; }
         public List<DateList>? GetDateList { get; set; }
-
-        private bool _itemselcted;
+        private bool _itemselcted = false;
         public bool Itemselcted
         {
             get { return _itemselcted; }
@@ -79,11 +78,11 @@ namespace MauiPhoneContactLibrary.Helper
                 OnPropertyChanged();
             }
         }
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        public event PropertyChangedEventHandler? PropertyChanged;
 
     }
 }

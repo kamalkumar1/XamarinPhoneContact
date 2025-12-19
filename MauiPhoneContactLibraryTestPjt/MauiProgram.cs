@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-
+﻿using MauiPhoneContactLibrary.Helper;
+using Microsoft.Extensions.Logging;
 namespace MauiPhoneContactLibraryTestPjt
 {
     public static class MauiProgram
@@ -9,6 +9,7 @@ namespace MauiPhoneContactLibraryTestPjt
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .SetKKContactControl()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

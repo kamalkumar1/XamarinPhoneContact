@@ -13,50 +13,88 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.1.2</Version>
+		<Version>2.1.1</Version>
 		<PackageId>PhoneContact.MAUI.KK</PackageId>
-		<Title>PhoneContact</Title>
+		<Title>KK.MAUIPHONECONTACTLIBARY</Title>
 		<Company>Valelas</Company>
 		<Copyright>@2025</Copyright>
-		<PackageIcon>Copilot_20250531_131700.png</PackageIcon>
+		<PackageIcon>Nuget_icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/kamalkumar1/XamarinPhoneContact</RepositoryUrl>
 		<PackageTags>MAUI;CONTACT;MOBILE CONTACT;iOS;ANDROID;CONTACT;PHONE</PackageTags>
-		<PackageReleaseNotes>Updated Readme file</PackageReleaseNotes>
-		<Description>- Retrieve and display phone contacts
-- Search and filter contacts
-- Request runtime permissions for accessing contacts
-- Cross-platform support (**Android &amp; iOS**)
-- Smooth UI experience with **MAUI**</Description>
+		<PackageReleaseNotes>
+      ✅ Cross-platform support (iOS and Android) with contact permissions
+
+      ✅ Configurable UI via ContactConfig.Instance (fonts, colors, icons, dark mode)
+
+      ✅ Ready-to-use views: KKSingleContactView (ungrouped) and KKGroupContactView (grouped)
+
+      ✅ Pagination for smooth loading of 2,000+ contacts
+
+      ✅ Silent sync: full sync first time, then incremental updates
+
+      ✅ Enterprise-ready: saves sprint time, accelerates delivery
+
+      ✅ Security-first: PBKDF2 encryption, per-device uniqueness
+    </PackageReleaseNotes>
+		<Description>
+      ✅ Cross-platform support (iOS and Android) with contact permissions
+
+      ✅ Configurable UI via ContactConfig.Instance (fonts, colors, icons, dark mode)
+
+      ✅ Ready-to-use views: KKSingleContactView (ungrouped) and KKGroupContactView (grouped)
+
+      ✅ Pagination for smooth loading of 2,000+ contacts
+
+      ✅ Silent sync: full sync first time, then incremental updates
+
+      ✅ Enterprise-ready: saves sprint time, accelerates delivery
+
+      ✅ Security-first: PBKDF2 encryption, per-device uniqueness
+    </Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<FileVersion>1.0.0.0</FileVersion>
-		<PackageLicenseFile>MIT License.txt</PackageLicenseFile>
-		<PackageProjectUrl>https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0</PackageProjectUrl>
+		<FileVersion>2.1.0.0</FileVersion>
+		<PackageLicenseFile>MITLicense.txt</PackageLicenseFile>
 	</PropertyGroup>
+  <PropertyGroup>
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="..\..\..\..\Downloads\Copilot_20250531_131700.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\..\MIT License.txt">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="View\MobileContact.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+  <ItemGroup>
+    <None Remove="*.pdb" />
+    <None Remove="*.xml" />
+  </ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\..\Downloads\Nuget_icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="MITLicense.txt">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

@@ -10,6 +10,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			//SetKKContactControl is extension method to register all services of MauiPhoneContactLibrary
+			//you must call this method to use maui phone contact library
 			.SetKKContactControl()
 			.ConfigureFonts(fonts =>
 			{

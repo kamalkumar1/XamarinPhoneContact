@@ -55,15 +55,19 @@ public partial class KKSingleContactViewModel : ObservableObject
 
   public async Task LoadContactsAsync()
   {
-    var permissionStatus = await _kKContactPermissionRequest.GetContactAuthorizationStatus();
-    if (permissionStatus != true)
+    try
     {
-      Debug.WriteLine("Contact permission not granted.");
-      return;
+      _currentPageSize++;
+      var contacts = await _kKReadDataFromLocalDB.GetAllContactFromLocalDb(_currentPageSize);
+      AddContactToGroup(contacts);
     }
-    _currentPageSize++;
-    var contacts = await _kKReadDataFromLocalDB.GetAllContactFromLocalDb(_currentPageSize);
-    AddContactToGroup(contacts);
+    catch (Exception ex)
+    {
+      Debug.WriteLine($"Error in LoadContactsAsync: {ex.Message}");
+      _currentPageSize = 0;
+
+    }
+
   }
   void AddContactToGroup(List<ContactItem> contacts)
   {
@@ -107,14 +111,22 @@ public partial class KKSingleContactViewModel : ObservableObject
 
   public void RestViewModel()
   {
-    _searchCts?.Cancel();
-    _searchCts?.Dispose();
-    _searchCts = null;
-    _kKReadDataFromLocalDB = null;
-    _kKContactPermissionRequest = null;
-    Singlecontactitem.Clear();
-    _currentPageSize = -1;
-    _totalPagecount = 0;
+    try
+    {
+      _searchCts?.Cancel();
+      _searchCts?.Dispose();
+      _searchCts = null;
+      _kKReadDataFromLocalDB = null;
+      _kKContactPermissionRequest = null;
+      Singlecontactitem.Clear();
+      _currentPageSize = -1;
+      _totalPagecount = 0;
+    }
+    catch (Exception ex)
+    {
+      Debug.WriteLine($"Error in RestViewModel: {ex.Message}");
+    }
+
   }
 
   async partial void OnSearchTextChanged(string value)
@@ -193,42 +205,58 @@ public partial class KKSingleContactViewModel : ObservableObject
   }
   public void UpdateSingleSelectedContact(ContactItem contact)
   {
-    ContactItem previouslySelected = Singlecontactitem.FirstOrDefault(c => c.Itemselcted == true);
-    if (previouslySelected != null)
+    try
     {
-      var previouslySelectedIndex = previouslySelected != null ? Singlecontactitem.ToList().IndexOf(previouslySelected) : -1;
-      var oldselecteditem = Singlecontactitem.ToList()[previouslySelectedIndex];
-      if (oldselecteditem != null)
+      ContactItem previouslySelected = Singlecontactitem.FirstOrDefault(c => c.Itemselcted == true);
+      if (previouslySelected != null)
       {
-        oldselecteditem.Itemselcted = false;
-        if (oldselecteditem.Id == contact.Id)
+        var previouslySelectedIndex = previouslySelected != null ? Singlecontactitem.ToList().IndexOf(previouslySelected) : -1;
+        var oldselecteditem = Singlecontactitem.ToList()[previouslySelectedIndex];
+        if (oldselecteditem != null)
         {
-          contact.Itemselcted = false;
-          return;
+          oldselecteditem.Itemselcted = false;
+          if (oldselecteditem.Id == contact.Id)
+          {
+            contact.Itemselcted = false;
+            return;
+          }
+          contact.Itemselcted = true;
+          getSingleSelectedContact?.Invoke(contact);
         }
+      }
+      else
+      {
         contact.Itemselcted = true;
         getSingleSelectedContact?.Invoke(contact);
       }
+
     }
-    else
+    catch (Exception ex)
     {
-      contact.Itemselcted = true;
-      getSingleSelectedContact?.Invoke(contact);
+      Debug.WriteLine($"Error in UpdateSingleSelectedContact: {ex.Message}");
     }
+
 
   }
 
   public void UpdateMultipleSelectedContacts(ContactItem currentselctedcontact)
   {
-    currentselctedcontact.Itemselcted = !currentselctedcontact.Itemselcted;
-    if (currentselctedcontact.Itemselcted)
+    try
     {
-      if (!SelectedContacts.Contains(currentselctedcontact))
-        SelectedContacts.Add(currentselctedcontact);
+      currentselctedcontact.Itemselcted = !currentselctedcontact.Itemselcted;
+      if (currentselctedcontact.Itemselcted)
+      {
+        if (!SelectedContacts.Contains(currentselctedcontact))
+          SelectedContacts.Add(currentselctedcontact);
+      }
+      else
+      {
+        SelectedContacts.Remove(currentselctedcontact);
+      }
     }
-    else
+    catch (Exception ex)
     {
-      SelectedContacts.Remove(currentselctedcontact);
+      Debug.WriteLine($"Error in UpdateMultipleSelectedContacts: {ex.Message}");
     }
   }
 

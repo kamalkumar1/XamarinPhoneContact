@@ -5,7 +5,7 @@ namespace MauiPhoneContactLibrary.Helper
     {
         Denied = 1,
         Restricted = 2,
-        Granted=3,
-        PermissionRequired=4
+        Granted = 3,
+        PermissionRequired = 4
     }
 }

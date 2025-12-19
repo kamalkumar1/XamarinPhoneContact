@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:maui="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MauiPhoneContactLibrary.ViewModel"
+    xmlns:model="clr-namespace:MauiPhoneContactLibrary.Helper"
+    xmlns:local="clr-namespace:MauiPhoneContactLibrary.View"
+    x:DataType="vm:KKGroupContactViewModel"
+    x:Class="MauiPhoneContactLibrary.View.KKGroupContactView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <local:ContactSearchBar
+            Grid.Row="0"
+            Grid.Column="0"
+            x:Name="searchText"
+            SearchTextValue="{Binding SearchText}"
+            SearchCommandValue="{Binding SearchCommand}"/>
+
+        <local:GroupedContactCollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            x:Name="GroupContactCollectionView"
+            SelectionChanged="contactList_SelectionChanged"
+            ContactGroups="{Binding ContactGroups}"
+            LoadMoreCommand="{Binding LoadMoreCommand}"/>
+
+        <CollectionView x:Name="AlphabetCollectionView"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding AlphabetList}"
+                        SelectionMode="None"
+                        VerticalOptions="Center"
+                        WidthRequest="30">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type x:String}">
+                    <Label Text="{Binding}"
+                           FontSize="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetFontSize, Mode=OneWay}"
+                           Padding="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetPadding, Mode=OneWay}"
+                           BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetBackgroundColor, Mode=OneWay}"
+                           TextColor="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetTextColor, Mode=OneWay}"
+                           HorizontalTextAlignment="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetHorizontalTextAlignment, Mode=OneWay}"
+                           VerticalTextAlignment="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ContactConfig.AlphabetVerticalTextAlignment, Mode=OneWay}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ScrollToLetterCommand}"
+                                                  CommandParameter="{Binding}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid Grid.Row="2"
+              Grid.Column="0"
+              IsVisible="{Binding IsLoadingMore}"
+              Padding="10">
+            <ActivityIndicator Grid.Row="0"
+                               Grid.Column="0"
+                               IsRunning="{Binding IsLoadingMore}"
+                               IsVisible="{Binding IsLoadingMore}"/>
+        </Grid>
+    </Grid>
+</ContentView>

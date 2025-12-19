@@ -2,6 +2,7 @@ using System.Diagnostics;
 using XamarinPhoneContact.ViewModel;
 using XamarinPhoneContact.Helper;
 using XamarinPhoneContact.Model;
+using XamarinPhoneContact.Interface;
 
 namespace XamarinPhoneContact.View;
 
@@ -12,14 +13,18 @@ public partial class SampleContentPage : ContentPage
 
 	private KKGroupContactViewModel _groupViewModel;
 	private KKGroupContactView _groupContactView;
+	private IKKContactPermissionRequest _kKContactPermissionRequest;
 
 
 
 
-	public SampleContentPage(KKSingleContactViewModel viewModel)
+	public SampleContentPage(KKSingleContactViewModel viewModel, IKKContactPermissionRequest kKContactPermissionRequest)
 	//public SampleContentPage(KKGroupContactViewModel viewModel)
 	{
 		InitializeComponent();
+		_kKContactPermissionRequest = kKContactPermissionRequest;
+
+
 
 		SetupSingleContactView(viewModel);
 		//SetupGroupContactView(viewModel);
@@ -40,6 +45,7 @@ public partial class SampleContentPage : ContentPage
 	/// <param name="viewModel"></param>
 	void SetupSingleContactView(KKSingleContactViewModel viewModel)
 	{
+
 		// Create and cache the ContentView
 		_viewModel = viewModel;
 		BindingContext = _viewModel;
@@ -68,15 +74,23 @@ public partial class SampleContentPage : ContentPage
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		if (_groupViewModel != null)
+
+		var permissionStatus = await _kKContactPermissionRequest.GetContactAuthorizationStatus();
+		if (permissionStatus)
 		{
-			await _groupViewModel.LoadGroupContactsAsync();
+
+			Debug.WriteLine("Contact permission not granted.");
+			if (_groupViewModel != null)
+			{
+				await _groupViewModel.LoadGroupContactsAsync();
+			}
+			if (_viewModel != null)
+			{
+				await _viewModel.CalulateAndGetTotalPageCount();
+				await _viewModel.LoadContactsAsync();
+			}
 		}
-		if (_viewModel != null)
-		{
-			await _viewModel.CalulateAndGetTotalPageCount();
-			await _viewModel.LoadContactsAsync();
-		}
+
 	}
 
 	private void OnGetSelectedContacts()
