@@ -16,6 +16,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <local:ContactSearchBar
             Grid.Row="0"
@@ -32,6 +33,29 @@
             ContactGroups="{Binding ContactGroups}"
             LoadMoreCommand="{Binding LoadMoreCommand}"/>
 
+        <CollectionView Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding AlphabetList}"
+                        SelectionMode="None"
+                        VerticalOptions="Center"
+                        WidthRequest="24">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type x:String}">
+                    <Label Text="{Binding}"
+                           FontSize="10"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:KKGroupContactViewModel}}, Path=ScrollToLetterCommand}"
+                                                  CommandParameter="{Binding}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <Grid Grid.Row="2"
               Grid.Column="0"
               IsVisible="{Binding IsLoadingMore}"
