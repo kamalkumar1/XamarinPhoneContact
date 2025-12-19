@@ -42,7 +42,7 @@ public partial class BaseViewModel : ObservableObject
     var totalItems = await _kKReadDataFromLocalDB.TotalCount();
     _totalPagecount = (totalItems + ContactConfig.Instance.PageSize - 1) / ContactConfig.Instance.PageSize;
   }
-  public async Task<List<ContactItem>?> LoadContactsAsync()
+  protected async Task<List<ContactItem>?> LoadContactsAsync()
   {
     var permissionStatus = await _kKContactPermissionRequest.GetContactAuthorizationStatus();
     if (permissionStatus != true)

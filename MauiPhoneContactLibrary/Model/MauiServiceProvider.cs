@@ -2,7 +2,7 @@ using System;
 
 namespace MauiPhoneContactLibrary.Model;
 
-public static class MauiServiceProvider
+public static class KKMauiServiceProvider
 {
     public static TService? GetService<TService>()
         => Current.GetService<TService>();

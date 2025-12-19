@@ -86,7 +86,7 @@ public static class KKContactControlExtensions
       // 1️⃣ First - Waits for completion
       System.Diagnostics.Debug.WriteLine("🔵 Step 1: Initializing KKControlSetup...");
 
-      var controlSetup = MauiServiceProvider.GetService<IKKControlSetup>();
+      var controlSetup = KKMauiServiceProvider.GetService<IKKControlSetup>();
       if (controlSetup == null)
       {
         System.Diagnostics.Debug.WriteLine("❌ Error: IKKControlSetup service is null");
@@ -98,19 +98,19 @@ public static class KKContactControlExtensions
 
       // 2️⃣ Second - Only runs AFTER first completes
       System.Diagnostics.Debug.WriteLine("🔵 Step 2: Check for contact permissions to read data...");
-      var contactPermissionGranted = await MauiServiceProvider.GetService<IKKContactPermissionRequest>().GetContactAuthorizationStatus();
+      var contactPermissionGranted = await KKMauiServiceProvider.GetService<IKKContactPermissionRequest>().GetContactAuthorizationStatus();
       if (contactPermissionGranted)
       {
         System.Diagnostics.Debug.WriteLine("🔵 Step 3:Check if local db first time full sync done. Then only perform update sync..");
-        var lastcheckDbSyncStatus = await MauiServiceProvider.GetService<IKKPhoneContactData>().CheckLocalDbFirstTimeSyncStatusAsync();
+        var lastcheckDbSyncStatus = await KKMauiServiceProvider.GetService<IKKPhoneContactData>().CheckLocalDbFirstTimeSyncStatusAsync();
         if (lastcheckDbSyncStatus)
         {
           System.Diagnostics.Debug.WriteLine(":📱  Performing updated sync...");
-          var result = await MauiServiceProvider.GetService<IReadUpdatePhoneContactData>().SyncContactChangesAsync();
+          var result = await KKMauiServiceProvider.GetService<IReadUpdatePhoneContactData>().SyncContactChangesAsync();
           if (result == KKContactResulType.SyncTokenFailure)
           {
-            await MauiServiceProvider.GetService<IKKContactControlDbOperation>().DeleteAllDataFromDbTable();
-            await MauiServiceProvider.GetService<IKKPhoneContactData>().GetAllContactFromPhoneAndStoreToLocalDbAsync();
+            await KKMauiServiceProvider.GetService<IKKContactControlDbOperation>().DeleteAllDataFromDbTable();
+            await KKMauiServiceProvider.GetService<IKKPhoneContactData>().GetAllContactFromPhoneAndStoreToLocalDbAsync();
             System.Diagnostics.Debug.WriteLine("✅ Step 2: Phone updated contacts synced successfully");
             return;
           }
@@ -120,7 +120,7 @@ public static class KKContactControlExtensions
         else
         {
           System.Diagnostics.Debug.WriteLine("Step 4:📱 Performing first time full sync...");
-          var result = await MauiServiceProvider.GetService<IKKPhoneContactData>().GetAllContactFromPhoneAndStoreToLocalDbAsync();
+          var result = await KKMauiServiceProvider.GetService<IKKPhoneContactData>().GetAllContactFromPhoneAndStoreToLocalDbAsync();
           if (result == KKContactResulType.FirstSynCompleted)
           {
             System.Diagnostics.Debug.WriteLine("✅ Step 2: Phone first time contacts synced successfully");
