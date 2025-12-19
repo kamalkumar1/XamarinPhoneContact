@@ -1,7 +1,7 @@
 # Contact Configuration Guide
-
-All contact-related UI properties can be customized through the `ContactConfig` class. This allows you to change the appearance and behavior of contact lists without modifying XAML files.
-
+# MAUIPhoneContact 
+> 🔗 Check the full documentation in the repository:
+[https://github.com/kamalkumar1/XamarinPhoneContact](https://github.com/kamalkumar1/XamarinPhoneContact)
 ## Setup
 ### iOS Permissions
 
@@ -38,6 +38,23 @@ Add the following permissions to your `AndroidManifest.xml` file to access conta
 </manifest>
 ```
 ## Integration Guide
+
+## Example Usage
+## How to Use
+
+Access the configuration singleton instance and modify properties before using any contact views:
+
+## Components That Use Configuration
+
+1. **ContactSearchBar** - Search functionality
+2. **ContactCollectionView** - Flat contact list(Ungrouped contact list)
+3. **GroupedContactCollectionView** - Grouped contact list
+4. **GroupHeaderView** - Group section headers
+5. **ContactItemView** - Individual contact item display
+6. **AnimatedSelectionTickMark** - when Individual contact item get selected
+6. **DarkMode** - It will support both dark and light mode feature
+7. **Pagination** - Get contact via pagination
+
 
 ### Using Contact Views in Your Pages
 
@@ -378,22 +395,6 @@ var selectedContacts = _viewModel.GetSelectedContacts();
 ### Selection Background Configuration
 - `SelectedItemBackgroundColor` - Selected item background (default: Transparent)
 - `NormalItemBackgroundColor` - Normal item background (default: Transparent)
-
-## Example Usage
-## How to Use
-
-Access the configuration singleton instance and modify properties before using any contact views:
-
-## Components That Use Configuration
-
-1. **ContactSearchBar** - Search functionality
-2. **ContactCollectionView** - Flat contact list(Ungrouped contact list)
-3. **GroupedContactCollectionView** - Grouped contact list
-4. **GroupHeaderView** - Group section headers
-5. **ContactItemView** - Individual contact item display
-6. **AnimatedSelectionTickMark** - when Individual contact item get selected
-6. **DarkMode** - It will support both dark and light mode feature
-7. **Pagination** - Get contact via pagination
 
 ## Secuirty 
 List Secuirty of below given secuirty check  and encryption followed while saving the Data of the Localdb.
