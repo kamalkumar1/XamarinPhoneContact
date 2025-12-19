@@ -1,7 +1,14 @@
-#PhoneContact.Maui.KK Developed using MAUI.
+#PhoneContact.Maui.KK developed using MAUI.
 
-## Overview
-PhoneContact.Maui.KK is a **MAUI** application that enables users to access and manage phone contacts efficiently. The app provides a clean UI for viewing, searching, and interacting with contacts stored on an Android or iOS device.
+## Highlights
+1. Cross-platform support: iOS & Android with proper permission handling
+2. Configurable UI: Fonts, colors, icons, animations, and dark mode via ContactConfig.Instance.
+3. Ready-to-use Views:KKSingleContactView → Ungrouped list and KKGroupContactView → Grouped list.
+4. Pagination for performance: Smooth loading of 2,000+ contacts without memory overhead.
+5. Silent sync: First-time full sync, then only incremental updates for seamless transitions.
+6. Enterprise-ready: Designed to minimize sprint time and accelerate delivery of contact features.
+7. Security-first: Local DB encryption with PBKDF2 (SHA-256, 100k iterations, per-device uniqueness)
+
 
 ## Read Documentaion how to add the libary
 https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0
@@ -15,6 +22,7 @@ https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-a
 6. **AnimatedSelectionTickMark** - when Individual contact item get selected
 6. **DarkMode** - It will support both dark and light mode feature
 7. **Pagination** - Get contact via pagination
+8. **SelectionMode** - It allowed to select the contact single and multiple contact. By default single slected will get enabled.
    
 ## CUSTOMISABLE INFORMATON
 BY USING THE BELOW PROPERTIES YOU CAN CUSTOMISE THE CONTACT CONTROL.
@@ -53,26 +61,23 @@ Add the following permissions to your `AndroidManifest.xml` file to access conta
 </manifest>
 ```
 ## Integration Guide
-
-
 ### Using Contact Views in Your Pages
 
-The library provides two main contact view controls that can be integrated into your XAML pages.
-Supports single and multi‑selection via properties.
-Choose the appropriate control depending on whether you want grouping or not:
-Grouped Contact List → KKGroupContactView with KKGroupContactViewModel
-Ungrouped Contact List → KKGroupContactView with KKSingleContactViewModel
-You can also add your own selection image configuration file to customize the visuals.
-Can be implemented via both ViewModel and code‑behind.
-Use the configuration singleton to customize attributes:
-```csharp
-var config = ContactConfig.Instance;
-```
-Through ContactConfig.Instance, you can configure:
-Font styles
-Images (including selection icons)
-Background colors
-Placeholder text
+1. The library provides two main contact view controls that can be integrated into your XAML pages.
+2. Supports single and multi‑selection via properties.
+3. Choose the appropriate control depending on whether you want grouping or not:
+4. Grouped Contact List → KKGroupContactView with KKGroupContactViewModel
+5. Ungrouped Contact List → KKGroupContactView with KKSingleContactViewModel
+6. You can also add your own selection image configuration file to customize the visuals.
+7. Can be implemented via both ViewModel and code‑behind.
+8. Use the configuration singleton to customize attributes:
+
+### Config File
+1. Font styles
+2. Images (including selection icons)
+3. Background colors
+4. Placeholder text
+5. By using this file you can update the  darak and light theme file.
 
 ```csharp
 var config = ContactConfig.Instance;
@@ -125,6 +130,49 @@ public bool ShowCheckmarkAnimation = true;
 public Color ContactCellBackgroundColor = Colors.White;
 ```
 
+```csharp
+/// <summary>
+  /// Example:  this tested theme you copy this to your project directly 
+  /// </summary>
+  public static void ApplyLightTheme()
+  {
+    var config = ContactConfig.Instance;
+    config.SearchBarBackgroundColor = Colors.White;
+    config.SearchBarTextColor = Colors.Black;
+    config.SearchBarPlaceholderColor = Colors.Gray;
+    config.GroupHeaderBackgroundColor = Colors.LightGray;
+    config.GroupHeaderTextColor = Colors.Black;
+    config.ContactNameTextColor = Colors.Black;
+    config.ContactPhoneTextColor = Colors.Gray;
+    config.ContactCellBackgroundColor = Colors.White;
+    config.SeparateColor = Colors.LightGray;
+    config.AlphabetBackgroundColor = Colors.White;
+    config.AlphabetTextColor = Colors.DarkBlue;
+    config.CheckmarkIcon = "checkmark";
+  }
+
+  /// <summary>
+  /// Example: this tested theme you copy this to your project directly 
+  /// </summary>
+  public static void ApplyDarkTheme()
+  {
+    var config = ContactConfig.Instance;
+
+    config.SearchBarBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.SearchBarTextColor = Colors.White;
+    config.SearchBarPlaceholderColor = Colors.Gray;
+    config.GroupHeaderBackgroundColor = Color.FromRgba("#1C1C1E");
+    config.GroupHeaderTextColor = Colors.White;
+    config.ContactNameTextColor = Colors.WhiteSmoke;
+    config.ContactPhoneTextColor = Color.FromRgba("#AEAEB2");
+    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.SeparateColor = Color.FromRgba("#3A3A3C");
+    config.AlphabetBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.AlphabetTextColor = Colors.WhiteSmoke;
+    config.CheckmarkIcon = "checkmark";
+    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
+  }
+```
 ### Initialize the Contact Control
 
 Before using any contact views, you must initialize the contact control in your `MauiProgram.cs`:
@@ -203,153 +251,137 @@ Add the namespace and use the control in your XAML:
     }
 ```
 
-#### 4. Inegrated ui via Code-Behind and load the data from code
-
-You can also create and configure views programmatically:
+#### 4. Sample code to integrated the ungrouped contact collecitonview in content page.
 
 ```csharp
-using XamarinPhoneContact.Controls;
+using MauiPhoneContactLibrary.Helper;
+using MauiPhoneContactLibrary.Interface;
+using MauiPhoneContactLibrary.Model;
+using MauiPhoneContactLibrary.View;
+using MauiPhoneContactLibrary.ViewModel;
+using System.Threading.Tasks;
 
-public partial class SampleContentPage : ContentPage
+public partial class TestContactPage : ContentPage
 {
-   private KKGroupContactView _groupContactView;
-   private KKSingleContactView _groupContactView;
+    //KKSingleContactViewModel is Ungrouped listview model
+    KKSingleContactViewModel singleContactViewModel;
 
+    //IKKContactPermissionRequest use this interface to request contact permission
+    //if you can implement default permission request of the maui use.
+    private IKKContactPermissionRequest _kKContactPermissionRequest;
 
-//	public SampleContentPage(KKSingleContactViewModel viewModel)
-	public SampleContentPage(KKGroupContactViewModel viewModel)
-	{
+    public TestContactPage(KKSingleContactViewModel viewModel, IKKContactPermissionRequest kKContactPermissionRequest)
+    {
         InitializeComponent();
-
-          // Configure before adding view
-        var config = ContactConfig.Instance;
-        config.SearchBarPlaceholder = "Search your contacts...";
-        config.ContactNameFontSize = 18;
-        config.GroupHeaderBackgroundColor = Colors.LightBlue;
-        
-        // Option 1: Ungrouped contacts
-         SetupSingleContactView(viewModel);
-        // Option 2: Setupgrouped contacts
-         Option 2: Grouped contacts
-           SetupGroupContactView(viewModel)
-       
+        //set BindingContext
+        BindingContext = viewModel;
+        //keep reference of viewmodel
+        singleContactViewModel = viewModel;
+        //keep reference of contact permission request interface
+        _kKContactPermissionRequest = kKContactPermissionRequest;
+        //create KKSingleContactView view with ungrouped listview
+        var _contactView = new KKSingleContactView(viewModel);
+        //subscribe to get selected contact event when single selectiom mode is enabled
+        viewModel.getSingleSelectedContact += OnGetSelectedContactItem;
+        //Use this method to get selected contacts from viewmodel whe multiple selection mode is enabled
+        viewModel.GetSelectedContacts();
+        //page we need to add contact view
+        contacgrid.Children.Add(_contactView);
     }
-    /// <summary>
-    /// This method setups the single contact view with out section based on the uiview 
-    /// </summary>
-    /// <param name="viewModel"></param>
-	void SetupSingleContactView(KKSingleContactViewModel viewModel)
-	{
-		_viewModel = viewModel;
-		BindingContext = _viewModel;
-		
-		//page we need to add contact view
-    //Avoid this line if UI lareday ingeated in xaml page
-    _contactView = new KKSingleContactView(_viewModel);
-		contentGrid.Children.Add(_contactView);
-	}
-  /// <summary>
-	/// This method setups the group contact view with  section based on the uiview
-	/// </summary>
-	/// <param name="viewModel"></param>
-	void SetupGroupContactView(KKGroupContactViewModel viewModel)
-	{
-		// Create and cache the ContentView
-		_groupViewModel = viewModel;
-		BindingContext = _groupViewModel;
-
-    //page we need to add contact view
-    //Avoid this line if UI lareday ingeated in xaml page
-    		_groupContactView = new KKGroupContactView(_groupViewModel);
-		contentGrid.Children.Add(_groupContactView);
-		
-	}
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        var permissionStatus = await_kKContactPermissionRequest.GetContactAuthorizationStatus();
+        if(permissionStatus)
+        {
+              await singleContactViewModel.LoadContactsAsync();
+        }
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        //unsubscribe event
+        singleContactViewModel.getSingleSelectedContact -= OnGetSelectedContactItem;
+        //reset viewmodel
+        singleContactViewModel.RestViewModel();
+        //clear reference
+        singleContactViewModel = null;
+        //clear bindingcontext
+        BindingContext = null;
+        //clear permission request reference
+        _kKContactPermissionRequest = null;
+    }
+    public void OnGetSelectedContactItem(ContactItem contactItem)
+    {
+        // Handle the selected contact item for ungrouped listview
+    }
+}
 }
 ```
-#### 5. Using in Code-Behind to load the contact
+#### 5. Sample code to integrated the Groupted contact collecitonview in content page.
 
 ```csharp
-   protected override async void OnAppearing()
-	{
-		base.OnAppearing();
-		if (_groupViewModel != null)
-		{
-			await _groupViewModel.LoadGroupContactsAsync();
-		}
-		if (_viewModel != null)
-		{
-			await _viewModel.CalulateAndGetTotalPageCount();
-			await _viewModel.LoadContactsAsync();
-		}
-	}
-  ```
+ public partial class TestContactPage : ContentPage
+{
+    //KKGroupContactViewModel is Grouped listview model
+    KKGroupContactViewModel groupContactViewModel;
 
-#### 6. Using in Code-Behind Get Selected Contact
+    //IKKContactPermissionRequest use this interface to request contact permission
+    //if you can implement default permission request of the maui use.
+    private IKKContactPermissionRequest _kKContactPermissionRequest;
 
-```csharp
-var selectedContacts = _viewModel.GetSelectedContacts();
-```
-#### 7. Using in Code-Behind reset the contact view
-
-```csharp
+    public TestContactPage(KKGroupContactViewModel viewModel, IKKContactPermissionRequest kKContactPermissionRequest)
+    {
+        InitializeComponent();
+        //set BindingContext
+        BindingContext = viewModel;
+        //keep reference of viewmodel
+        groupContactViewModel = viewModel;
+        //keep reference of contact permission request interface
+        _kKContactPermissionRequest = kKContactPermissionRequest;
+        //create KKSingleContactView view with ungrouped listview
+        var _contactView = new KKGroupContactView(viewModel);
+        //subscribe to get selected contact event when single selectiom mode is enabled
+        viewModel.getSingleSelectedContact += OnGetSelectedContactItem;
+        //Use this method to get selected contacts from viewmodel whe multiple selection mode is enabled
+        viewModel.GetSelectedContacts();
+        //page we need to add contact view
+        contacgrid.Children.Add(_contactView);
+    }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        var permissionStatus = await _kKContactPermissionRequest.GetContactAuthorizationStatus();
+        if (permissionStatus)
+        {
+            await groupContactViewModel.LoadGroupContactsAsync();
+        }
+    }
     protected override void OnDisappearing()
-	{
-		base.OnDisappearing();
-    	_groupViewModel?.RestViewModel();
-		 // Optional: Clean up if needed
-		 contentGrid.Children.Clear();
-		 BindingContext = null;
-	}
-```
-#### 8. Using in Code-Behind reset the contact view
-* by usingvar config = ContactConfig.Instance; use can define the  drak and light time
- ``` /// <summary>
-  /// Example: Minimal light theme
-  /// </summary>
-  public static void ApplyLightTheme()
-  {
-    var config = ContactConfig.Instance;
-    config.SearchBarBackgroundColor = Colors.White;
-    config.SearchBarTextColor = Colors.Black;
-    config.SearchBarPlaceholderColor = Colors.Gray;
-    config.GroupHeaderBackgroundColor = Colors.LightGray;
-    config.GroupHeaderTextColor = Colors.Black;
-    config.ContactNameTextColor = Colors.Black;
-    config.ContactPhoneTextColor = Colors.Gray;
-    config.SelectedItemBackgroundColor = Color.FromRgba("#E8F4F8");
-    config.NormalItemBackgroundColor = Colors.Transparent;
-    config.ContactCellBackgroundColor = Colors.White;
-    config.SeparateColor = Colors.LightGray;
-    config.AlphabetBackgroundColor = Colors.White;
-    config.AlphabetTextColor = Colors.DarkBlue;
-    config.CheckmarkIcon = "checkmark";
-  }
-
-  /// <summary>
-  /// Example: Dark theme
-  /// </summary>
-  public static void ApplyDarkTheme()
-  {
-    var config = ContactConfig.Instance;
-
-    config.SearchBarBackgroundColor = Color.FromRgba("#2C2C2E");
-    config.SearchBarTextColor = Colors.White;
-    config.SearchBarPlaceholderColor = Colors.Gray;
-    config.GroupHeaderBackgroundColor = Color.FromRgba("#1C1C1E");
-    config.GroupHeaderTextColor = Colors.White;
-    config.ContactNameTextColor = Colors.WhiteSmoke;
-    config.ContactPhoneTextColor = Color.FromRgba("#AEAEB2");
-    config.SelectedItemBackgroundColor = Color.FromRgba("#3A3A3C");
-    config.NormalItemBackgroundColor = Color.FromRgba("#2C2C2E");
-    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
-    config.SeparateColor = Color.FromRgba("#3A3A3C");
-    config.AlphabetBackgroundColor = Color.FromRgba("#2C2C2E");
-    config.AlphabetTextColor = Colors.WhiteSmoke;
-    config.CheckmarkIcon = "checkmark";
-    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
-  }
-
-```
+    {
+        base.OnDisappearing();
+        //unsubscribe event
+        groupContactViewModel.getSingleSelectedContact -= OnGetSelectedContactItem;
+        //reset viewmodel
+        groupContactViewModel.RestViewModel();
+        //clear reference
+        groupContactViewModel = null;
+        //clear bindingcontext
+        BindingContext = null;
+        //clear permission request reference
+        _kKContactPermissionRequest = null;
+    }
+    public void OnGetSelectedContactItem(ContactItem contactItem)
+    {
+        // Handle the selected contact item for ungrouped listview
+    }
+}
+  ```
+#### 5. Add the selection image in resource folder and assign to config.CheckmarkIcon file. This need to set before the page load.
+  ```csharp
+  var config = ContactConfig.Instance;
+ config.CheckmarkIcon ="your image name"
+  ```
 ## Available Configuration Properties
 
 ### SearchBar Configuration
@@ -391,9 +423,6 @@ var selectedContacts = _viewModel.GetSelectedContacts();
 - `CheckmarkMargin` - Margin (default: 5,5,20,0)
 - `ShowCheckmarkAnimation` - Enable/disable animation (default: true)
 
-### Selection Background Configuration
-- `SelectedItemBackgroundColor` - Selected item background (default: Transparent)
-- `NormalItemBackgroundColor` - Normal item background (default: Transparent)
 
 ## Secuirty 
 List Secuirty of below given secuirty check  and encryption followed while saving the Data of the Localdb.
