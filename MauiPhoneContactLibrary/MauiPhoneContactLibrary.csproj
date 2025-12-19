@@ -13,7 +13,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 		<PackageId>PhoneContact.MAUI.KK</PackageId>
 		<Title>KK.MAUIPHONECONTACTLIBARY</Title>
 		<Company>Valelas</Company>
@@ -21,16 +21,38 @@
 		<PackageIcon>Nuget_icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/kamalkumar1/XamarinPhoneContact</RepositoryUrl>
 		<PackageTags>MAUI;CONTACT;MOBILE CONTACT;iOS;ANDROID;CONTACT;PHONE</PackageTags>
-		<PackageReleaseNotes>Given Support .Net 8 and above
-Given MAUI Compatablity 
-Support latest android and iOS</PackageReleaseNotes>
-		<Description>- Retrieve and display phone contacts
-- Search and filter contacts
-- Request runtime permissions for accessing contacts
-- Cross-platform support (**Android &amp; iOS**)
-- Smooth UI experience with **MAUI**</Description>
+		<PackageReleaseNotes>
+      ✅ Cross-platform support (iOS and Android) with contact permissions
+
+      ✅ Configurable UI via ContactConfig.Instance (fonts, colors, icons, dark mode)
+
+      ✅ Ready-to-use views: KKSingleContactView (ungrouped) and KKGroupContactView (grouped)
+
+      ✅ Pagination for smooth loading of 2,000+ contacts
+
+      ✅ Silent sync: full sync first time, then incremental updates
+
+      ✅ Enterprise-ready: saves sprint time, accelerates delivery
+
+      ✅ Security-first: PBKDF2 encryption, per-device uniqueness
+    </PackageReleaseNotes>
+		<Description>
+      ✅ Cross-platform support (iOS and Android) with contact permissions
+
+      ✅ Configurable UI via ContactConfig.Instance (fonts, colors, icons, dark mode)
+
+      ✅ Ready-to-use views: KKSingleContactView (ungrouped) and KKGroupContactView (grouped)
+
+      ✅ Pagination for smooth loading of 2,000+ contacts
+
+      ✅ Silent sync: full sync first time, then incremental updates
+
+      ✅ Enterprise-ready: saves sprint time, accelerates delivery
+
+      ✅ Security-first: PBKDF2 encryption, per-device uniqueness
+    </Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<FileVersion>1.0.0.0</FileVersion>
+		<FileVersion>2.0.0.0</FileVersion>
 		<PackageLicenseFile>MITLicense.txt</PackageLicenseFile>
 	</PropertyGroup>
 

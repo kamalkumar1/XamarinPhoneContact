@@ -285,7 +285,55 @@ var selectedContacts = _viewModel.GetSelectedContacts();
 		 BindingContext = null;
 	}
 ```
+#### 8. Using in Code-Behind reset the contact view
+* by usingvar config = ContactConfig.Instance; use can define the  drak and light time
+ ``` /// <summary>
+  /// Example: Minimal light theme
+  /// </summary>
+  public static void ApplyLightTheme()
+  {
+    var config = ContactConfig.Instance;
+    config.SearchBarBackgroundColor = Colors.White;
+    config.SearchBarTextColor = Colors.Black;
+    config.SearchBarPlaceholderColor = Colors.Gray;
+    config.GroupHeaderBackgroundColor = Colors.LightGray;
+    config.GroupHeaderTextColor = Colors.Black;
+    config.ContactNameTextColor = Colors.Black;
+    config.ContactPhoneTextColor = Colors.Gray;
+    config.SelectedItemBackgroundColor = Color.FromRgba("#E8F4F8");
+    config.NormalItemBackgroundColor = Colors.Transparent;
+    config.ContactCellBackgroundColor = Colors.White;
+    config.SeparateColor = Colors.LightGray;
+    config.AlphabetBackgroundColor = Colors.White;
+    config.AlphabetTextColor = Colors.DarkBlue;
+    config.CheckmarkIcon = "checkmark";
+  }
 
+  /// <summary>
+  /// Example: Dark theme
+  /// </summary>
+  public static void ApplyDarkTheme()
+  {
+    var config = ContactConfig.Instance;
+
+    config.SearchBarBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.SearchBarTextColor = Colors.White;
+    config.SearchBarPlaceholderColor = Colors.Gray;
+    config.GroupHeaderBackgroundColor = Color.FromRgba("#1C1C1E");
+    config.GroupHeaderTextColor = Colors.White;
+    config.ContactNameTextColor = Colors.WhiteSmoke;
+    config.ContactPhoneTextColor = Color.FromRgba("#AEAEB2");
+    config.SelectedItemBackgroundColor = Color.FromRgba("#3A3A3C");
+    config.NormalItemBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.SeparateColor = Color.FromRgba("#3A3A3C");
+    config.AlphabetBackgroundColor = Color.FromRgba("#2C2C2E");
+    config.AlphabetTextColor = Colors.WhiteSmoke;
+    config.CheckmarkIcon = "checkmark";
+    config.ContactCellBackgroundColor = Color.FromRgba("#2C2C2E");
+  }
+
+```
 ## Available Configuration Properties
 
 ### SearchBar Configuration
