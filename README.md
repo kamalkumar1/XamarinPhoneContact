@@ -202,11 +202,11 @@ Add the namespace and use the control in your XAML:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:contact="clr-namespace:XamarinPhoneContact.Controls;assembly=XamarinPhoneContact"
-             x:Class="YourApp.ContactsPage"
-             Title="Contacts">
+<ContentPage  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:local="clr-namespace:MauiPhoneContactLibrary.View;assembly=MauiPhoneContactLibrary"
+              x:Class="YourApp.ContactsPage"
+              Title="Contacts">
     
     <Grid x:Name ="contentGrid">
         <contact:KKSingleContactView />
@@ -221,9 +221,9 @@ Add the namespace and use the control in your XAML:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:contact="clr-namespace:XamarinPhoneContact.Controls;assembly=XamarinPhoneContact"
+             xmlns:local="clr-namespace:MauiPhoneContactLibrary.View;assembly=MauiPhoneContactLibrary"
              x:Class="YourApp.GroupedContactsPage"
              Title="Grouped Contacts">
     
