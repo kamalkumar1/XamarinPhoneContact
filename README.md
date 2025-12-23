@@ -11,7 +11,8 @@
 
 
 ## Read Documentaion how to add the libary
-https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0
+https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0.
+Need any help on integrating the libary connect with me at kamalkumariospjt@gmail.com or https://www.linkedin.com/in/kamal-kumar-39450654/
 
 ## Features
 1. **ContactSearchBar** - Search functionality
@@ -24,8 +25,7 @@ https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-a
 7. **Pagination** - Get contact via pagination
 8. **SelectionMode** - It allowed to select the contact single and multiple contact. By default single slected will get enabled.
    
-## CUSTOMISABLE INFORMATON
-BY USING THE BELOW PROPERTIES YOU CAN CUSTOMISE THE CONTACT CONTROL.
+
 # Contact Configuration Guide
 ### iOS Permissions
 Add the following permissions to your `Info.plist` file to access contacts on iOS:
@@ -78,6 +78,9 @@ Add the following permissions to your `AndroidManifest.xml` file to access conta
 3. Background colors
 4. Placeholder text
 5. By using this file you can update the  darak and light theme file.
+
+## CUSTOMISABLE INFORMATON
+  BY USING THE BELOW PROPERTIES YOU CAN CUSTOMISE THE CONTACT CONTROL.
 
 ```csharp
 var config = ContactConfig.Instance;
