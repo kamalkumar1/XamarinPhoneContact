@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinPhoneContact", "XamarinPhoneContact.csproj", "{175CEF4D-933C-8728-53FD-FDB143882037}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiPhoneContactLibrary", "..\MauiPhoneContactLibrary\MauiPhoneContactLibrary.csproj", "{4D465C11-BC58-4A5E-B192-2961F497BD93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiPhoneContactLibraryTestPjt", "..\MauiPhoneContactLibraryTestPjt\MauiPhoneContactLibraryTestPjt.csproj", "{BE4254FE-EC55-4EB6-A95E-FEB965E3DA80}"
@@ -19,20 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|x64.Build.0 = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Debug|x86.Build.0 = Debug|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|Any CPU.Build.0 = Release|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|x64.ActiveCfg = Release|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|x64.Build.0 = Release|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|x86.ActiveCfg = Release|Any CPU
-		{175CEF4D-933C-8728-53FD-FDB143882037}.Release|x86.Build.0 = Release|Any CPU
 		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D465C11-BC58-4A5E-B192-2961F497BD93}.Debug|x64.ActiveCfg = Debug|Any CPU
