@@ -11,7 +11,8 @@
 
 
 ## Read Documentaion how to add the libary
-https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0
+https://medium.com/@kamalelango15/fetch-mobile-contact-in-maui-for-both-iphone-and-android-eefc296985c0.
+Need any help on integrating the libary connect with me at kamalkumariospjt@gmail.com or https://www.linkedin.com/in/kamal-kumar-39450654/
 
 ## Features
 1. **ContactSearchBar** - Search functionality
