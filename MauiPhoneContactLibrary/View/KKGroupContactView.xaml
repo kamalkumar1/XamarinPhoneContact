@@ -21,6 +21,7 @@
         <local:ContactSearchBar
             Grid.Row="0"
             Grid.Column="0"
+            Grid.ColumnSpan="2"
             x:Name="searchText"
             SearchTextValue="{Binding SearchText}"
             SearchCommandValue="{Binding SearchCommand}"/>
